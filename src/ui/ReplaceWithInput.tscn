@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/ReplaceWithInput.cs" type="Script" id=1]
+
+[node name="ReplaceWithInput" type="HBoxContainer"]
+margin_top = 18.0
+margin_right = 418.0
+margin_bottom = 42.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LEReplace" type="LineEdit" parent="."]
+margin_right = 165.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="LEWith" type="LineEdit" parent="."]
+margin_left = 169.0
+margin_right = 334.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="BtnMoveUp" type="Button" parent="."]
+margin_left = 338.0
+margin_right = 362.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+text = "^"
+
+[node name="BtnMoveDown" type="Button" parent="."]
+margin_left = 366.0
+margin_right = 390.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+text = "v"
+
+[node name="BtnDelete" type="Button" parent="."]
+margin_left = 394.0
+margin_right = 418.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+text = "X"
+
+[connection signal="pressed" from="BtnDelete" to="." method="OnBtnDeletePressed"]

@@ -1,0 +1,386 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/ui/ProductFolderInput.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/main/FoldersList.cs" type="Script" id=2]
+[ext_resource path="res://src/main/Main.cs" type="Script" id=3]
+[ext_resource path="res://src/ui/ReplaceWithList.cs" type="Script" id=4]
+[ext_resource path="res://src/ui/ReplaceWithInput.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ui/Preview.cs" type="Script" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
+
+[sub_resource type="ShaderMaterial" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[node name="Main" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+NPProductFolder = NodePath("SplitMain/SplitSidebar/PnFolders/ScrlFolders/VbFolders")
+NPRemoveFiles = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove/TeRemove")
+NPIgnoreFiles = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbIgnore/TeIgnore")
+NPReplaceWith = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith")
+NPPreview = NodePath("SplitMain/PnPreview/VbPreview")
+NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/TeRemoveFileNameParts")
+
+[node name="SplitMain" type="HSplitContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SplitSidebar" type="VSplitContainer" parent="SplitMain"]
+margin_right = 430.0
+margin_bottom = 1200.0
+rect_min_size = Vector2( 430, 0 )
+
+[node name="PnFolders" type="Panel" parent="SplitMain/SplitSidebar"]
+margin_right = 430.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="HBF2" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnFolders"]
+margin_right = 430.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
+margin_right = 199.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Product Folders"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
+margin_left = 203.0
+margin_right = 402.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Product Names"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
+margin_left = 406.0
+margin_right = 430.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="ScrlFolders" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnFolders"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 26.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VbFolders" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnFolders/ScrlFolders"]
+margin_right = 430.0
+margin_bottom = 174.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBF1" parent="SplitMain/SplitSidebar/PnFolders/ScrlFolders/VbFolders" instance=ExtResource( 1 )]
+margin_right = 430.0
+
+[node name="PnOptions" type="Panel" parent="SplitMain/SplitSidebar"]
+margin_top = 212.0
+margin_right = 430.0
+margin_bottom = 1200.0
+
+[node name="LbOptions" type="Label" parent="SplitMain/SplitSidebar/PnOptions"]
+margin_left = 6.0
+margin_top = 6.0
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VbOptions" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 26.0
+margin_right = -6.0
+margin_bottom = -6.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HbIgnoreRemove" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_right = 418.0
+margin_bottom = 218.0
+
+[node name="VbIgnore" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove"]
+margin_right = 207.0
+margin_bottom = 218.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
+margin_right = 207.0
+margin_bottom = 14.0
+text = "Ignore Files containing:"
+
+[node name="TeIgnore" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
+margin_top = 18.0
+margin_right = 207.0
+margin_bottom = 218.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="VbRemove" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove"]
+margin_left = 211.0
+margin_right = 418.0
+margin_bottom = 218.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove"]
+margin_right = 207.0
+margin_bottom = 14.0
+text = "Remove Files containing:"
+
+[node name="TeRemove" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove"]
+margin_top = 18.0
+margin_right = 207.0
+margin_bottom = 218.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="HSeparator" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 222.0
+margin_right = 418.0
+margin_bottom = 226.0
+
+[node name="CbMoveToBaseFolder" type="CheckBox" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 230.0
+margin_right = 418.0
+margin_bottom = 254.0
+text = "Move all Files to their Base Folders"
+
+[node name="HSeparator2" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 258.0
+margin_right = 418.0
+margin_bottom = 262.0
+
+[node name="HbLabels" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 266.0
+margin_right = 418.0
+margin_bottom = 280.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
+margin_right = 193.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Replace:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
+margin_left = 197.0
+margin_right = 390.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "With:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
+margin_left = 394.0
+margin_right = 418.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 24, 0 )
+
+[node name="VbReplaceWith" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 284.0
+margin_right = 418.0
+margin_bottom = 364.0
+script = ExtResource( 4 )
+
+[node name="ReplaceWithInput" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
+margin_top = 0.0
+margin_bottom = 24.0
+
+[node name="ReplaceWithInput2" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
+margin_top = 28.0
+margin_bottom = 52.0
+
+[node name="ReplaceWithInput3" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
+margin_top = 56.0
+margin_bottom = 80.0
+
+[node name="HSeparator3" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 368.0
+margin_right = 418.0
+margin_bottom = 372.0
+
+[node name="LbRemoveFileNameParts" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 376.0
+margin_right = 418.0
+margin_bottom = 390.0
+text = "Remove parts from Filenames"
+
+[node name="TeRemoveFileNameParts" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 394.0
+margin_right = 418.0
+margin_bottom = 594.0
+rect_min_size = Vector2( 0, 200 )
+
+[node name="PnPreview" type="Panel" parent="SplitMain"]
+material = SubResource( 6 )
+margin_left = 442.0
+margin_right = 1500.0
+margin_bottom = 1200.0
+
+[node name="VbPreview" type="VBoxContainer" parent="SplitMain/PnPreview"]
+margin_right = 1058.0
+margin_bottom = 1200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HbPreviewTop" type="HBoxContainer" parent="SplitMain/PnPreview/VbPreview"]
+margin_right = 1058.0
+margin_bottom = 24.0
+
+[node name="Label" type="Label" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_top = 5.0
+margin_right = 50.0
+margin_bottom = 19.0
+text = "Preview"
+
+[node name="CbGeneratePreview" type="CheckBox" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_left = 54.0
+margin_right = 195.0
+margin_bottom = 24.0
+pressed = true
+text = "Generate Preview"
+
+[node name="CbShowFullPaths" type="CheckBox" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_left = 199.0
+margin_right = 326.0
+margin_bottom = 24.0
+text = "Show Full Paths"
+
+[node name="CbShowColorCodes" type="CheckBox" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_left = 330.0
+margin_right = 466.0
+margin_bottom = 24.0
+pressed = true
+text = "Show Colorcodes"
+
+[node name="Stretch" type="Control" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_left = 470.0
+margin_right = 881.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="BtnSave" type="Button" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_left = 885.0
+margin_right = 969.0
+margin_bottom = 24.0
+text = "Save Config"
+
+[node name="BtnLoad" type="Button" parent="SplitMain/PnPreview/VbPreview/HbPreviewTop"]
+margin_left = 973.0
+margin_right = 1058.0
+margin_bottom = 24.0
+text = "Load Config"
+
+[node name="HbPreview" type="HBoxContainer" parent="SplitMain/PnPreview/VbPreview"]
+margin_top = 28.0
+margin_right = 1058.0
+margin_bottom = 1200.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TeOriginal" type="RichTextLabel" parent="SplitMain/PnPreview/VbPreview/HbPreview"]
+margin_right = 518.0
+margin_bottom = 1172.0
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/normal = SubResource( 4 )
+bbcode_enabled = true
+selection_enabled = true
+
+[node name="Label" type="Label" parent="SplitMain/PnPreview/VbPreview/HbPreview"]
+margin_left = 522.0
+margin_top = 579.0
+margin_right = 535.0
+margin_bottom = 593.0
+text = "->"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SplitMain/PnPreview/VbPreview/HbPreview"]
+margin_left = 539.0
+margin_right = 1058.0
+margin_bottom = 1172.0
+size_flags_horizontal = 3
+scroll_vertical_enabled = false
+
+[node name="TeDestination" type="RichTextLabel" parent="SplitMain/PnPreview/VbPreview/HbPreview/ScrollContainer"]
+margin_right = 1500.0
+margin_bottom = 1160.0
+rect_min_size = Vector2( 1500, 0 )
+rect_clip_content = false
+focus_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+selection_enabled = true
+
+[node name="BtnRun" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -88.0
+margin_top = -49.0
+margin_right = -12.0
+margin_bottom = -12.0
+text = "Run"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnRun2" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1186.0
+margin_top = -55.0
+margin_right = -1088.0
+margin_bottom = -18.0
+text = "Generate List"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="meta_clicked" from="SplitMain/PnPreview/VbPreview/HbPreview/TeOriginal" to="SplitMain/PnPreview/VbPreview" method="OnFileClicked"]
+[connection signal="pressed" from="BtnRun2" to="." method="OnGenerateJobList"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/FolderLineEdit.cs" type="Script" id=1]
+
+[node name="ProductFolderInput" type="HBoxContainer"]
+margin_right = 418.0
+margin_bottom = 24.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LEF" type="LineEdit" parent="."]
+margin_right = 193.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+placeholder_text = "Enter Path"
+
+[node name="LEP" type="LineEdit" parent="."]
+margin_left = 197.0
+margin_right = 390.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="BtnDelete" type="Button" parent="."]
+margin_left = 394.0
+margin_right = 418.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 24, 0 )
+text = "X"
+
+[connection signal="text_changed" from="LEF" to="." method="OnLEFChanged"]
+[connection signal="pressed" from="BtnDelete" to="." method="OnBtnDeletePressed"]
