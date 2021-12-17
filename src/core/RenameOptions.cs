@@ -38,7 +38,7 @@ public class RenameOptions : Node
             if (ignore) continue;
 
 
-            string fileDest = fileOrigin;
+            string fileDest = fileOrigin.GetFile();
             foreach (KeyValuePair<string, string> kvp in replaceWithDict)
             {
                 if (kvp.Key == "") {
@@ -46,8 +46,9 @@ public class RenameOptions : Node
                 }
                 fileDest = fileDest.Replace(kvp.Key, kvp.Value);
             }
-            if (fileOrigin != fileDest) {
-                jobList.Add(new FileJob(fileOrigin, fileDest));
+            if (fileOrigin.GetFile() != fileDest) {
+                jobList.Add(new FileJob(fileOrigin, fileOrigin.GetBaseDir() + fileDest));
+                GD.Print(fileOrigin);
             }
         }
         

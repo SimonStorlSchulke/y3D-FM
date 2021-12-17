@@ -11,7 +11,7 @@ public class RNUtil : Node
         string[] files = { };
         try
         {
-            files = recursive ? System.IO.Directory.GetFiles(path) : System.IO.Directory.GetFiles(path);
+            files = recursive ? System.IO.Directory.GetFiles(path, "*", System.IO.SearchOption.AllDirectories) : System.IO.Directory.GetFiles(path);
         }
         catch (System.Exception e)
         {

@@ -51,10 +51,12 @@ public class Preview : Control
         teOriginal.BbcodeText = "";
         teDestination.BbcodeText = "";
 
+        Font f = teOriginal.GetFont("normal_font");
+        Vector2 longestString = new Vector2(0,0);
 
         foreach (FileJob job in jobs)
         {
-            string color = "#aa00aa";
+            string color = "#aaaaaa";
             foreach (KeyValuePair<string, string> c in colorCodes)
             {
                 if (job.pathOriginal.Contains(c.Key))
@@ -70,10 +72,18 @@ public class Preview : Control
                     color = c.Value;
                 }
             }
+            
+            Vector2 stringSize = f.GetStringSize(job.pathOriginal.GetFile());
+            if (stringSize.x > longestString.x) {
+                longestString = stringSize;
+            }
 
             teOriginal.BbcodeText += GenerateBbcodeText(job.pathOriginal, cbShowColorCodes.Pressed, false, true);
             teDestination.BbcodeText += GenerateBbcodeText(job.pathDestination, cbShowColorCodes.Pressed, cbShowFullPaths.Pressed, false);
         }
+        
+        // Set Size of pathOriginal Box to fit longest filename
+        teOriginal.RectMinSize = new Vector2(longestString.x, teOriginal.RectMinSize.y);
     }
 
     public string GenerateBbcodeText(string str, bool withColorCode, bool fullPath, bool generateLink)

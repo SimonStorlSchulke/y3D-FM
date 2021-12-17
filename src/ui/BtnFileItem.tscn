@@ -1,0 +1,35 @@
+[gd_scene format=2]
+
+[node name="BtnFileItem" type="Button"]
+margin_left = 432.0
+margin_right = 444.0
+margin_bottom = 1200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hb" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lblOrig" type="Label" parent="Hb"]
+margin_top = 593.0
+margin_right = 94.0
+margin_bottom = 607.0
+text = "plastik_22_rot_"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lblDest" type="Label" parent="Hb"]
+margin_left = 98.0
+margin_top = 593.0
+margin_right = 222.0
+margin_bottom = 607.0
+text = "23.aaa -05 SEB4-GK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
