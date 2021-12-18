@@ -6,16 +6,12 @@
 [ext_resource path="res://src/ui/ReplaceWithList.cs" type="Script" id=4]
 [ext_resource path="res://src/ui/ReplaceWithInput.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ui/Preview.cs" type="Script" id=6]
-[ext_resource path="res://theme/arrow.svg" type="Texture" id=7]
+[ext_resource path="res://theme/new_dynamicfont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://src/ui/tbPrevL1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/ui/tbPrevL2.tscn" type="PackedScene" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
-
-[sub_resource type="StyleBoxEmpty" id=4]
-
-[sub_resource type="StyleBoxTexture" id=5]
-texture = ExtResource( 7 )
-region_rect = Rect2( 0, 0, 42, 42 )
 
 [node name="Main" type="Panel"]
 anchor_right = 1.0
@@ -64,8 +60,9 @@ __meta__ = {
 
 [node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
 margin_right = 196.0
-margin_bottom = 14.0
+margin_bottom = 18.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
 text = "Product Folders"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -74,8 +71,9 @@ __meta__ = {
 [node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
 margin_left = 200.0
 margin_right = 396.0
-margin_bottom = 14.0
+margin_bottom = 18.0
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 7 )
 text = "Product Names"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -84,7 +82,7 @@ __meta__ = {
 [node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
 margin_left = 400.0
 margin_right = 424.0
-margin_bottom = 14.0
+margin_bottom = 18.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="ScrlFolders" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnFolders"]
@@ -119,6 +117,7 @@ margin_left = 6.0
 margin_top = 6.0
 margin_right = 40.0
 margin_bottom = 14.0
+custom_fonts/font = ExtResource( 7 )
 text = "Options"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -197,72 +196,56 @@ __meta__ = {
 }
 
 [node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
-margin_right = 193.0
+margin_right = 165.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-text = "Replace:"
+text = "Replace"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
-margin_left = 197.0
-margin_right = 390.0
+margin_left = 169.0
+margin_right = 334.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
-text = "With:"
+text = "With"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
-margin_left = 394.0
+margin_left = 338.0
 margin_right = 418.0
 margin_bottom = 14.0
-rect_min_size = Vector2( 24, 0 )
+rect_min_size = Vector2( 80, 0 )
 
 [node name="VbReplaceWith" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
 margin_top = 284.0
 margin_right = 418.0
-margin_bottom = 364.0
+margin_bottom = 308.0
 script = ExtResource( 4 )
 
 [node name="ReplaceWithInput" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
 margin_top = 0.0
 margin_bottom = 24.0
 
-[node name="ReplaceWithInput2" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
-margin_top = 28.0
-margin_bottom = 52.0
-
-[node name="ReplaceWithInput3" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
-margin_top = 56.0
-margin_bottom = 80.0
-
 [node name="HSeparator3" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 368.0
+margin_top = 312.0
 margin_right = 418.0
-margin_bottom = 372.0
+margin_bottom = 316.0
 
 [node name="LbRemoveFileNameParts" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 376.0
+margin_top = 320.0
 margin_right = 418.0
-margin_bottom = 390.0
+margin_bottom = 334.0
 text = "Remove parts from Filenames"
 
 [node name="TeRemoveFileNameParts" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 394.0
+margin_top = 338.0
 margin_right = 418.0
-margin_bottom = 594.0
+margin_bottom = 538.0
 rect_min_size = Vector2( 0, 200 )
-
-[node name="ItemList" type="ItemList" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 598.0
-margin_right = 418.0
-margin_bottom = 695.0
-items = [ "ssar34", null, false, "Item 1fsdfs", null, false, "Item 2", null, false, "Item 3", null, false, "Item 4", null, false, "Item 5", null, false, "Item 6", null, false, "Item 7", null, false, "Item 8", null, false ]
-auto_height = true
-max_columns = 2
 
 [node name="VbPreview" type="VBoxContainer" parent="SplitMain"]
 margin_left = 442.0
@@ -274,6 +257,8 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+tbPresetL1 = ExtResource( 8 )
+tbPresetL2 = ExtResource( 9 )
 
 [node name="HbPreviewTop" type="HBoxContainer" parent="SplitMain/VbPreview"]
 margin_right = 1058.0
@@ -285,21 +270,27 @@ margin_right = 50.0
 margin_bottom = 19.0
 text = "Preview"
 
-[node name="CbShowFullPaths" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 54.0
-margin_right = 181.0
-margin_bottom = 24.0
-text = "Show Full Paths"
-
 [node name="CbShowColorCodes" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 185.0
-margin_right = 321.0
+margin_left = 54.0
+margin_right = 153.0
 margin_bottom = 24.0
 pressed = true
-text = "Show Colorcodes"
+text = "Colorcodes"
+
+[node name="CbShowFullPathsOrig" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
+margin_left = 157.0
+margin_right = 301.0
+margin_bottom = 24.0
+text = "Full Paths Original"
+
+[node name="CbShowFullPathsDest" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
+margin_left = 305.0
+margin_right = 473.0
+margin_bottom = 24.0
+text = "Full Paths Destination"
 
 [node name="Stretch" type="Control" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 325.0
+margin_left = 477.0
 margin_right = 881.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -316,59 +307,21 @@ margin_right = 1058.0
 margin_bottom = 24.0
 text = "Load Config"
 
-[node name="HbPreview" type="HBoxContainer" parent="SplitMain/VbPreview"]
+[node name="Scrl" type="ScrollContainer" parent="SplitMain/VbPreview"]
 margin_top = 28.0
 margin_right = 1058.0
 margin_bottom = 1200.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="ScrlOriginal" type="ScrollContainer" parent="SplitMain/VbPreview/HbPreview"]
-margin_right = 333.0
-margin_bottom = 1172.0
-rect_min_size = Vector2( 333, 0 )
-
-[node name="TeOriginal" type="RichTextLabel" parent="SplitMain/VbPreview/HbPreview/ScrlOriginal"]
-margin_right = 300.0
-margin_bottom = 1172.0
-rect_min_size = Vector2( 300, 0 )
-focus_mode = 2
-size_flags_vertical = 3
-custom_styles/normal = SubResource( 4 )
-bbcode_enabled = true
-fit_content_height = true
-scroll_active = false
-selection_enabled = true
-
-[node name="Label" type="Label" parent="SplitMain/VbPreview/HbPreview"]
-modulate = Color( 0.368627, 0.439216, 0.521569, 1 )
-margin_left = 337.0
-margin_right = 385.0
-margin_bottom = 48.0
-rect_min_size = Vector2( 48, 48 )
-size_flags_vertical = 0
-custom_styles/normal = SubResource( 5 )
-
-[node name="ScrlDestination" type="ScrollContainer" parent="SplitMain/VbPreview/HbPreview"]
-margin_left = 389.0
+[node name="Grid" type="GridContainer" parent="SplitMain/VbPreview/Scrl"]
 margin_right = 1058.0
 margin_bottom = 1172.0
 size_flags_horizontal = 3
-
-[node name="TeDestination" type="RichTextLabel" parent="SplitMain/VbPreview/HbPreview/ScrlDestination"]
-margin_right = 1500.0
-margin_bottom = 1160.0
-rect_min_size = Vector2( 1500, 0 )
-rect_clip_content = false
-focus_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-bbcode_enabled = true
-fit_content_height = true
-scroll_active = false
-selection_enabled = true
+custom_constants/vseparation = 0
+custom_constants/hseparation = 0
+columns = 2
 
 [node name="BtnRun" type="Button" parent="."]
 anchor_left = 1.0
@@ -385,6 +338,6 @@ __meta__ = {
 }
 
 [connection signal="timeout" from="TimerShowPreview" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPaths" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
-[connection signal="meta_clicked" from="SplitMain/VbPreview/HbPreview/ScrlOriginal/TeOriginal" to="SplitMain/VbPreview" method="OnFileClicked"]
+[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]

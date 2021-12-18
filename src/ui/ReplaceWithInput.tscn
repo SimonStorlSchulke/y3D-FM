@@ -43,4 +43,5 @@ margin_bottom = 24.0
 rect_min_size = Vector2( 24, 0 )
 text = "X"
 
+[connection signal="text_changed" from="LEReplace" to="." method="OnLEChanged"]
 [connection signal="pressed" from="BtnDelete" to="." method="OnBtnDeletePressed"]

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 
 public class Preview : Control {
-    RichTextLabel teOriginal;
-    RichTextLabel teDestination;
-    CheckBox cbShowFullPaths;
+    GridContainer table;
+    CheckBox cbShowFullPathsOrig;
+    CheckBox cbShowFullPathsDest;
     CheckBox cbShowColorCodes;
     Dictionary<string, string> colorCodes = new Dictionary<string, string>() {
         {"-20", "b8ff00"},
@@ -36,52 +36,50 @@ public class Preview : Control {
         {"DELETE", "a84242"},
     };
 
+    [Export]
+    PackedScene tbPresetL1;
+
+    [Export]
+    PackedScene tbPresetL2;
+
     public override void _Ready() {
-        teOriginal = GetNode<RichTextLabel>("HbPreview/ScrlOriginal/TeOriginal");
-        teDestination = GetNode<RichTextLabel>("HbPreview/ScrlDestination/TeDestination");
-        cbShowFullPaths = GetNode<CheckBox>("HbPreviewTop/CbShowFullPaths");
+        cbShowFullPathsOrig = GetNode<CheckBox>("HbPreviewTop/CbShowFullPathsOrig");
+        cbShowFullPathsDest = GetNode<CheckBox>("HbPreviewTop/CbShowFullPathsDest");
         cbShowColorCodes = GetNode<CheckBox>("HbPreviewTop/CbShowColorCodes");
+        table = GetNode<GridContainer>("Scrl/Grid");
     }
 
     public void Show(List<FileJob> jobs) {
-        teOriginal.BbcodeText = "";
-        teDestination.BbcodeText = "";
+        
+        foreach (ToolButton item in table.GetChildren()) {
+            item.QueueFree();
+        }
 
-        Font f = teOriginal.GetFont("normal_font");
-        Vector2 longestString = new Vector2(0, 0);
-
+        int i=0;
         foreach (FileJob job in jobs) {
+            
+            ToolButton tbOrig = (i%2==0) ? tbPresetL1.Instance<ToolButton>() : tbPresetL2.Instance<ToolButton>();
+            ToolButton tbDest = tbOrig.Duplicate() as ToolButton;
 
-            Vector2 stringSize = f.GetStringSize(job.pathOriginal.GetFile());
-            if (stringSize.x > longestString.x) {
-                longestString = stringSize;
+            tbOrig.Text = cbShowFullPathsOrig.Pressed ? job.pathOriginal : job.pathOriginal.GetFile();
+            tbDest.Text = cbShowFullPathsDest.Pressed ? job.pathDestination : job.pathDestination.GetFile();
+            
+            if (cbShowColorCodes.Pressed) {
+                tbOrig.AddColorOverride("font_color", checkForColorCode(job.pathOriginal.GetFile()));
+                tbDest.AddColorOverride("font_color", checkForColorCode(job.pathDestination.GetFile()));
             }
 
-            teOriginal.BbcodeText += GenerateBbcodeText(job.pathOriginal, cbShowColorCodes.Pressed, false, true);
-            teDestination.BbcodeText += GenerateBbcodeText(job.pathDestination, cbShowColorCodes.Pressed, cbShowFullPaths.Pressed, false);
+            tbOrig.Connect("pressed", this, nameof(OnFileClicked), new Godot.Collections.Array(){job.pathOriginal});
+            tbDest.Connect("pressed", this, nameof(OnFileClicked), new Godot.Collections.Array(){job.pathOriginal});
+
+            table.AddChild(tbOrig);
+            table.AddChild(tbDest);
+
+            i += 1;
         }
 
-        // Set Size of pathOriginal Box to fit longest filename
-        GetNode<ScrollContainer>("HbPreview/ScrlOriginal").RectMinSize = new Vector2(Mathf.Clamp(longestString.x, 0, 300), teOriginal.RectMinSize.y);
-        teOriginal.RectMinSize = new Vector2(longestString.x, teOriginal.RectMinSize.y);
     }
 
-    public string GenerateBbcodeText(string str, bool withColorCode, bool fullPath, bool generateLink) {
-
-        string color = "ccc";
-        if (withColorCode) {
-            color = checkForColorCode(str);
-        }
-
-        string pathPrev = fullPath ? str : str.GetFile();
-        string bbc;
-        if (generateLink) {
-            bbc = $"[color=#{color}][url={str}]{pathPrev}[/url][/color]" + "\n";
-        } else {
-            bbc = $"[color=#{color}]{pathPrev}[/color]" + "\n";
-        }
-        return bbc;
-    }
 
     public void OnFileClicked(string href) {
         try {
@@ -91,8 +89,8 @@ public class Preview : Control {
         }
     }
 
-    string checkForColorCode(string str) {
-        string color = "ccc";
+    Color checkForColorCode(string str) {
+        string color = "cccccc";
         foreach (KeyValuePair<string, string> c in colorCodes) {
             if (str.Contains(c.Key)) {
                 color = c.Value;
@@ -105,7 +103,7 @@ public class Preview : Control {
                 break;
             }
         }
-        return color;
+        return new Color(color);
     }
 
 }
