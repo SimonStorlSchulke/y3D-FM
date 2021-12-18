@@ -31,6 +31,10 @@ NPIgnoreFiles = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRem
 NPReplaceWith = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith")
 NPPreview = NodePath("SplitMain/VbPreview")
 NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/TeRemoveFileNameParts")
+NPTimerShowPreview = NodePath("TimerShowPreview")
+
+[node name="TimerShowPreview" type="Timer" parent="."]
+one_shot = true
 
 [node name="SplitMain" type="HSplitContainer" parent="."]
 anchor_right = 1.0
@@ -157,7 +161,7 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove"]
 margin_right = 207.0
 margin_bottom = 14.0
-text = "Remove Files containing:"
+text = "Delete Files containing:"
 
 [node name="TeRemove" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove"]
 margin_top = 18.0
@@ -270,28 +274,21 @@ margin_right = 50.0
 margin_bottom = 19.0
 text = "Preview"
 
-[node name="CbGeneratePreview" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 54.0
-margin_right = 195.0
-margin_bottom = 24.0
-pressed = true
-text = "Generate Preview"
-
 [node name="CbShowFullPaths" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 199.0
-margin_right = 326.0
+margin_left = 54.0
+margin_right = 181.0
 margin_bottom = 24.0
 text = "Show Full Paths"
 
 [node name="CbShowColorCodes" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 330.0
-margin_right = 466.0
+margin_left = 185.0
+margin_right = 321.0
 margin_bottom = 24.0
 pressed = true
 text = "Show Colorcodes"
 
 [node name="Stretch" type="Control" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 470.0
+margin_left = 325.0
 margin_right = 881.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
@@ -317,7 +314,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TeOriginal" type="RichTextLabel" parent="SplitMain/VbPreview/HbPreview"]
+[node name="ScrlOriginal" type="ScrollContainer" parent="SplitMain/VbPreview/HbPreview"]
+margin_right = 333.0
+margin_bottom = 1172.0
+rect_min_size = Vector2( 333, 0 )
+
+[node name="TeOriginal" type="RichTextLabel" parent="SplitMain/VbPreview/HbPreview/ScrlOriginal"]
 margin_right = 300.0
 margin_bottom = 1172.0
 rect_min_size = Vector2( 300, 0 )
@@ -325,24 +327,26 @@ focus_mode = 2
 size_flags_vertical = 3
 custom_styles/normal = SubResource( 4 )
 bbcode_enabled = true
+fit_content_height = true
+scroll_active = false
 selection_enabled = true
 
 [node name="Label" type="Label" parent="SplitMain/VbPreview/HbPreview"]
-margin_left = 304.0
-margin_top = 570.0
-margin_right = 336.0
-margin_bottom = 602.0
-rect_min_size = Vector2( 32, 32 )
+modulate = Color( 0.368627, 0.439216, 0.521569, 1 )
+margin_left = 337.0
+margin_right = 385.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+size_flags_vertical = 0
 custom_styles/normal = SubResource( 5 )
 
-[node name="ScrollContainer" type="ScrollContainer" parent="SplitMain/VbPreview/HbPreview"]
-margin_left = 340.0
+[node name="ScrlDestination" type="ScrollContainer" parent="SplitMain/VbPreview/HbPreview"]
+margin_left = 389.0
 margin_right = 1058.0
 margin_bottom = 1172.0
 size_flags_horizontal = 3
-scroll_vertical_enabled = false
 
-[node name="TeDestination" type="RichTextLabel" parent="SplitMain/VbPreview/HbPreview/ScrollContainer"]
+[node name="TeDestination" type="RichTextLabel" parent="SplitMain/VbPreview/HbPreview/ScrlDestination"]
 margin_right = 1500.0
 margin_bottom = 1160.0
 rect_min_size = Vector2( 1500, 0 )
@@ -351,6 +355,8 @@ focus_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 bbcode_enabled = true
+fit_content_height = true
+scroll_active = false
 selection_enabled = true
 
 [node name="BtnRun" type="Button" parent="."]
@@ -381,5 +387,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="meta_clicked" from="SplitMain/VbPreview/HbPreview/TeOriginal" to="SplitMain/VbPreview" method="OnFileClicked"]
+[connection signal="timeout" from="TimerShowPreview" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPaths" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
+[connection signal="meta_clicked" from="SplitMain/VbPreview/HbPreview/ScrlOriginal/TeOriginal" to="SplitMain/VbPreview" method="OnFileClicked"]
 [connection signal="pressed" from="BtnRun2" to="." method="OnGenerateJobList"]

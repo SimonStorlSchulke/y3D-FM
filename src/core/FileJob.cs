@@ -14,16 +14,19 @@ public struct FileJob
     /// <summary>Exectues the FIleJob and returns errors if there were any.</summary>
     public static string Execute(List<FileJob> jobList) 
     {
-        string warnings = "Fehler:\n";
+        string errors = "Fehler:\n";
         foreach (FileJob job in jobList)
         {
+            if (job.pathDestination == "DELETE") { // kinda dirty ;)
+                System.IO.File.Delete(job.pathOriginal);
+            }
              try {
                  System.IO.File.Move(job.pathOriginal, job.pathDestination);
              } catch (System.Exception e) {
-                warnings += job.pathOriginal.GetFile() + " konnte nicht zu " + job.pathDestination.GetFile() + " umbenannt werden: ";
-                warnings += "\n" + e.ToString() + "\n";
+                errors += job.pathOriginal.GetFile() + " konnte nicht zu " + job.pathDestination.GetFile() + " umbenannt werden: ";
+                errors += "\n" + e.ToString() + "\n";
              }
         }
-        return warnings;
+        return errors;
     }
 }

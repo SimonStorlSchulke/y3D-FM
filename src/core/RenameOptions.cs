@@ -11,22 +11,27 @@ public class RenameOptions : Node
     public Dictionary<string, string> replaceWithDict;
     public List<string> removeFileNamePartsList;
 
-    public List<FileJob> ParseFiles() 
-    {
-        List<string> fileList = new List<string>();
-        List<FileJob> jobList = new List<FileJob>();
+    List<string> fileList = new List<string>();
+    List<FileJob> jobList;
 
-        foreach (KeyValuePair<string, string> folder in productFoldersDict)
-        {
-            string[] files;
-            files = RNUtil.TryParseFiles(folder.Key, true);
-            fileList.AddRange(files);
+    public List<FileJob> ParseFiles(bool refreshFileList)
+    {
+        jobList = new List<FileJob>();
+
+        if(refreshFileList) {
+            fileList = new List<string>();
+            foreach (KeyValuePair<string, string> folder in productFoldersDict)
+            {
+                string[] files;
+                files = RNUtil.TryParseFiles(folder.Key, true);
+                fileList.AddRange(files);
+            }
         }
 
-        GD.Print(ignoreFilesList.Count);
         foreach (string fileOrigin in fileList)
         {
             bool ignore = false;
+            bool remove = false;
             foreach (string ignoreFile in ignoreFilesList)
             {
                 if (ignoreFile != "" && fileOrigin.GetFile().Contains(ignoreFile)) {
@@ -35,10 +40,24 @@ public class RenameOptions : Node
                 }
             }
 
+            foreach (string removeFile in removeFilesList)
+            {
+                if (removeFile != "" && fileOrigin.GetFile().Contains(removeFile)) {
+                    remove = true;
+                }
+            }
+
             if (ignore) continue;
 
+            string fileDest;
 
-            string fileDest = fileOrigin.GetFile();
+            if (remove) {
+                jobList.Add(new FileJob(fileOrigin, "DELETE"));
+                continue;
+            }
+
+
+            fileDest = fileOrigin.GetFile();
             foreach (KeyValuePair<string, string> kvp in replaceWithDict)
             {
                 if (kvp.Key == "") {
@@ -48,7 +67,6 @@ public class RenameOptions : Node
             }
             if (fileOrigin.GetFile() != fileDest) {
                 jobList.Add(new FileJob(fileOrigin, fileOrigin.GetBaseDir() + fileDest));
-                GD.Print(fileOrigin);
             }
         }
         

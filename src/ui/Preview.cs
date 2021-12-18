@@ -6,7 +6,6 @@ public class Preview : Control
 {
     RichTextLabel teOriginal;
     RichTextLabel teDestination;
-    CheckBox cbGeneratePreview;
     CheckBox cbShowFullPaths;
     CheckBox cbShowColorCodes;
     Dictionary<string, string> colorCodes = new Dictionary<string, string>() {
@@ -35,13 +34,13 @@ public class Preview : Control
         {"grau", "b1b1b1"},
         {"weiss", "ffffff"},
         {"orange", "ffa400"},
+        {"DELETE", "a84242"},
     };
 
     public override void _Ready()
     {
-        teOriginal = GetNode<RichTextLabel>("HbPreview/TeOriginal");
-        teDestination = GetNode<RichTextLabel>("HbPreview/ScrollContainer/TeDestination");
-        cbGeneratePreview = GetNode<CheckBox>("HbPreviewTop/CbGeneratePreview");
+        teOriginal = GetNode<RichTextLabel>("HbPreview/ScrlOriginal/TeOriginal");
+        teDestination = GetNode<RichTextLabel>("HbPreview/ScrlDestination/TeDestination");
         cbShowFullPaths = GetNode<CheckBox>("HbPreviewTop/CbShowFullPaths");
         cbShowColorCodes = GetNode<CheckBox>("HbPreviewTop/CbShowColorCodes");
     }
@@ -83,6 +82,7 @@ public class Preview : Control
         }
         
         // Set Size of pathOriginal Box to fit longest filename
+        GetNode<ScrollContainer>("HbPreview/ScrlOriginal").RectMinSize = new Vector2(Mathf.Clamp(longestString.x, 0, 300), teOriginal.RectMinSize.y);
         teOriginal.RectMinSize = new Vector2(longestString.x, teOriginal.RectMinSize.y);
     }
 
@@ -120,7 +120,6 @@ public class Preview : Control
 
     public void OnFileClicked(string href)
     {
-        GD.Print(href);
         System.Diagnostics.Process.Start(href);
     }
 
