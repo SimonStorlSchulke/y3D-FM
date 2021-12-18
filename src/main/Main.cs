@@ -50,7 +50,7 @@ public class Main : Control {
             if (GetFocusOwner() == null) {
                 return;
             }
-            if (GetFocusOwner().Name == "LEF") { // Refresh Files if user types in Folders UI
+            if (GetFocusOwner().Name == "LEF" || GetFocusOwner().Name == "LEP") { // Refresh Files if user types in Folders UI
                 refreshFiles = true;
             }
         }
@@ -63,8 +63,8 @@ public class Main : Control {
         options.replaceWithDict = GetNode<ReplaceWithList>(NPReplaceWith).GetReplaceWithDict();
         options.ignoreFilesList = new List<string>(GetNode<TextEdit>(NPIgnoreFiles).Text.Split("\n"));
         options.removeFilesList = new List<string>(GetNode<TextEdit>(NPRemoveFiles).Text.Split("\n"));
+        options.removeFileNamePartsList = new List<string>(GetNode<TextEdit>(NPRemoveFileNameParts).Text.Split("\n"));
 
-        RNUtil.PrintStringPairDict(options.replaceWithDict);
         jobList = options.ParseFiles(refreshFiles);
         GetNode<Preview>(NPPreview).Show(jobList);
         if (refreshFiles) refreshFiles = false;

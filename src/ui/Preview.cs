@@ -2,8 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class Preview : Control
-{
+public class Preview : Control {
     RichTextLabel teOriginal;
     RichTextLabel teDestination;
     CheckBox cbShowFullPaths;
@@ -37,43 +36,22 @@ public class Preview : Control
         {"DELETE", "a84242"},
     };
 
-    public override void _Ready()
-    {
+    public override void _Ready() {
         teOriginal = GetNode<RichTextLabel>("HbPreview/ScrlOriginal/TeOriginal");
         teDestination = GetNode<RichTextLabel>("HbPreview/ScrlDestination/TeDestination");
         cbShowFullPaths = GetNode<CheckBox>("HbPreviewTop/CbShowFullPaths");
         cbShowColorCodes = GetNode<CheckBox>("HbPreviewTop/CbShowColorCodes");
     }
 
-    public void Show(List<FileJob> jobs)
-    {
+    public void Show(List<FileJob> jobs) {
         teOriginal.BbcodeText = "";
         teDestination.BbcodeText = "";
 
         Font f = teOriginal.GetFont("normal_font");
-        Vector2 longestString = new Vector2(0,0);
+        Vector2 longestString = new Vector2(0, 0);
 
-        foreach (FileJob job in jobs)
-        {
-            string color = "ccc";
-            foreach (KeyValuePair<string, string> c in colorCodes)
-            {
-                if (job.pathOriginal.Contains(c.Key))
-                {
-                    color = c.Value;
-                    break;
-                }
-            }
+        foreach (FileJob job in jobs) {
 
-            foreach (KeyValuePair<string, string> c in colorNames)
-            {
-                if (job.pathOriginal.Contains(c.Key))
-                {
-                    color = c.Value;
-                    break;
-                }
-            }
-            
             Vector2 stringSize = f.GetStringSize(job.pathOriginal.GetFile());
             if (stringSize.x > longestString.x) {
                 longestString = stringSize;
@@ -82,34 +60,17 @@ public class Preview : Control
             teOriginal.BbcodeText += GenerateBbcodeText(job.pathOriginal, cbShowColorCodes.Pressed, false, true);
             teDestination.BbcodeText += GenerateBbcodeText(job.pathDestination, cbShowColorCodes.Pressed, cbShowFullPaths.Pressed, false);
         }
-        
+
         // Set Size of pathOriginal Box to fit longest filename
         GetNode<ScrollContainer>("HbPreview/ScrlOriginal").RectMinSize = new Vector2(Mathf.Clamp(longestString.x, 0, 300), teOriginal.RectMinSize.y);
         teOriginal.RectMinSize = new Vector2(longestString.x, teOriginal.RectMinSize.y);
     }
 
-    public string GenerateBbcodeText(string str, bool withColorCode, bool fullPath, bool generateLink)
-    {
+    public string GenerateBbcodeText(string str, bool withColorCode, bool fullPath, bool generateLink) {
 
         string color = "ccc";
         if (withColorCode) {
-            foreach (KeyValuePair<string, string> c in colorCodes)
-            {
-                if (str.Contains(c.Key))
-                {
-                    color = c.Value;
-                    break;
-                }
-            }
-
-            foreach (KeyValuePair<string, string> c in colorNames)
-            {
-                if (str.Contains(c.Key))
-                {
-                    color = c.Value;
-                    break;
-                }
-            }
+            color = checkForColorCode(str);
         }
 
         string pathPrev = fullPath ? str : str.GetFile();
@@ -122,9 +83,29 @@ public class Preview : Control
         return bbc;
     }
 
-    public void OnFileClicked(string href)
-    {
-        System.Diagnostics.Process.Start(href);
+    public void OnFileClicked(string href) {
+        try {
+            System.Diagnostics.Process.Start(href);
+        } catch(System.Exception e) {
+            //Error handling
+        }
+    }
+
+    string checkForColorCode(string str) {
+        string color = "ccc";
+        foreach (KeyValuePair<string, string> c in colorCodes) {
+            if (str.Contains(c.Key)) {
+                color = c.Value;
+                break;
+            }
+        }
+        foreach (KeyValuePair<string, string> c in colorNames) {
+            if (str.Contains(c.Key)) {
+                color = c.Value;
+                break;
+            }
+        }
+        return color;
     }
 
 }

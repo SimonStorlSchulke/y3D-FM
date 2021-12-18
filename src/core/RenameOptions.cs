@@ -2,8 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class RenameOptions : Node
-{
+public class RenameOptions : Node {
     public Dictionary<string, string> productFoldersDict;
     public bool moveToBaseFolders;
     public List<string> ignoreFilesList;
@@ -11,38 +10,42 @@ public class RenameOptions : Node
     public Dictionary<string, string> replaceWithDict;
     public List<string> removeFileNamePartsList;
 
-    List<string> fileList = new List<string>();
+    // stores file and productname of FIle
+    Dictionary<string, string> fileList = new Dictionary<string, string>();
     List<FileJob> jobList;
 
-    public List<FileJob> ParseFiles(bool refreshFileList)
-    {
+    public List<FileJob> ParseFiles(bool refreshFileList) {
         jobList = new List<FileJob>();
 
-        if(refreshFileList) {
-            fileList = new List<string>();
-            foreach (KeyValuePair<string, string> folder in productFoldersDict)
-            {
+        if (refreshFileList) {
+            fileList = new Dictionary<string, string>();
+            foreach (KeyValuePair<string, string> folder in productFoldersDict) {
                 string[] files;
                 files = RNUtil.TryParseFiles(folder.Key, true);
-                fileList.AddRange(files);
+                foreach (string file in files)
+                {
+                    fileList.Add(file, folder.Value);
+                }
             }
         }
 
-        foreach (string fileOrigin in fileList)
-        {
+        foreach (KeyValuePair<string, string> fileOrigin in fileList) {
+            string[] productnameParts = fileOrigin.Value.Split("..");
+            if (productnameParts.Length == 1) {
+                productnameParts = new string[2]{productnameParts[0],""};
+            }
+
             bool ignore = false;
             bool remove = false;
-            foreach (string ignoreFile in ignoreFilesList)
-            {
-                if (ignoreFile != "" && fileOrigin.GetFile().Contains(ignoreFile)) {
+            foreach (string ignoreFile in ignoreFilesList) {
+                if (ignoreFile != "" && fileOrigin.Key.GetFile().Contains(ignoreFile)) {
                     ignore = true;
                     break;
                 }
             }
 
-            foreach (string removeFile in removeFilesList)
-            {
-                if (removeFile != "" && fileOrigin.GetFile().Contains(removeFile)) {
+            foreach (string removeFile in removeFilesList) {
+                if (removeFile != "" && fileOrigin.Key.GetFile().Contains(removeFile)) {
                     remove = true;
                 }
             }
@@ -52,24 +55,43 @@ public class RenameOptions : Node
             string fileDest;
 
             if (remove) {
-                jobList.Add(new FileJob(fileOrigin, "DELETE"));
+                jobList.Add(new FileJob(fileOrigin.Key, "DELETE"));
                 continue;
             }
 
 
-            fileDest = fileOrigin.GetFile();
-            foreach (KeyValuePair<string, string> kvp in replaceWithDict)
-            {
+            fileDest = fileOrigin.Key.GetFile();
+            foreach (KeyValuePair<string, string> kvp in replaceWithDict) {
                 if (kvp.Key == "") {
                     continue;
                 }
-                fileDest = fileDest.Replace(kvp.Key, kvp.Value);
+
+                string parsedString = kvp.Value;
+                parsedString = parsedString.Replace("%DATE%", DateTime.Now.ToString("yyyyMMdd"));
+                parsedString = parsedString.Replace("<p_name_start>", productnameParts[0]);
+                parsedString = parsedString.Replace("<p_name_end>", productnameParts[1]);
+                
+
+
+                fileDest = fileDest.Replace(kvp.Key, parsedString);
+
             }
-            if (fileOrigin.GetFile() != fileDest) {
-                jobList.Add(new FileJob(fileOrigin, fileOrigin.GetBaseDir() + "\\" + fileDest));
+
+            foreach (string rmPart in removeFileNamePartsList) {
+                if (rmPart == "") {
+                    continue;
+                }
+
+                if (fileDest.Contains(rmPart)) {
+                    fileDest = fileDest.Replace(rmPart, "");
+                }
+            }
+
+            if (fileOrigin.Key.GetFile() != fileDest) {
+                jobList.Add(new FileJob(fileOrigin.Key, fileOrigin.Key.GetBaseDir() + "\\" + fileDest));
             }
         }
-        
+
         return jobList;
     }
 }

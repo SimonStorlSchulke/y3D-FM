@@ -54,6 +54,8 @@ margin_bottom = 200.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="HBF2" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnFolders"]
+margin_left = 6.0
+margin_top = 6.0
 margin_right = 430.0
 margin_bottom = 14.0
 __meta__ = {
@@ -61,7 +63,7 @@ __meta__ = {
 }
 
 [node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
-margin_right = 199.0
+margin_right = 196.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Product Folders"
@@ -70,8 +72,8 @@ __meta__ = {
 }
 
 [node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
-margin_left = 203.0
-margin_right = 402.0
+margin_left = 200.0
+margin_right = 396.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
 text = "Product Names"
@@ -80,21 +82,23 @@ __meta__ = {
 }
 
 [node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
-margin_left = 406.0
-margin_right = 430.0
+margin_left = 400.0
+margin_right = 424.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="ScrlFolders" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnFolders"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 6.0
 margin_top = 26.0
+margin_right = -6.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="VbFolders" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnFolders/ScrlFolders"]
-margin_right = 430.0
+margin_right = 418.0
 margin_bottom = 174.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -104,7 +108,6 @@ __meta__ = {
 }
 
 [node name="HBF1" parent="SplitMain/SplitSidebar/PnFolders/ScrlFolders/VbFolders" instance=ExtResource( 1 )]
-margin_right = 430.0
 
 [node name="PnOptions" type="Panel" parent="SplitMain/SplitSidebar"]
 margin_top = 212.0
@@ -253,6 +256,14 @@ margin_right = 418.0
 margin_bottom = 594.0
 rect_min_size = Vector2( 0, 200 )
 
+[node name="ItemList" type="ItemList" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+margin_top = 598.0
+margin_right = 418.0
+margin_bottom = 695.0
+items = [ "ssar34", null, false, "Item 1fsdfs", null, false, "Item 2", null, false, "Item 3", null, false, "Item 4", null, false, "Item 5", null, false, "Item 6", null, false, "Item 7", null, false, "Item 8", null, false ]
+auto_height = true
+max_columns = 2
+
 [node name="VbPreview" type="VBoxContainer" parent="SplitMain"]
 margin_left = 442.0
 margin_right = 1500.0
@@ -373,22 +384,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BtnRun2" type="Button" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -1186.0
-margin_top = -55.0
-margin_right = -1088.0
-margin_bottom = -18.0
-text = "Generate List"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [connection signal="timeout" from="TimerShowPreview" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPaths" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="meta_clicked" from="SplitMain/VbPreview/HbPreview/ScrlOriginal/TeOriginal" to="SplitMain/VbPreview" method="OnFileClicked"]
-[connection signal="pressed" from="BtnRun2" to="." method="OnGenerateJobList"]
