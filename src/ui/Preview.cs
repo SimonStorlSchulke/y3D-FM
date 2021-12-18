@@ -55,12 +55,13 @@ public class Preview : Control
 
         foreach (FileJob job in jobs)
         {
-            string color = "#aaaaaa";
+            string color = "ccc";
             foreach (KeyValuePair<string, string> c in colorCodes)
             {
                 if (job.pathOriginal.Contains(c.Key))
                 {
                     color = c.Value;
+                    break;
                 }
             }
 
@@ -69,6 +70,7 @@ public class Preview : Control
                 if (job.pathOriginal.Contains(c.Key))
                 {
                     color = c.Value;
+                    break;
                 }
             }
             
@@ -96,6 +98,7 @@ public class Preview : Control
                 if (str.Contains(c.Key))
                 {
                     color = c.Value;
+                    break;
                 }
             }
 
@@ -104,6 +107,7 @@ public class Preview : Control
                 if (str.Contains(c.Key))
                 {
                     color = c.Value;
+                    break;
                 }
             }
         }

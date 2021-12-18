@@ -66,7 +66,7 @@ public class RenameOptions : Node
                 fileDest = fileDest.Replace(kvp.Key, kvp.Value);
             }
             if (fileOrigin.GetFile() != fileDest) {
-                jobList.Add(new FileJob(fileOrigin, fileOrigin.GetBaseDir() + fileDest));
+                jobList.Add(new FileJob(fileOrigin, fileOrigin.GetBaseDir() + "\\" + fileDest));
             }
         }
         

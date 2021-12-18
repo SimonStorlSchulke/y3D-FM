@@ -56,19 +56,6 @@ public class Main : Control {
         }
     }
 
-    public void updateOptionsOnly() {
-        GD.Print("Update Options");
-        options.productFoldersDict = GetNode<FoldersList>(NPProductFolder).GetProductFoldersDict();
-
-        options.replaceWithDict = GetNode<ReplaceWithList>(NPReplaceWith).GetReplaceWithDict();
-        options.ignoreFilesList = new List<string>(GetNode<TextEdit>(NPIgnoreFiles).Text.Split("\n"));
-        options.removeFilesList = new List<string>(GetNode<TextEdit>(NPRemoveFiles).Text.Split("\n"));
-
-        RNUtil.PrintStringPairDict(options.replaceWithDict);
-        jobList = options.ParseFiles(false);
-        GetNode<Preview>(NPPreview).Show(jobList);
-    }
-
     // Read all Files and update Joblist
     public void OnUpdateJobList() {
         options.productFoldersDict = GetNode<FoldersList>(NPProductFolder).GetProductFoldersDict();
