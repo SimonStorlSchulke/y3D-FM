@@ -61,7 +61,7 @@ public class Preview : Control {
             ToolButton tbOrig = (i%2==0) ? tbPresetL1.Instance<ToolButton>() : tbPresetL2.Instance<ToolButton>();
             ToolButton tbDest = tbOrig.Duplicate() as ToolButton;
 
-            tbOrig.Text = cbShowFullPathsOrig.Pressed ? job.pathOriginal : job.pathOriginal.GetFile();
+            tbOrig.Text = cbShowFullPathsOrig.Pressed ? job.pathOriginal + "   " : job.pathOriginal.GetFile() + "   ";
             tbDest.Text = cbShowFullPathsDest.Pressed ? job.pathDestination : job.pathDestination.GetFile();
             
             if (cbShowColorCodes.Pressed) {
@@ -79,6 +79,7 @@ public class Preview : Control {
         }
 
     }
+
 
 
     public void OnFileClicked(string href) {

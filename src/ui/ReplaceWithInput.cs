@@ -23,8 +23,17 @@ public class ReplaceWithInput : Node
     }
 
     void OnBtnDeletePressed() {
-        if (GetParent().GetChildCount() > 1) {
+        // Don't delete last item in list
+        if (!(GetIndex() == GetParent().GetChildCount()-1)) {
             QueueFree();
         }
+    }
+
+    
+    public void OnMoveUpDown(bool upDown) {
+        int move = upDown ? -1 : 1;
+        if (GetIndex() == GetParent().GetChildCount()-2 && move == 1) return;
+        if (GetIndex() == GetParent().GetChildCount()-1) return;
+        GetParent().MoveChild(this, GetIndex() + move);
     }
 }
