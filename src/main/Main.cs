@@ -69,4 +69,9 @@ public class Main : Control {
         GetNode<Preview>(NPPreview).Show(jobList);
         if (refreshFiles) refreshFiles = false;
     }
+
+    public void OnRun() {
+        //TODO avoid runnning while files arent Updated (waiting for Timer)
+        FileJob.Execute(jobList);
+    }
 }

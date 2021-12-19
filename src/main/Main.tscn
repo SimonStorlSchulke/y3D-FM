@@ -22,11 +22,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 NPProductFolder = NodePath("SplitMain/SplitSidebar/PnFolders/ScrlFolders/VbFolders")
-NPRemoveFiles = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove/TeRemove")
-NPIgnoreFiles = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbIgnore/TeIgnore")
-NPReplaceWith = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith")
+NPRemoveFiles = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbRemove/TeRemove")
+NPIgnoreFiles = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbIgnore/TeIgnore")
+NPReplaceWith = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/VbReplaceWith")
 NPPreview = NodePath("SplitMain/VbPreview")
-NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/VbOptions/TeRemoveFileNameParts")
+NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/TeRemoveFileNameParts")
 NPTimerShowPreview = NodePath("TimerShowPreview")
 
 [node name="TimerShowPreview" type="Timer" parent="."]
@@ -112,90 +112,98 @@ margin_top = 212.0
 margin_right = 430.0
 margin_bottom = 1200.0
 
-[node name="LbOptions" type="Label" parent="SplitMain/SplitSidebar/PnOptions"]
-margin_left = 6.0
-margin_top = 6.0
-margin_right = 40.0
-margin_bottom = 14.0
-custom_fonts/font = ExtResource( 7 )
-text = "Options"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="VbOptions" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions"]
+[node name="ScrlOptions" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnOptions"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 6.0
-margin_top = 26.0
+margin_top = 6.0
 margin_right = -6.0
 margin_bottom = -6.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HbIgnoreRemove" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
+[node name="VbOptions" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions"]
 margin_right = 418.0
-margin_bottom = 218.0
+margin_bottom = 976.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="VbIgnore" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove"]
+[node name="LbOptions" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_right = 418.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 7 )
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HbIgnoreRemove" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 22.0
+margin_right = 418.0
+margin_bottom = 240.0
+
+[node name="VbIgnore" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove"]
 margin_right = 207.0
 margin_bottom = 218.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
+[node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
 margin_right = 207.0
 margin_bottom = 14.0
 text = "Ignore Files containing:"
 
-[node name="TeIgnore" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
+[node name="TeIgnore" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
 margin_top = 18.0
 margin_right = 207.0
 margin_bottom = 218.0
 rect_min_size = Vector2( 0, 200 )
 
-[node name="VbRemove" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove"]
+[node name="VbRemove" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove"]
 margin_left = 211.0
 margin_right = 418.0
 margin_bottom = 218.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove"]
+[node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbRemove"]
 margin_right = 207.0
 margin_bottom = 14.0
 text = "Delete Files containing:"
 
-[node name="TeRemove" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbIgnoreRemove/VbRemove"]
+[node name="TeRemove" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbRemove"]
 margin_top = 18.0
 margin_right = 207.0
 margin_bottom = 218.0
 rect_min_size = Vector2( 0, 200 )
 
-[node name="HSeparator" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 222.0
+[node name="HSeparator" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 244.0
 margin_right = 418.0
-margin_bottom = 226.0
+margin_bottom = 248.0
 
-[node name="CbMoveToBaseFolder" type="CheckBox" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 230.0
+[node name="CbMoveToBaseFolder" type="CheckBox" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 252.0
 margin_right = 418.0
-margin_bottom = 254.0
+margin_bottom = 276.0
 text = "Move all Files to their Base Folders"
 
-[node name="HSeparator2" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 258.0
+[node name="HSeparator2" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 280.0
 margin_right = 418.0
-margin_bottom = 262.0
+margin_bottom = 284.0
 
-[node name="HbLabels" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 266.0
+[node name="HbLabels" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 288.0
 margin_right = 418.0
-margin_bottom = 280.0
+margin_bottom = 302.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
+[node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbLabels"]
 margin_right = 165.0
 margin_bottom = 14.0
 size_flags_horizontal = 3
@@ -204,7 +212,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
+[node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbLabels"]
 margin_left = 169.0
 margin_right = 334.0
 margin_bottom = 14.0
@@ -214,37 +222,37 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/HbLabels"]
+[node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbLabels"]
 margin_left = 338.0
 margin_right = 418.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 80, 0 )
 
-[node name="VbReplaceWith" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 284.0
+[node name="VbReplaceWith" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 306.0
 margin_right = 418.0
-margin_bottom = 308.0
+margin_bottom = 330.0
 script = ExtResource( 4 )
 
-[node name="ReplaceWithInput" parent="SplitMain/SplitSidebar/PnOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
+[node name="ReplaceWithInput" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
 margin_top = 0.0
 margin_bottom = 24.0
 
-[node name="HSeparator3" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 312.0
+[node name="HSeparator3" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 334.0
 margin_right = 418.0
-margin_bottom = 316.0
+margin_bottom = 338.0
 
-[node name="LbRemoveFileNameParts" type="Label" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 320.0
+[node name="LbRemoveFileNameParts" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 342.0
 margin_right = 418.0
-margin_bottom = 334.0
+margin_bottom = 356.0
 text = "Remove parts from Filenames"
 
-[node name="TeRemoveFileNameParts" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/VbOptions"]
-margin_top = 338.0
+[node name="TeRemoveFileNameParts" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 360.0
 margin_right = 418.0
-margin_bottom = 538.0
+margin_bottom = 560.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="VbPreview" type="VBoxContainer" parent="SplitMain"]
@@ -341,3 +349,4 @@ __meta__ = {
 [connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="BtnRun" to="." method="OnRun"]
