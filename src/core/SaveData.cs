@@ -4,14 +4,14 @@ using System.Linq;
 
 public class SaveData
 {
-    public string[] baseFolders;
-    public string[] productNames;
+    public string[] baseFolders = {};
+    public string[] productNames = {};
     public bool moveToBaseFolders;
-    public string[] ignoreFilesList;
-    public string[] removeFilesList;
-    public string[] removeNamePartsList;
-    public string[] replaceDictFrom;
-    public string[] replaceDictTo;
+    public string[] ignoreFilesList = {};
+    public string[] removeFilesList = {};
+    public string[] removeNamePartsList = {};
+    public string[] replaceDictFrom = {};
+    public string[] replaceDictTo = {};
     public string dropletPath;
     public string mpsDir;
     public static SaveData FromOptions(RenameOptions rno) {
@@ -21,7 +21,7 @@ public class SaveData
         sd.moveToBaseFolders = rno.moveToBaseFolders;
         sd.ignoreFilesList = rno.ignoreFilesList.ToArray();
         sd.removeFilesList = rno.removeFilesList.ToArray();
-        sd.removeFilesList = rno.removeFileNamePartsList.ToArray();
+        sd.removeNamePartsList = rno.removeFileNamePartsList.ToArray();
         sd.replaceDictFrom = rno.replaceWithDict.Keys.ToArray();
         sd.replaceDictTo = rno.replaceWithDict.Values.ToArray();
         return sd;

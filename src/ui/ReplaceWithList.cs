@@ -24,9 +24,9 @@ public class ReplaceWithList : Node
 
         for (int i = 0; i < from.Length; i++) {
             ReplaceWithInput dp = inp.Duplicate() as ReplaceWithInput;
+            AddChild(dp);
             dp.leReplace.Text = from[i];
             dp.leWith.Text = to[i];
-            AddChild(dp);
         }
 
     }

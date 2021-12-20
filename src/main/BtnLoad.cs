@@ -33,7 +33,7 @@ public class BtnLoad : MenuButton
         using (Stream reader = new FileStream(saveFiles[index], FileMode.Open))
         {
             SaveData sd = (SaveData)x.Deserialize(reader);
-            GD.Print(sd.replaceDictFrom);
+            Main.instance.FromSaveData(sd);
         }
     }
 }

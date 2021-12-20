@@ -71,9 +71,9 @@ public class FoldersList : VBoxContainer
 
         for (int i = 0; i < from.Length; i++) {
             FolderLineEdit dp = inp.Duplicate() as FolderLineEdit;
+            AddChild(dp);
             dp.leFolder.Text = from[i];
             dp.leProduct.Text = to[i];
-            AddChild(dp);
         }
 
     }
