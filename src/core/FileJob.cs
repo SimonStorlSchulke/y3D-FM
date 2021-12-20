@@ -25,6 +25,7 @@ public struct FileJob
              } catch (System.Exception e) {
                 errors += job.pathOriginal.GetFile() + " konnte nicht zu " + job.pathDestination.GetFile() + " umbenannt werden: ";
                 errors += "\n" + e.ToString() + "\n";
+                GD.Print(errors);
              }
         }
         return errors;

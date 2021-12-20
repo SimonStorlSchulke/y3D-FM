@@ -16,4 +16,19 @@ public class ReplaceWithList : Node
         return dict;
     }
 
+    public void PopulateFromData(string[] from, string[] to) {
+        ReplaceWithInput inp = GetChild(0).Duplicate() as ReplaceWithInput;
+        foreach (Node c in GetChildren()) {
+            c.QueueFree();
+        }
+
+        for (int i = 0; i < from.Length; i++) {
+            ReplaceWithInput dp = inp.Duplicate() as ReplaceWithInput;
+            dp.leReplace.Text = from[i];
+            dp.leWith.Text = to[i];
+            AddChild(dp);
+        }
+
+    }
+
 }

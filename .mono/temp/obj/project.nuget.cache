@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ElD51Bv5gJV0GbNUEEjrvNi/2m+zCijF4+tkeA7ndQxwr6g7+z8xTCukBSM1HF42OXr/Nn6kqBdB9wfVVDMOPQ==",
+  "dgSpecHash": "/d5HQesMXJgzIv/aDVUkX1CCcGIVw8lfQujRLUyBrH5sQfRzC8BGgIxGbSWp24Sx5ItigDCa3fpUzupzu0XasQ==",
   "success": true,
-  "projectFilePath": "A:\\dev\\y3D-FM\\y3D-FM.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "C:\\Users\\Simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

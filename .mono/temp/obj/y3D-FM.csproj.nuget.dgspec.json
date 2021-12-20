@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "A:\\dev\\y3D-FM\\y3D-FM.csproj": {}
+    "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj": {}
   },
   "projects": {
-    "A:\\dev\\y3D-FM\\y3D-FM.csproj": {
+    "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "A:\\dev\\y3D-FM\\y3D-FM.csproj",
+        "projectUniqueName": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
         "projectName": "y3D-FM",
-        "projectPath": "A:\\dev\\y3D-FM\\y3D-FM.csproj",
-        "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
-        "outputPath": "A:\\dev\\y3D-FM\\.mono\\temp\\obj\\",
+        "projectPath": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
+        "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Simon\\dev\\y3D-FM\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\simon\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472"
@@ -40,7 +37,15 @@
       "frameworks": {
         "net472": {
           "targetAlias": "net472",
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

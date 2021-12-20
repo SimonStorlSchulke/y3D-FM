@@ -1,8 +1,11 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class RenameOptions : Node {
+
+    // Top-Folder and Productname
     public Dictionary<string, string> productFoldersDict;
     public bool moveToBaseFolders;
     public List<string> ignoreFilesList;
@@ -10,27 +13,32 @@ public class RenameOptions : Node {
     public Dictionary<string, string> replaceWithDict;
     public List<string> removeFileNamePartsList;
 
-    // stores file and productname of FIle
-    Dictionary<string, string> fileList = new Dictionary<string, string>();
+    // stores file and productname of File
+    //Dictionary<string, string> fileList = new Dictionary<string, string>();
+
+    // Files List: 1. Filepath 2. File Top-Basefolder 3. Productname
+    List<Tuple<string, string, string>> list = new List<Tuple<string, string, string>>();
     List<FileJob> jobList;
 
     public List<FileJob> ParseFiles(bool refreshFileList) {
         jobList = new List<FileJob>();
 
         if (refreshFileList) {
-            fileList = new Dictionary<string, string>();
+            //fileList = new Dictionary<string, string>();
+            list = new List<Tuple<string, string, string>>();
             foreach (KeyValuePair<string, string> folder in productFoldersDict) {
                 string[] files;
                 files = RNUtil.TryParseFiles(folder.Key, true);
                 foreach (string file in files)
                 {
-                    fileList.Add(file, folder.Value);
+                    //fileList.Add(file, folder.Value);
+                    list.Add(new Tuple<string, string, string>(file, folder.Key, folder.Value));
                 }
             }
         }
 
-        foreach (KeyValuePair<string, string> fileOrigin in fileList) {
-            string[] productnameParts = fileOrigin.Value.Split("..");
+        foreach (Tuple<string, string, string> fileOrigin in list) {
+            string[] productnameParts = fileOrigin.Item3.Split("..");
             if (productnameParts.Length == 1) {
                 productnameParts = new string[2]{productnameParts[0],""};
             }
@@ -38,14 +46,14 @@ public class RenameOptions : Node {
             bool ignore = false;
             bool remove = false;
             foreach (string ignoreFile in ignoreFilesList) {
-                if (ignoreFile != "" && fileOrigin.Key.GetFile().Contains(ignoreFile)) {
+                if (ignoreFile != "" && fileOrigin.Item1.GetFile().Contains(ignoreFile)) {
                     ignore = true;
                     break;
                 }
             }
 
             foreach (string removeFile in removeFilesList) {
-                if (removeFile != "" && fileOrigin.Key.GetFile().Contains(removeFile)) {
+                if (removeFile != "" && fileOrigin.Item1.GetFile().Contains(removeFile)) {
                     remove = true;
                 }
             }
@@ -55,12 +63,12 @@ public class RenameOptions : Node {
             string fileDest;
 
             if (remove) {
-                jobList.Add(new FileJob(fileOrigin.Key, "DELETE"));
+                jobList.Add(new FileJob(fileOrigin.Item1, "DELETE"));
                 continue;
             }
 
 
-            fileDest = fileOrigin.Key.GetFile();
+            fileDest = fileOrigin.Item1.GetFile();
             foreach (KeyValuePair<string, string> kvp in replaceWithDict) {
                 if (kvp.Key == "") {
                     continue;
@@ -87,11 +95,16 @@ public class RenameOptions : Node {
                 }
             }
 
-            if (fileOrigin.Key.GetFile() != fileDest) {
-                jobList.Add(new FileJob(fileOrigin.Key, fileOrigin.Key.GetBaseDir() + "\\" + fileDest));
+            
+            fileDest = moveToBaseFolders ? fileOrigin.Item2 + "\\" + fileDest : fileOrigin.Item1.GetBaseDir() + "\\" + fileDest;
+
+            if (fileOrigin.Item1 != fileDest) {
+                jobList.Add(new FileJob(fileOrigin.Item1, fileDest));
             }
         }
 
         return jobList;
     }
+
+    
 }

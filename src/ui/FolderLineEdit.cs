@@ -22,8 +22,9 @@ public class FolderLineEdit : HBoxContainer
     }
 
     void OnBtnDeletePressed() {
-        if (GetParent().GetChildCount() > 1) {
+        if (!(GetIndex() == GetParent().GetChildCount()-1)) {
             QueueFree();
+            Main.instance.StartUpdateTimer();
         }
     }
 

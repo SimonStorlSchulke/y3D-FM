@@ -14,6 +14,9 @@ public class Main : Control {
     NodePath NPIgnoreFiles;
 
     [Export]
+    NodePath NPMoveToTopFolder;
+
+    [Export]
     NodePath NPReplaceWith;
 
     [Export]
@@ -29,7 +32,7 @@ public class Main : Control {
     public static Main instance;
 
 
-    RenameOptions options = new RenameOptions();
+    RenameOptions options;
 
     public List<FileJob> jobList;
 
@@ -37,9 +40,15 @@ public class Main : Control {
         timerShowPreview = GetNode<Timer>(NPTimerShowPreview);
         if (instance == null) {
             instance = this;
+            options = GetNode<RenameOptions>("RenameOptions");
         } else {
             GD.Print("Only one Instance of Main is allowed");
         }
+    }
+
+    public void StartUpdateTimer() {
+        refreshFiles = true;
+        timerShowPreview.Start();
     }
 
     
@@ -64,6 +73,7 @@ public class Main : Control {
         options.ignoreFilesList = new List<string>(GetNode<TextEdit>(NPIgnoreFiles).Text.Split("\n"));
         options.removeFilesList = new List<string>(GetNode<TextEdit>(NPRemoveFiles).Text.Split("\n"));
         options.removeFileNamePartsList = new List<string>(GetNode<TextEdit>(NPRemoveFileNameParts).Text.Split("\n"));
+        options.moveToBaseFolders = GetNode<CheckBox>(NPMoveToTopFolder).Pressed;
 
         jobList = options.ParseFiles(refreshFiles);
         GetNode<Preview>(NPPreview).Show(jobList);
@@ -73,5 +83,15 @@ public class Main : Control {
     public void OnRun() {
         //TODO avoid runnning while files arent Updated (waiting for Timer)
         FileJob.Execute(jobList);
+    }
+
+    public void FromSaveData(SaveData sd) {
+        GetNode<ReplaceWithList>(NPReplaceWith).PopulateFromData(sd.replaceDictFrom, sd.replaceDictTo);
+        GetNode<FoldersList>(NPProductFolder).PopulateFromData(sd.baseFolders, sd.productNames);
+        GetNode<TextEdit>(NPIgnoreFiles).Text = string.Join("\n", sd.ignoreFilesList);
+        GetNode<TextEdit>(NPRemoveFiles).Text = string.Join("\n", sd.removeFilesList);
+        GetNode<TextEdit>(NPRemoveFileNameParts).Text = string.Join("\n", sd.removeNamePartsList);
+        refreshFiles = true;
+        OnUpdateJobList();
     }
 }

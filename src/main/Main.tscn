@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/ui/ProductFolderInput.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/FoldersList.cs" type="Script" id=2]
@@ -9,6 +9,10 @@
 [ext_resource path="res://theme/new_dynamicfont.tres" type="DynamicFont" id=7]
 [ext_resource path="res://src/ui/tbPrevL1.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/ui/tbPrevL2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://theme/default_dark.tres" type="Theme" id=10]
+[ext_resource path="res://src/core/Save.cs" type="Script" id=11]
+[ext_resource path="res://src/core/RenameOptions.cs" type="Script" id=12]
+[ext_resource path="res://src/main/BtnLoad.cs" type="Script" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
@@ -16,6 +20,7 @@ bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
 [node name="Main" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 10 )
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -24,8 +29,9 @@ __meta__ = {
 NPProductFolder = NodePath("SplitMain/SplitSidebar/PnFolders/ScrlFolders/VbFolders")
 NPRemoveFiles = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbRemove/TeRemove")
 NPIgnoreFiles = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbIgnore/TeIgnore")
+NPMoveToTopFolder = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbMoveToBaseFolder")
 NPReplaceWith = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/VbReplaceWith")
-NPPreview = NodePath("SplitMain/VbPreview")
+NPPreview = NodePath("SplitMain/Tabs/Preview")
 NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/TeRemoveFileNameParts")
 NPTimerShowPreview = NodePath("TimerShowPreview")
 
@@ -39,14 +45,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SplitSidebar" type="VSplitContainer" parent="SplitMain"]
+[node name="SplitSidebar" type="VBoxContainer" parent="SplitMain"]
 margin_right = 430.0
 margin_bottom = 1200.0
 rect_min_size = Vector2( 430, 0 )
 
-[node name="PnFolders" type="Panel" parent="SplitMain/SplitSidebar"]
+[node name="HbSaveLoad" type="HBoxContainer" parent="SplitMain/SplitSidebar"]
 margin_right = 430.0
-margin_bottom = 200.0
+margin_bottom = 20.0
+
+[node name="BtnSave" type="Button" parent="SplitMain/SplitSidebar/HbSaveLoad"]
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Save Config"
+
+[node name="BtnLoad" type="MenuButton" parent="SplitMain/SplitSidebar/HbSaveLoad"]
+margin_left = 88.0
+margin_right = 173.0
+margin_bottom = 20.0
+text = "Load Config"
+script = ExtResource( 13 )
+
+[node name="PnFolders" type="Panel" parent="SplitMain/SplitSidebar"]
+margin_top = 24.0
+margin_right = 430.0
+margin_bottom = 224.0
 rect_min_size = Vector2( 0, 200 )
 
 [node name="HBF2" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnFolders"]
@@ -108,9 +131,10 @@ __meta__ = {
 [node name="HBF1" parent="SplitMain/SplitSidebar/PnFolders/ScrlFolders/VbFolders" instance=ExtResource( 1 )]
 
 [node name="PnOptions" type="Panel" parent="SplitMain/SplitSidebar"]
-margin_top = 212.0
+margin_top = 228.0
 margin_right = 430.0
 margin_bottom = 1200.0
+size_flags_vertical = 3
 
 [node name="ScrlOptions" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnOptions"]
 anchor_right = 1.0
@@ -125,7 +149,7 @@ __meta__ = {
 
 [node name="VbOptions" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions"]
 margin_right = 418.0
-margin_bottom = 976.0
+margin_bottom = 960.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -144,11 +168,11 @@ __meta__ = {
 [node name="HbIgnoreRemove" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
 margin_top = 22.0
 margin_right = 418.0
-margin_bottom = 240.0
+margin_bottom = 190.0
 
 [node name="VbIgnore" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove"]
 margin_right = 207.0
-margin_bottom = 218.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
@@ -159,13 +183,13 @@ text = "Ignore Files containing:"
 [node name="TeIgnore" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbIgnore"]
 margin_top = 18.0
 margin_right = 207.0
-margin_bottom = 218.0
-rect_min_size = Vector2( 0, 200 )
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
 
 [node name="VbRemove" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove"]
 margin_left = 211.0
 margin_right = 418.0
-margin_bottom = 218.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbRemove"]
@@ -176,29 +200,29 @@ text = "Delete Files containing:"
 [node name="TeRemove" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove/VbRemove"]
 margin_top = 18.0
 margin_right = 207.0
-margin_bottom = 218.0
-rect_min_size = Vector2( 0, 200 )
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 150 )
 
 [node name="HSeparator" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 244.0
+margin_top = 194.0
 margin_right = 418.0
-margin_bottom = 248.0
+margin_bottom = 198.0
 
 [node name="CbMoveToBaseFolder" type="CheckBox" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 252.0
+margin_top = 202.0
 margin_right = 418.0
-margin_bottom = 276.0
-text = "Move all Files to their Base Folders"
+margin_bottom = 226.0
+text = "Move all Files to their Top Level Folders"
 
 [node name="HSeparator2" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 280.0
+margin_top = 230.0
 margin_right = 418.0
-margin_bottom = 284.0
+margin_bottom = 234.0
 
 [node name="HbLabels" type="HBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 288.0
+margin_top = 238.0
 margin_right = 418.0
-margin_bottom = 302.0
+margin_bottom = 252.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -229,9 +253,9 @@ margin_bottom = 14.0
 rect_min_size = Vector2( 80, 0 )
 
 [node name="VbReplaceWith" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 306.0
+margin_top = 256.0
 margin_right = 418.0
-margin_bottom = 330.0
+margin_bottom = 280.0
 script = ExtResource( 4 )
 
 [node name="ReplaceWithInput" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/VbReplaceWith" instance=ExtResource( 5 )]
@@ -239,26 +263,35 @@ margin_top = 0.0
 margin_bottom = 24.0
 
 [node name="HSeparator3" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 334.0
+margin_top = 284.0
 margin_right = 418.0
-margin_bottom = 338.0
+margin_bottom = 288.0
 
 [node name="LbRemoveFileNameParts" type="Label" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 342.0
+margin_top = 292.0
 margin_right = 418.0
-margin_bottom = 356.0
+margin_bottom = 306.0
 text = "Remove parts from Filenames"
 
 [node name="TeRemoveFileNameParts" type="TextEdit" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 360.0
+margin_top = 310.0
 margin_right = 418.0
-margin_bottom = 560.0
+margin_bottom = 510.0
 rect_min_size = Vector2( 0, 200 )
 
-[node name="VbPreview" type="VBoxContainer" parent="SplitMain"]
+[node name="Tabs" type="TabContainer" parent="SplitMain"]
 margin_left = 442.0
 margin_right = 1500.0
 margin_bottom = 1200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+
+[node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 6 )
@@ -268,85 +301,212 @@ __meta__ = {
 tbPresetL1 = ExtResource( 8 )
 tbPresetL2 = ExtResource( 9 )
 
-[node name="HbPreviewTop" type="HBoxContainer" parent="SplitMain/VbPreview"]
+[node name="HbPreviewTop" type="HBoxContainer" parent="SplitMain/Tabs/Preview"]
 margin_right = 1058.0
 margin_bottom = 24.0
 
-[node name="Label" type="Label" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_top = 5.0
-margin_right = 50.0
-margin_bottom = 19.0
+[node name="Label" type="Label" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
+margin_top = 3.0
+margin_right = 53.0
+margin_bottom = 21.0
+custom_fonts/font = ExtResource( 7 )
 text = "Preview"
 
-[node name="CbShowColorCodes" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 54.0
-margin_right = 153.0
+[node name="CbShowColorCodes" type="CheckBox" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
+margin_left = 57.0
+margin_right = 156.0
 margin_bottom = 24.0
 pressed = true
 text = "Colorcodes"
 
-[node name="CbShowFullPathsOrig" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 157.0
-margin_right = 301.0
+[node name="CbShowFullPathsOrig" type="CheckBox" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
+margin_left = 160.0
+margin_right = 304.0
 margin_bottom = 24.0
 text = "Full Paths Original"
 
-[node name="CbShowFullPathsDest" type="CheckBox" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 305.0
-margin_right = 473.0
+[node name="CbShowFullPathsDest" type="CheckBox" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
+margin_left = 308.0
+margin_right = 476.0
 margin_bottom = 24.0
 text = "Full Paths Destination"
 
-[node name="Stretch" type="Control" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 477.0
-margin_right = 881.0
+[node name="Stretch" type="Control" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
+margin_left = 480.0
+margin_right = 1058.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="BtnSave" type="Button" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 885.0
-margin_right = 969.0
-margin_bottom = 24.0
-text = "Save Config"
-
-[node name="BtnLoad" type="Button" parent="SplitMain/VbPreview/HbPreviewTop"]
-margin_left = 973.0
-margin_right = 1058.0
-margin_bottom = 24.0
-text = "Load Config"
-
-[node name="Scrl" type="ScrollContainer" parent="SplitMain/VbPreview"]
+[node name="Scrl" type="ScrollContainer" parent="SplitMain/Tabs/Preview"]
 margin_top = 28.0
 margin_right = 1058.0
-margin_bottom = 1200.0
+margin_bottom = 1176.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Grid" type="GridContainer" parent="SplitMain/VbPreview/Scrl"]
+[node name="Grid" type="GridContainer" parent="SplitMain/Tabs/Preview/Scrl"]
 margin_right = 1058.0
-margin_bottom = 1172.0
+margin_bottom = 1148.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 0
 custom_constants/hseparation = 0
 columns = 2
 
+[node name="Help" type="VBoxContainer" parent="SplitMain/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 12.0
+margin_top = 35.0
+margin_right = -6.0
+margin_bottom = -6.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SplitMain/Tabs/Help"]
+margin_right = 1040.0
+margin_bottom = 1159.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[font=res://theme/font_heading.tres]y3D-FM[/font]	
+
+y3D-FM Ist ein Tool zur automatisierten Verwaltung von Dateien, speziell entwickelt für Produktrenderings.
+
+
+[font=res://theme/new_dynamicfont.tres]Product Folders[/font]	
+
+Hier können per Eingabe oder Drag & Drop (ganzes Fenster gültig) Ordner angegeben werden, deren Dateien (auch in Unterordnern) berücksichtigt werden sollen. Der Produktname zum jeweiligen Ordner wird automatisch vom Ordnernamen abgeleitet, kann jedoch auch manuell geändert  werden.
+
+[font=res://theme/font_heading.tres]Optionen[/font]
+
+[font=res://theme/new_dynamicfont.tres]1. Ignore Files[/font]	
+Dateien, die die hier angegebene Zeichenfolgen enthalten werden vom Tool ignoriert. Separiert werden diese per Absatz.
+
+
+[font=res://theme/new_dynamicfont.tres]1. Remove Files[/font]	
+Dateien, die die hier angegebene Zeichenfolgen enthalten werden vom Tool entgültig gelöscht. Separiert werden diese per Absatz.
+
+
+[font=res://theme/new_dynamicfont.tres]Move all Files to their Top Level Folder[/font]	
+Ist diese Option aktiv, werden alle nicht ignorierten Dateien vom Tool, die sich in Unterordnern zu den oben angegebenen Ordnern befanden in deren jeweiligen Überordner verschoben.
+
+[font=res://theme/new_dynamicfont.tres]Replace With[/font]	
+Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen ersetzt werden sollen. Dabei können unter \"With\" auch folgende Bezeichner eingesetzt werden:
+
+[color=yellow]<p_name_start>[/color] Setzt den Teil des Produktnamens vor \"..\" ein. \"..\" wird meist als Platzhalter für Farbcodes in Produktnamen verwendet, daher die Trennung. Ist kein Farbcode im Produktnamen enthalten, kann <p_name_start> für den vollständigen Produktnamen verwendet werden.
+
+[color=yellow]<p_name_end>[/color] Setzt den Teil des Produktnamens nach \"..\" ein.
+
+[color=yellow]<date>[/color] Setzt das aktuelle Datum ein (z.b. 20211205)
+
+[font=res://theme/new_dynamicfont.tres]Remove Parts from Filenames[/font]	
+Entfernt Zeichenfolgen aus Dateinamen. Separiert werden diese per Absatz.
+
+
+[font=res://theme/font_heading.tres]Preview[/font]
+Im Tab [font=res://theme/new_dynamicfont.tres]Preview[/font] werden die Dateien angezeigt, die beim Ausführen der aktuellen Konfiguration geändert würden. Links die Originaldatei, rechts die Datei nach dem Ausführen. Oben im Tab kann eingestellt werden, ob der ganze Pfad angezeigt werden soll. Dateien können zum öffnen angeklickt werden. 
+Auch die Säubli Farbcodes können visualisiert werden. Enthält ein Dateiname eine Farbe (\"rot\") oder Farbcode (\"-22\"), werden diese in der entsprechenden Farbe dargestellt."
+text = "y3D-FM	
+
+y3D-FM Ist ein Tool zur automatisierten Verwaltung von Dateien, speziell entwickelt für Produktrenderings.
+
+
+Product Folders	
+
+Hier können per Eingabe oder Drag & Drop (ganzes Fenster gültig) Ordner angegeben werden, deren Dateien (auch in Unterordnern) berücksichtigt werden sollen. Der Produktname zum jeweiligen Ordner wird automatisch vom Ordnernamen abgeleitet, kann jedoch auch manuell geändert  werden.
+
+Optionen
+
+1. Ignore Files	
+Dateien, die die hier angegebene Zeichenfolgen enthalten werden vom Tool ignoriert. Separiert werden diese per Absatz.
+
+
+1. Remove Files	
+Dateien, die die hier angegebene Zeichenfolgen enthalten werden vom Tool entgültig gelöscht. Separiert werden diese per Absatz.
+
+
+Move all Files to their Top Level Folder	
+Ist diese Option aktiv, werden alle nicht ignorierten Dateien vom Tool, die sich in Unterordnern zu den oben angegebenen Ordnern befanden in deren jeweiligen Überordner verschoben.
+
+Replace With	
+Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen ersetzt werden sollen. Dabei können unter \"With\" auch folgende Bezeichner eingesetzt werden:
+
+<p_name_start> Setzt den Teil des Produktnamens vor \"..\" ein. \"..\" wird meist als Platzhalter für Farbcodes in Produktnamen verwendet, daher die Trennung. Ist kein Farbcode im Produktnamen enthalten, kann <p_name_start> für den vollständigen Produktnamen verwendet werden.
+
+<p_name_end> Setzt den Teil des Produktnamens nach \"..\" ein.
+
+<date> Setzt das aktuelle Datum ein (z.b. 20211205)
+
+Remove Parts from Filenames	
+Entfernt Zeichenfolgen aus Dateinamen. Separiert werden diese per Absatz.
+
+
+Preview
+Im Tab Preview werden die Dateien angezeigt, die beim Ausführen der aktuellen Konfiguration geändert würden. Links die Originaldatei, rechts die Datei nach dem Ausführen. Oben im Tab kann eingestellt werden, ob der ganze Pfad angezeigt werden soll. Dateien können zum öffnen angeklickt werden. 
+Auch die Säubli Farbcodes können visualisiert werden. Enthält ein Dateiname eine Farbe (\"rot\") oder Farbcode (\"-22\"), werden diese in der entsprechenden Farbe dargestellt."
+
 [node name="BtnRun" type="Button" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -88.0
-margin_top = -49.0
-margin_right = -12.0
-margin_bottom = -12.0
+margin_left = -59.0
+margin_top = -39.0
+margin_right = -6.0
+margin_bottom = -6.0
 text = "Run"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PuSave" type="AcceptDialog" parent="."]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -41.5
+margin_top = -29.0
+margin_right = 41.5
+margin_bottom = 29.0
+rect_min_size = Vector2( 300, 100 )
+window_title = "Save Configuration"
+dialog_text = "Enter a Name for the Configuration to Save"
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+NPRenameOptions = NodePath("../RenameOptions")
+NPBtnSave = NodePath("../SplitMain/SplitSidebar/HbSaveLoad/BtnSave")
+NPBtnLoad = NodePath("../SplitMain/SplitSidebar/HbSaveLoad/BtnLoad")
+
+[node name="SaveDialog" type="VBoxContainer" parent="PuSave"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 22.0
+margin_right = -8.0
+margin_bottom = -36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LineEdit" type="LineEdit" parent="PuSave/SaveDialog"]
+margin_right = 284.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RenameOptions" type="Node" parent="."]
+script = ExtResource( 12 )
+
 [connection signal="timeout" from="TimerShowPreview" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="SplitMain/VbPreview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
+[connection signal="about_to_show" from="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" to="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" method="UpdateItems"]
+[connection signal="pressed" from="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbMoveToBaseFolder" to="." method="StartUpdateTimer"]
+[connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
+[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
