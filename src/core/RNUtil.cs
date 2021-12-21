@@ -15,7 +15,7 @@ public class RNUtil : Node
         }
         catch (System.Exception e)
         {
-            //Warning.instance.Warn("Fehler beim auslesen der Dateien:\n" + a.ToString());
+            ErrorLog.instance.Add("Fehler beim auslesen der Dateien:\n" + e.ToString(), ErrorLog.LogColor.RED);
         }
         return files;
     }
@@ -33,7 +33,7 @@ public class RNUtil : Node
         catch (System.Exception e)
         {
             warnings += e.ToString();
-            //Warning.instance.Warn(warnings);
+            ErrorLog.instance.Add(warnings, ErrorLog.LogColor.RED);
 
             dirs = new List<string>();
         }

@@ -12,6 +12,8 @@ public class RenameOptions : Node {
     public List<string> removeFilesList;
     public Dictionary<string, string> replaceWithDict;
     public List<string> removeFileNamePartsList;
+    public string prefix;
+    public string subfix;
 
     // stores file and productname of File
     //Dictionary<string, string> fileList = new Dictionary<string, string>();
@@ -19,6 +21,14 @@ public class RenameOptions : Node {
     // Files List: 1. Filepath 2. File Top-Basefolder 3. Productname
     List<Tuple<string, string, string>> list = new List<Tuple<string, string, string>>();
     List<FileJob> jobList;
+
+    string ParseKeywords(string input, string[] productnameParts) {
+        string parsedString = input;
+        parsedString = parsedString.Replace("<date>", DateTime.Now.ToString("yyyyMMdd"));
+        parsedString = parsedString.Replace("<p_name_start>", productnameParts[0]);
+        parsedString = parsedString.Replace("<p_name_end>", productnameParts[1]);
+        return parsedString;
+    }
 
     public List<FileJob> ParseFiles(bool refreshFileList) {
         jobList = new List<FileJob>();
@@ -74,14 +84,7 @@ public class RenameOptions : Node {
                     continue;
                 }
 
-                string parsedString = kvp.Value;
-                parsedString = parsedString.Replace("%DATE%", DateTime.Now.ToString("yyyyMMdd"));
-                parsedString = parsedString.Replace("<p_name_start>", productnameParts[0]);
-                parsedString = parsedString.Replace("<p_name_end>", productnameParts[1]);
-                
-
-
-                fileDest = fileDest.Replace(kvp.Key, parsedString);
+                fileDest = fileDest.Replace(kvp.Key, ParseKeywords(kvp.Value, productnameParts));
 
             }
 
@@ -95,6 +98,13 @@ public class RenameOptions : Node {
                 }
             }
 
+            if (prefix != "") {
+                fileDest = ParseKeywords(prefix, productnameParts) + fileDest;
+            }
+
+            if (subfix != "") {
+                fileDest = fileDest + ParseKeywords(subfix, productnameParts);
+            }
             
             fileDest = moveToBaseFolders ? fileOrigin.Item2 + "\\" + fileDest : fileOrigin.Item1.GetBaseDir() + "\\" + fileDest;
 

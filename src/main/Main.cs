@@ -27,6 +27,12 @@ public class Main : Control {
 
     [Export]
     NodePath NPTimerShowPreview;
+
+    [Export]
+    NodePath NPLePreFix;
+
+    [Export]
+    NodePath NPLeSubFix;
     Timer timerShowPreview;
 
     public static Main instance;
@@ -35,7 +41,7 @@ public class Main : Control {
     RenameOptions options;
 
     public List<FileJob> jobList;
-
+ 
     public override void _Ready() {
         timerShowPreview = GetNode<Timer>(NPTimerShowPreview);
         if (instance == null) {
@@ -73,6 +79,8 @@ public class Main : Control {
         options.ignoreFilesList = new List<string>(GetNode<TextEdit>(NPIgnoreFiles).Text.Split("\n"));
         options.removeFilesList = new List<string>(GetNode<TextEdit>(NPRemoveFiles).Text.Split("\n"));
         options.removeFileNamePartsList = new List<string>(GetNode<TextEdit>(NPRemoveFileNameParts).Text.Split("\n"));
+        options.prefix = GetNode<LineEdit>(NPLePreFix).Text;
+        options.subfix = GetNode<LineEdit>(NPLeSubFix).Text;
         options.moveToBaseFolders = GetNode<CheckBox>(NPMoveToTopFolder).Pressed;
 
         jobList = options.ParseFiles(refreshFiles);
