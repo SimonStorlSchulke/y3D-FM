@@ -12,20 +12,20 @@ __meta__ = {
 
 [node name="LEF" type="LineEdit" parent="."]
 margin_right = 193.0
-margin_bottom = 24.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
-placeholder_text = "Enter Path"
+placeholder_text = "Enter Path or Drag&Drop"
 
 [node name="LEP" type="LineEdit" parent="."]
 margin_left = 197.0
 margin_right = 390.0
-margin_bottom = 24.0
+margin_bottom = 27.0
 size_flags_horizontal = 3
 
 [node name="BtnDelete" type="Button" parent="."]
 margin_left = 394.0
 margin_right = 418.0
-margin_bottom = 24.0
+margin_bottom = 27.0
 rect_min_size = Vector2( 24, 0 )
 text = "X"
 

@@ -8,6 +8,9 @@ public class Main : Control {
     NodePath NPProductFolder;
 
     [Export]
+    NodePath NPDate;
+
+    [Export]
     NodePath NPRemoveFiles;
 
     [Export]
@@ -75,6 +78,7 @@ public class Main : Control {
     public void OnUpdateJobList() {
         options.productFoldersDict = GetNode<FoldersList>(NPProductFolder).GetProductFoldersDict();
 
+        options.date = GetNode<LineEdit>(NPDate).Text;
         options.replaceWithDict = GetNode<ReplaceWithList>(NPReplaceWith).GetReplaceWithDict();
         options.ignoreFilesList = new List<string>(GetNode<TextEdit>(NPIgnoreFiles).Text.Split("\n"));
         options.removeFilesList = new List<string>(GetNode<TextEdit>(NPRemoveFiles).Text.Split("\n"));

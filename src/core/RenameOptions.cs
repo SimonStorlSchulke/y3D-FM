@@ -2,10 +2,12 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class RenameOptions : Node {
 
     // Top-Folder and Productname
+    public string date;
     public Dictionary<string, string> productFoldersDict;
     public bool moveToBaseFolders;
     public List<string> ignoreFilesList;
@@ -24,10 +26,23 @@ public class RenameOptions : Node {
 
     string ParseKeywords(string input, string[] productnameParts) {
         string parsedString = input;
-        parsedString = parsedString.Replace("<date>", DateTime.Now.ToString("yyyyMMdd"));
+        string useDate = date == "" ? DateTime.Now.ToString("yyyyMMdd") : date;
+        parsedString = parsedString.Replace("<date>", useDate);
         parsedString = parsedString.Replace("<p_name_start>", productnameParts[0]);
         parsedString = parsedString.Replace("<p_name_end>", productnameParts[1]);
         return parsedString;
+    }
+
+
+    string UnParseDate(string s) {
+        Regex rgx = new Regex(@"\d{8}");
+        Match mat = rgx.Match(s);
+        GD.Print(mat.ToString());
+        if (mat.ToString() == "") {
+            return s;
+        } else {
+            return s.Replace(mat.ToString(), "<date>");
+        }
     }
 
     public List<FileJob> ParseFiles(bool refreshFileList) {
@@ -48,6 +63,11 @@ public class RenameOptions : Node {
         }
 
         foreach (Tuple<string, string, string> fileOrigin in list) {
+
+            string originalFileName = fileOrigin.Item1.GetFile();
+            string unparsedFileName = UnParseDate(fileOrigin.Item1.GetFile());
+
+
             string[] productnameParts = fileOrigin.Item3.Split("..");
             if (productnameParts.Length == 1) {
                 productnameParts = new string[2]{productnameParts[0],""};
@@ -56,14 +76,17 @@ public class RenameOptions : Node {
             bool ignore = false;
             bool remove = false;
             foreach (string ignoreFile in ignoreFilesList) {
-                if (ignoreFile != "" && fileOrigin.Item1.GetFile().Contains(ignoreFile)) {
+                string toCompare =  ignoreFile.Contains("<date>") ? unparsedFileName : originalFileName;
+
+                if (ignoreFile != "" &&  toCompare.Contains(ignoreFile)) {
                     ignore = true;
                     break;
                 }
             }
 
             foreach (string removeFile in removeFilesList) {
-                if (removeFile != "" && fileOrigin.Item1.GetFile().Contains(removeFile)) {
+                string toCompare =  removeFile.Contains("<date>") ? unparsedFileName : originalFileName;
+                if (removeFile != "" && toCompare.Contains(removeFile)) {
                     remove = true;
                 }
             }
@@ -85,7 +108,9 @@ public class RenameOptions : Node {
                     continue;
                 }
 
-                fileDest = fileDest.Replace(kvp.Key, ParseKeywords(kvp.Value, productnameParts));
+                string toCompare = kvp.Key.Contains("<date>") ? UnParseDate(fileDest) : fileDest;
+
+                fileDest = toCompare.Replace(kvp.Key, ParseKeywords(kvp.Value, productnameParts));
 
             }
 
@@ -99,16 +124,20 @@ public class RenameOptions : Node {
                 }
             }
 
+
             if (prefix != "") {
-                fileDest = ParseKeywords(prefix, productnameParts) + fileDest;
+                string parsedPrefix = ParseKeywords(prefix, productnameParts);
+                fileDest = parsedPrefix + fileDest;
             }
 
+
             if (subfix != "") {
-                fileDest = fileDest + ParseKeywords(subfix, productnameParts);
+                string parsedSubfix = ParseKeywords(subfix, productnameParts);
+                fileDest = fileDest + parsedSubfix;
             }
             
             fileDest = moveToBaseFolders ? fileOrigin.Item2 + "\\" + fileDest : fileOrigin.Item1.GetBaseDir() + "\\" + fileDest;
-            fileDest += System.IO.Path.GetExtension(fileOrigin.Item1); // TODO prevent crash(?) files with no extension
+            fileDest += System.IO.Path.GetExtension(fileOrigin.Item1);
 
             if (fileOrigin.Item1 != fileDest) {
                 jobList.Add(new FileJob(fileOrigin.Item1, fileDest ));
@@ -117,6 +146,4 @@ public class RenameOptions : Node {
 
         return jobList;
     }
-
-    
 }
