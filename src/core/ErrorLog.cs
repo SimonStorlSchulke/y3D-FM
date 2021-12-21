@@ -5,6 +5,9 @@ public class ErrorLog : RichTextLabel
 {
     public static ErrorLog instance;
 
+    [Export]
+    NodePath NPTabs;
+
     public enum LogColor {
         BLUE,
         GREEN,
@@ -25,34 +28,41 @@ public class ErrorLog : RichTextLabel
         }
     }
 
-    public void Add(string text, LogColor color) {
+    public void PopUp() {
+        GetNode<TabContainer>(NPTabs).CurrentTab = 1;
+    }
+
+    public void Add(string title, string text, LogColor colorTitle) {
         string bbc;
-        switch (color)
+        switch (colorTitle)
         {
             case LogColor.BLUE:
-                bbc = $"[color=#3e7beb]{text}[/color]";
+                bbc = $"[b][color=#3e7beb]{title}[/color][/b]";
                 break;
             case LogColor.GREEN:
-                bbc = $"[color=#3eeb6f]{text}[/color]";
+                bbc = $"[b][color=#3eeb6f]{title}[/color][/b]";
                 break;
             case LogColor.YELLOW:
-                bbc = $"[color=#ebeb3e]{text}[/color]";
+                bbc = $"[b][color=#ebeb3e]{title}[/color][/b]";
                 break;
             case LogColor.ORANGE:
-                bbc = $"[color=#eb953e]{text}[/color]";
+                bbc = $"[b][color=#eb953e]{title}[/color][/b]";
                 break;
             case LogColor.RED:
-                bbc = $"[color=#eb3e3e]{text}[/color]";
+                bbc = $"[b][color=#eb3e3e]{title}[/color][/b]";
                 break;
             case LogColor.WHITE:
-                bbc = $"[color=#d7d7d7]{text}[/color]";
+                bbc = $"[b][color=#d7d7d7]{title}[/color][/b]";
                 break;
             default:
-                bbc = $"[color=#d7d7d7]{text}[/color]";
+                bbc = $"[b][color=#d7d7d7]{title}[/color][/b]";
                 break;
         }
+
+        bbc += "\n"+text;
+
         string last_chars = this.BbcodeText.Substring(Math.Max(0, this.BbcodeText.Length - 2));
-        if (last_chars == "\n\n") {
+        if (this.Text == "" || last_chars == "\n\n") {
             this.AppendBbcode(bbc);
         } else {
             this.AppendBbcode("\n\n" + bbc);

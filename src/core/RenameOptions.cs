@@ -37,7 +37,6 @@ public class RenameOptions : Node {
     string UnParseDate(string s) {
         Regex rgx = new Regex(@"\d{8}");
         Match mat = rgx.Match(s);
-        GD.Print(mat.ToString());
         if (mat.ToString() == "") {
             return s;
         } else {

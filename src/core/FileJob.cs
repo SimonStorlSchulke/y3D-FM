@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using Godot;
-public struct FileJob
-{
-    
+public struct FileJob {
+
     public string pathOriginal;
     public string pathDestination;
 
@@ -12,22 +11,25 @@ public struct FileJob
     }
 
     /// <summary>Exectues the FIleJob and returns errors if there were any.</summary>
-    public static string Execute(List<FileJob> jobList) 
-    {
-        string errors = "Fehler:\n";
-        foreach (FileJob job in jobList)
-        {
+    public static void Execute(List<FileJob> jobList) {
+        bool had_errors = false;
+        ErrorLog.instance.Clear();
+        foreach (FileJob job in jobList) {
             if (job.pathDestination == "DELETE") { // kinda dirty ;)
                 System.IO.File.Delete(job.pathOriginal);
             }
-             try {
-                 System.IO.File.Move(job.pathOriginal, job.pathDestination);
-             } catch (System.Exception e) {
-                errors += job.pathOriginal.GetFile() + " konnte nicht zu " + job.pathDestination.GetFile() + " umbenannt werden: ";
-                errors += "\n" + e.ToString() + "\n";
-                GD.Print(errors);
-             }
+            try {
+                System.IO.File.Move(job.pathOriginal, job.pathDestination);
+            } catch (System.Exception e) {
+                had_errors = true;
+                ErrorLog.instance.Add(
+                    job.pathOriginal.GetFile() + " could not be renamed to " + job.pathDestination.GetFile(),
+                    e.ToString(),
+                    ErrorLog.LogColor.RED);
+            }
         }
-        return errors;
+        if (had_errors) {
+            ErrorLog.instance.PopUp();
+        }
     }
 }

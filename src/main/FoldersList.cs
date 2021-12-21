@@ -1,8 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 
-public class FoldersList : VBoxContainer
-{
+public class FoldersList : VBoxContainer {
 
     public override void _Ready() {
         GetTree().Connect("files_dropped", this, nameof(OnFilesDropped));
@@ -11,9 +10,8 @@ public class FoldersList : VBoxContainer
     /// <summary>Returns Productfolders (Folder + Productname)from the UI as Dictionary .</summary>
     public Dictionary<string, string> GetProductFoldersDict() {
         Dictionary<string, string> dict = new Dictionary<string, string>();
-        foreach (FolderLineEdit fe in GetChildren())
-        {
-            if(!dict.ContainsKey(fe.leFolder.Text) && fe.leFolder.Text != "") {
+        foreach (FolderLineEdit fe in GetChildren()) {
+            if (!dict.ContainsKey(fe.leFolder.Text) && fe.leFolder.Text != "") {
                 dict.Add(fe.leFolder.Text, fe.leProduct.Text);
             }
         }
@@ -23,25 +21,37 @@ public class FoldersList : VBoxContainer
     public void OnFilesDropped(string[] files, int screen) {
         var d = new Directory();
         bool has_updated = false;
-        foreach (var f in files)
-        {
+        bool hadErrors = false;
+        ErrorLog.instance.Clear();
+        foreach (var f in files) {
 
             if (d.DirExists(f)) {
                 // If dropped files are folders, add them, but only if the folder isn't added already
                 bool alreadyAdded = false;
+                bool isParentFolder = false;
                 foreach (Node c in GetChildren()) {
                     string fe = (c as FolderLineEdit).leFolder.Text;
-                    if (fe != "" && f.Contains((c as FolderLineEdit).leFolder.Text)) {
+                    if (fe != "" && f.Contains(fe)) {
                         alreadyAdded = true;
+                    }
+                    if (fe != "" && fe.Contains(f)) {
+                        isParentFolder = true; 
                     }
                 }
                 if (alreadyAdded) {
+                    ErrorLog.instance.Add("Could not add Folder", "Folder " + f + " was already added or is a subfolder of one already added", ErrorLog.LogColor.YELLOW);
+                    hadErrors = true;
+                    continue;
+                }
+                if (isParentFolder) {
+                    ErrorLog.instance.Add("Could not add Folder", "Folder " + f + " is a parent folder of one already added", ErrorLog.LogColor.YELLOW);
+                    hadErrors = true;
                     continue;
                 }
 
                 has_updated = true;
 
-                FolderLineEdit lastChild = GetChild<FolderLineEdit>(GetChildCount()-1);
+                FolderLineEdit lastChild = GetChild<FolderLineEdit>(GetChildCount() - 1);
 
                 if (lastChild.leFolder.Text == "") {
                     lastChild.leFolder.Text = f;
@@ -59,9 +69,8 @@ public class FoldersList : VBoxContainer
                 }
             }
         }
-        if (has_updated) {
-            Main.instance.StartUpdateTimer();
-        }
+        if (has_updated) Main.instance.StartUpdateTimer();
+        if (hadErrors) ErrorLog.instance.PopUp();
     }
 
     public void PopulateFromData(string[] from, string[] to) {

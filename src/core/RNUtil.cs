@@ -15,7 +15,7 @@ public class RNUtil : Node
         }
         catch (System.Exception e)
         {
-            ErrorLog.instance.Add("Fehler beim auslesen der Dateien:\n" + e.ToString(), ErrorLog.LogColor.RED);
+            ErrorLog.instance.Add("Error reading files", e.ToString(), ErrorLog.LogColor.RED);
         }
         return files;
     }
@@ -23,7 +23,6 @@ public class RNUtil : Node
     public static List<string> TryParseDirs(string path, bool recursive)
     {
         List<string> dirs;
-        string warnings = "Ordner konnte nicht gelesen werden.\n"; ;
         try
         {
             string[] dirsArr = recursive ? System.IO.Directory.GetDirectories(path, "*", SearchOption.AllDirectories) : System.IO.Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly);
@@ -32,8 +31,7 @@ public class RNUtil : Node
         }
         catch (System.Exception e)
         {
-            warnings += e.ToString();
-            ErrorLog.instance.Add(warnings, ErrorLog.LogColor.RED);
+            ErrorLog.instance.Add("Error reading directories", e.ToString(), ErrorLog.LogColor.RED);
 
             dirs = new List<string>();
         }

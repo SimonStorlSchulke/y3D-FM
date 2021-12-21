@@ -94,6 +94,7 @@ public class Main : Control {
 
     public void OnRun() {
         //TODO avoid runnning while files arent Updated (waiting for Timer)
+        ErrorLog.instance.Clear();
         FileJob.Execute(jobList);
     }
 
