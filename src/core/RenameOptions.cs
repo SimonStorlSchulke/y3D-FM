@@ -77,8 +77,9 @@ public class RenameOptions : Node {
                 continue;
             }
 
+            fileOrigin.Item1.GetFile().Split("."); //Name and Extension
 
-            fileDest = fileOrigin.Item1.GetFile();
+            fileDest = System.IO.Path.GetFileNameWithoutExtension(fileOrigin.Item1).GetFile();
             foreach (KeyValuePair<string, string> kvp in replaceWithDict) {
                 if (kvp.Key == "") {
                     continue;
@@ -107,9 +108,10 @@ public class RenameOptions : Node {
             }
             
             fileDest = moveToBaseFolders ? fileOrigin.Item2 + "\\" + fileDest : fileOrigin.Item1.GetBaseDir() + "\\" + fileDest;
+            fileDest += System.IO.Path.GetExtension(fileOrigin.Item1); // TODO prevent crash(?) files with no extension
 
             if (fileOrigin.Item1 != fileDest) {
-                jobList.Add(new FileJob(fileOrigin.Item1, fileDest));
+                jobList.Add(new FileJob(fileOrigin.Item1, fileDest ));
             }
         }
 

@@ -30,7 +30,8 @@ public class FoldersList : VBoxContainer
                 // If dropped files are folders, add them, but only if the folder isn't added already
                 bool alreadyAdded = false;
                 foreach (Node c in GetChildren()) {
-                    if ((c as FolderLineEdit).leFolder.Text == f) {
+                    string fe = (c as FolderLineEdit).leFolder.Text;
+                    if (fe != "" && f.Contains((c as FolderLineEdit).leFolder.Text)) {
                         alreadyAdded = true;
                     }
                 }

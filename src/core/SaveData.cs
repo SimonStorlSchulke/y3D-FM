@@ -12,8 +12,9 @@ public class SaveData
     public string[] removeNamePartsList = {};
     public string[] replaceDictFrom = {};
     public string[] replaceDictTo = {};
+    public string prefix;
+    public string subfix;
     public string dropletPath;
-    public string mpsDir;
     public static SaveData FromOptions(RenameOptions rno) {
         SaveData sd = new SaveData();
         sd.baseFolders = rno.productFoldersDict.Keys.ToArray();
@@ -23,7 +24,8 @@ public class SaveData
         sd.removeFilesList = rno.removeFilesList.ToArray();
         sd.removeNamePartsList = rno.removeFileNamePartsList.ToArray();
         sd.replaceDictFrom = rno.replaceWithDict.Keys.ToArray();
-        sd.replaceDictTo = rno.replaceWithDict.Values.ToArray();
+        sd.prefix = rno.prefix;
+        sd.subfix = rno.subfix;
         return sd;
     }
 }

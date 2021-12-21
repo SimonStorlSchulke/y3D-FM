@@ -96,9 +96,12 @@ public class Main : Control {
     public void FromSaveData(SaveData sd) {
         GetNode<ReplaceWithList>(NPReplaceWith).PopulateFromData(sd.replaceDictFrom, sd.replaceDictTo);
         GetNode<FoldersList>(NPProductFolder).PopulateFromData(sd.baseFolders, sd.productNames);
+        GetNode<CheckBox>(NPMoveToTopFolder).Pressed = sd.moveToBaseFolders;
         GetNode<TextEdit>(NPIgnoreFiles).Text = string.Join("\n", sd.ignoreFilesList);
         GetNode<TextEdit>(NPRemoveFiles).Text = string.Join("\n", sd.removeFilesList);
         GetNode<TextEdit>(NPRemoveFileNameParts).Text = string.Join("\n", sd.removeNamePartsList);
+        GetNode<TextEdit>(NPLePreFix).Text = sd.prefix;
+        GetNode<TextEdit>(NPLeSubFix).Text = sd.subfix;
         refreshFiles = true;
         OnUpdateJobList();
     }

@@ -7,6 +7,7 @@ public class BtnLoad : MenuButton
     string dirCfg;
     string[] saveFiles;
     public override void _Ready() {
+        GetPopup().Connect("id_pressed", this, nameof(OnLoadSelected));
         UpdateItems();
     }
 
@@ -20,7 +21,6 @@ public class BtnLoad : MenuButton
         foreach (string f in saveFiles) {
             GetPopup().AddItem(f.GetFile());
         }
-        GetPopup().Connect("id_pressed", this, nameof(OnLoadSelected));
     }
 
     public void OnLoadSelected(int index) {
