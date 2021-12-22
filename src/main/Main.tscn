@@ -365,6 +365,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -502,10 +503,13 @@ Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen e
 
 [color=yellow]<p_name_end>[/color] Setzt den Teil des Produktnamens nach \"..\" ein.
 
-[color=yellow]<date>[/color] Setzt das aktuelle Datum ein (z.b. 20211205)
+[color=yellow]<date>[/color] Setzt das aktuelle Datum ein (z.b. 20211205). Date kann auch z.B. bei \"ignore\", \"delete\" und \"replace this\" eingetragen werden, um Dateien zu erkennen, die ein Datum enthalten.
 
 [font=res://theme/new_dynamicfont.tres]Remove Parts from Filenames[/font]	
 Entfernt Zeichenfolgen aus Dateinamen. Separiert werden diese per Absatz.
+
+[font=res://theme/new_dynamicfont.tres]Prefix & Subfix[/font]	
+Werden vor / nach dem Dateinamen angefügt. Dateiendungen werden hierbei ignoriert.
 
 
 [font=res://theme/font_heading.tres]Preview[/font]
@@ -540,15 +544,44 @@ Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen e
 
 <p_name_end> Setzt den Teil des Produktnamens nach \"..\" ein.
 
-<date> Setzt das aktuelle Datum ein (z.b. 20211205)
+<date> Setzt das aktuelle Datum ein (z.b. 20211205). Date kann auch z.B. bei \"ignore\", \"delete\" und \"replace this\" eingetragen werden, um Dateien zu erkennen, die ein Datum enthalten.
 
 Remove Parts from Filenames	
 Entfernt Zeichenfolgen aus Dateinamen. Separiert werden diese per Absatz.
+
+Prefix & Subfix	
+Werden vor / nach dem Dateinamen angefügt. Dateiendungen werden hierbei ignoriert.
 
 
 Preview
 Im Tab Preview werden die Dateien angezeigt, die beim Ausführen der aktuellen Konfiguration geändert würden. Links die Originaldatei, rechts die Datei nach dem Ausführen. Oben im Tab kann eingestellt werden, ob der ganze Pfad angezeigt werden soll. Dateien können zum öffnen angeklickt werden. 
 Auch die Säubli Farbcodes können visualisiert werden. Enthält ein Dateiname eine Farbe (\"rot\") oder Farbcode (\"-22\"), werden diese in der entsprechenden Farbe dargestellt."
+
+[node name="Known Issues" type="VBoxContainer" parent="SplitMain/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SplitMain/Tabs/Known Issues"]
+margin_right = 1048.0
+margin_bottom = 1163.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
+bbcode_enabled = true
+bbcode_text = "[font=res://theme/font_heading.tres]Known Issues[/font]
+
+- Droplet Funktion ist TODO
+- Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
+- Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
+text = "Known Issues
+
+- Droplet Funktion ist TODO
+- Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
+- Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
 
 [node name="BtnRun" type="Button" parent="."]
 anchor_left = 1.0
@@ -565,7 +598,6 @@ __meta__ = {
 }
 
 [node name="PuSave" type="AcceptDialog" parent="."]
-visible = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -613,5 +645,5 @@ script = ExtResource( 12 )
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
+[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]

@@ -7,12 +7,3 @@ C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfo.cs
 C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CoreCompileInputs.cache
 C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.dll
 C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.pdb
-A:\dev\y3D-FM\.mono\temp\bin\Debug\y3D-FM.dll
-A:\dev\y3D-FM\.mono\temp\bin\Debug\y3D-FM.pdb
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.AssemblyReference.cache
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.GeneratedMSBuildEditorConfig.editorconfig
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfoInputs.cache
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfo.cs
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CoreCompileInputs.cache
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.dll
-A:\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.pdb
