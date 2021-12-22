@@ -24,6 +24,7 @@ public class SaveData
         sd.removeFilesList = rno.removeFilesList.ToArray();
         sd.removeNamePartsList = rno.removeFileNamePartsList.ToArray();
         sd.replaceDictFrom = rno.replaceWithDict.Keys.ToArray();
+        sd.replaceDictTo = rno.replaceWithDict.Values.ToArray();
         sd.prefix = rno.prefix;
         sd.subfix = rno.subfix;
         return sd;

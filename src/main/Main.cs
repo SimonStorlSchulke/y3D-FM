@@ -95,7 +95,9 @@ public class Main : Control {
     public void OnRun() {
         //TODO avoid runnning while files arent Updated (waiting for Timer)
         ErrorLog.instance.Clear();
-        FileJob.Execute(jobList);
+        if (jobList != null) {
+            FileJob.Execute(jobList);
+        }
     }
 
     public void FromSaveData(SaveData sd) {
@@ -105,8 +107,8 @@ public class Main : Control {
         GetNode<TextEdit>(NPIgnoreFiles).Text = string.Join("\n", sd.ignoreFilesList);
         GetNode<TextEdit>(NPRemoveFiles).Text = string.Join("\n", sd.removeFilesList);
         GetNode<TextEdit>(NPRemoveFileNameParts).Text = string.Join("\n", sd.removeNamePartsList);
-        GetNode<TextEdit>(NPLePreFix).Text = sd.prefix;
-        GetNode<TextEdit>(NPLeSubFix).Text = sd.subfix;
+        GetNode<LineEdit>(NPLePreFix).Text = sd.prefix;
+        GetNode<LineEdit>(NPLeSubFix).Text = sd.subfix;
         refreshFiles = true;
         OnUpdateJobList();
     }

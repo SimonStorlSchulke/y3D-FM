@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class FoldersList : VBoxContainer {
 
+    [Export]
+    PackedScene fEdit;
+
     public override void _Ready() {
         GetTree().Connect("files_dropped", this, nameof(OnFilesDropped));
     }
@@ -74,17 +77,18 @@ public class FoldersList : VBoxContainer {
     }
 
     public void PopulateFromData(string[] from, string[] to) {
-        FolderLineEdit inp = GetChild(0).Duplicate() as FolderLineEdit;
+
         foreach (Node c in GetChildren()) {
             c.QueueFree();
         }
 
         for (int i = 0; i < from.Length; i++) {
-            FolderLineEdit dp = inp.Duplicate() as FolderLineEdit;
+            FolderLineEdit dp = fEdit.Instance<FolderLineEdit>();
             AddChild(dp);
             dp.leFolder.Text = from[i];
             dp.leProduct.Text = to[i];
         }
 
+        AddChild(fEdit.Instance<FolderLineEdit>());
     }
 }

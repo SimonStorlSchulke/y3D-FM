@@ -25,10 +25,16 @@ public class Save : AcceptDialog
     }
 
     public void OnSaveConfigPressed() {
-        DirectoryInfo di = new DirectoryInfo(OS.GetExecutablePath().GetBaseDir());
-        di.CreateSubdirectory("y3d_fm_configs");
         string path = OS.GetExecutablePath().GetBaseDir() + "\\y3d_fm_configs\\" + GetNode<LineEdit>("SaveDialog/LineEdit").Text + ".yfm";
-        SaveToFile(path);
+        try {
+            DirectoryInfo di = new DirectoryInfo(OS.GetExecutablePath().GetBaseDir());
+            di.CreateSubdirectory("y3d_fm_configs");
+            SaveToFile(path);
+        } catch(System.Exception e) {
+            ErrorLog.instance.Clear();
+            ErrorLog.instance.Add("Error saving to config folder at "+ path, e.ToString(), ErrorLog.LogColor.RED);
+            ErrorLog.instance.PopUp();
+        }
     }
 
     public void SaveToFile(string path) {
