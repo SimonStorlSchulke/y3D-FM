@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/ui/ProductFolderInput.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/FoldersList.cs" type="Script" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://src/core/ErrorLog.cs" type="Script" id=14]
 [ext_resource path="res://theme/font_heading.tres" type="DynamicFont" id=15]
 [ext_resource path="res://src/ui/BtnConfigFolder.cs" type="Script" id=16]
+[ext_resource path="res://src/core/DopletComp.cs" type="Script" id=17]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
@@ -53,7 +54,7 @@ __meta__ = {
 
 [node name="SplitSidebar" type="VBoxContainer" parent="SplitMain"]
 margin_right = 430.0
-margin_bottom = 1200.0
+margin_bottom = 1000.0
 rect_min_size = Vector2( 430, 0 )
 
 [node name="HbSaveLoad" type="HBoxContainer" parent="SplitMain/SplitSidebar"]
@@ -148,7 +149,7 @@ margin_bottom = 27.0
 [node name="PnOptions" type="Panel" parent="SplitMain/SplitSidebar"]
 margin_top = 231.0
 margin_right = 430.0
-margin_bottom = 1200.0
+margin_bottom = 1000.0
 size_flags_vertical = 3
 
 [node name="ScrlOptions" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnOptions"]
@@ -164,7 +165,7 @@ __meta__ = {
 
 [node name="VbOptions" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions"]
 margin_right = 418.0
-margin_bottom = 957.0
+margin_bottom = 757.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -356,16 +357,20 @@ margin_top = 21.0
 margin_right = 207.0
 margin_bottom = 48.0
 
+[node name="HSeparator5" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 518.0
+margin_right = 418.0
+margin_bottom = 522.0
+
 [node name="Tabs" type="TabContainer" parent="SplitMain"]
 margin_left = 442.0
-margin_right = 1500.0
-margin_bottom = 1200.0
+margin_right = 1400.0
+margin_bottom = 1000.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
 
 [node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -380,7 +385,7 @@ tbPresetL1 = ExtResource( 8 )
 tbPresetL2 = ExtResource( 9 )
 
 [node name="HbPreviewTop" type="HBoxContainer" parent="SplitMain/Tabs/Preview"]
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 25.0
 
 [node name="Label" type="Label" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
@@ -411,20 +416,20 @@ text = "Full Paths Destination"
 
 [node name="Stretch" type="Control" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
 margin_left = 472.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 
 [node name="Scrl" type="ScrollContainer" parent="SplitMain/Tabs/Preview"]
 margin_top = 29.0
-margin_right = 1048.0
-margin_bottom = 1163.0
+margin_right = 948.0
+margin_bottom = 963.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Grid" type="GridContainer" parent="SplitMain/Tabs/Preview/Scrl"]
-margin_right = 1048.0
-margin_bottom = 1134.0
+margin_right = 948.0
+margin_bottom = 934.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/vseparation = 0
@@ -441,15 +446,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="SplitMain/Tabs/Error Log"]
-margin_right = 1058.0
+margin_right = 1048.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 15 )
 text = "Errors"
 
 [node name="LblErrorLog" type="RichTextLabel" parent="SplitMain/Tabs/Error Log"]
 margin_top = 28.0
-margin_right = 1058.0
-margin_bottom = 1173.0
+margin_right = 1048.0
+margin_bottom = 1163.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.843137, 0.843137, 0.843137, 1 )
@@ -558,6 +563,7 @@ Im Tab Preview werden die Dateien angezeigt, die beim Ausführen der aktuellen K
 Auch die Säubli Farbcodes können visualisiert werden. Enthält ein Dateiname eine Farbe (\"rot\") oder Farbcode (\"-22\"), werden diese in der entsprechenden Farbe dargestellt."
 
 [node name="Known Issues" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -582,6 +588,102 @@ text = "Known Issues
 - Droplet Funktion ist TODO
 - Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
 - Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
+
+[node name="Doplet Comp" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 37.0
+rect_min_size = Vector2( 300, 0 )
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+NPFoldersList = NodePath("../../SplitSidebar/PnFolders/ScrlFolders/VbFolders")
+NPRenameOptions = NodePath("../../../RenameOptions")
+
+[node name="LblDroplet" type="Label" parent="SplitMain/Tabs/Doplet Comp"]
+margin_right = 1048.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 7 )
+text = "Photoshop Droplet Comp"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HbDropletPath" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
+margin_top = 22.0
+margin_right = 1048.0
+margin_bottom = 49.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Doplet Comp/HbDropletPath"]
+margin_top = 5.0
+margin_right = 78.0
+margin_bottom = 22.0
+text = "Droplet Path"
+
+[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletPath"]
+margin_left = 82.0
+margin_right = 1048.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\ecs_trim_droplet.exe"
+
+[node name="HbDropletOutput" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
+margin_top = 53.0
+margin_right = 1048.0
+margin_bottom = 80.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Doplet Comp/HbDropletOutput"]
+margin_top = 5.0
+margin_right = 134.0
+margin_bottom = 22.0
+text = "Droplet Output Folder"
+
+[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletOutput"]
+margin_left = 138.0
+margin_right = 1048.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
+
+[node name="HbDropletCustomOutput" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
+margin_top = 84.0
+margin_right = 1048.0
+margin_bottom = 111.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Doplet Comp/HbDropletCustomOutput"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 22.0
+text = "Move to custom Folder?"
+
+[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletCustomOutput"]
+margin_left = 153.0
+margin_right = 1048.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+
+[node name="BtnRunDroplet" type="Button" parent="SplitMain/Tabs/Doplet Comp"]
+margin_top = 115.0
+margin_right = 1048.0
+margin_bottom = 138.0
+text = "Run Droplet"
+
+[node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Doplet Comp"]
+margin_top = 142.0
+margin_right = 1048.0
+margin_bottom = 159.0
 
 [node name="BtnRun" type="Button" parent="."]
 anchor_left = 1.0
@@ -645,5 +747,6 @@ script = ExtResource( 12 )
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="BtnRun" to="." method="OnRun"]
+[connection signal="pressed" from="SplitMain/Tabs/Doplet Comp/BtnRunDroplet" to="SplitMain/Tabs/Doplet Comp" method="Run"]
 [connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
+[connection signal="pressed" from="BtnRun" to="." method="OnRun"]

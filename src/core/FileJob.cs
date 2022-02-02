@@ -17,6 +17,7 @@ public struct FileJob {
         foreach (FileJob job in jobList) {
             if (job.pathDestination == "DELETE") { // kinda dirty ;)
                 System.IO.File.Delete(job.pathOriginal);
+                continue;
             }
             try {
                 System.IO.File.Move(job.pathOriginal, job.pathDestination);

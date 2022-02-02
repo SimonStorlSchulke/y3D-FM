@@ -15,10 +15,10 @@ run/main_scene="res://src/main/Main.tscn"
 
 [display]
 
-window/size/width=1500
-window/size/height=1200
+window/size/width=1400
+window/size/height=1000
 window/dpi/allow_hidpi=true
-window/stretch/shrink=1.3
+window/stretch/shrink=1.2
 
 [gui]
 

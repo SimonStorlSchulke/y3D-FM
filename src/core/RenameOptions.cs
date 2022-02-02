@@ -33,8 +33,21 @@ public class RenameOptions : Node {
         return parsedString;
     }
 
+    public bool ignoreFile(string unparsedFileName, string originalFileName) {
 
-    string UnParseDate(string s) {
+        bool ignore = false;
+        foreach (string ignoreFile in ignoreFilesList) {
+            string toCompare =  ignoreFile.Contains("<date>") ? unparsedFileName : originalFileName;
+
+            if (ignoreFile != "" &&  toCompare.Contains(ignoreFile)) {
+                ignore = true;
+                break;
+            }
+        }
+        return ignore;
+    }
+
+    public string UnParseDate(string s) {
         Regex rgx = new Regex(@"\d{8}");
         Match mat = rgx.Match(s);
         if (mat.ToString() == "") {
@@ -75,6 +88,7 @@ public class RenameOptions : Node {
             bool ignore = false;
             bool remove = false;
             foreach (string ignoreFile in ignoreFilesList) {
+                // TODO replace with ignoreFIle method
                 string toCompare =  ignoreFile.Contains("<date>") ? unparsedFileName : originalFileName;
 
                 if (ignoreFile != "" &&  toCompare.Contains(ignoreFile)) {

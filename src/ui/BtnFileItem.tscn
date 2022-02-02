@@ -16,19 +16,19 @@ __meta__ = {
 }
 
 [node name="lblOrig" type="Label" parent="Hb"]
-margin_top = 593.0
-margin_right = 94.0
-margin_bottom = 607.0
+margin_top = 591.0
+margin_right = 93.0
+margin_bottom = 608.0
 text = "plastik_22_rot_"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="lblDest" type="Label" parent="Hb"]
-margin_left = 98.0
-margin_top = 593.0
-margin_right = 222.0
-margin_bottom = 607.0
+margin_left = 97.0
+margin_top = 591.0
+margin_right = 223.0
+margin_bottom = 608.0
 text = "23.aaa -05 SEB4-GK"
 __meta__ = {
 "_edit_use_anchors_": false
