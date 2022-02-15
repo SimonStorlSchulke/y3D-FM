@@ -4,6 +4,6 @@
     <RootNamespace>y3DFM</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Magick.NET.Core" Version="9.1.2" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="9.1.2" />
   </ItemGroup>
 </Project>

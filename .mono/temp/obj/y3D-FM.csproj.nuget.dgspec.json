@@ -38,7 +38,7 @@
         "net472": {
           "targetAlias": "net472",
           "dependencies": {
-            "Magick.NET.Core": {
+            "Magick.NET-Q16-AnyCPU": {
               "target": "Package",
               "version": "[9.1.2, )"
             },

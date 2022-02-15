@@ -1,12 +1,10 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using ImageMagick;
 
 public class DopletComp : Node
 {
-    LineEdit DropletPath;
-    LineEdit DropletOuptutPath;
-    LineEdit DropletCustomOutputPath;
     FoldersList foldersList;
     [Export]
     NodePath NPFoldersList;
@@ -16,25 +14,21 @@ public class DopletComp : Node
     RenameOptions rn;
     public override void _Ready()
     {
-        DropletPath = GetNode<LineEdit>("HbDropletPath/Le");
-        DropletOuptutPath = GetNode<LineEdit>("HbDropletOutput/Le");
-        DropletCustomOutputPath = GetNode<LineEdit>("HbDropletCustomOutput/Le");
         foldersList = GetNode<FoldersList>(NPFoldersList);
         rn = GetNode<RenameOptions>(NPRenameOptions);
+
     }
 
     public void Run()
     {
-        string fileStringList = "";
-
-        foreach (string file in GetFiles())
-        {
-            fileStringList += '"' + file + '"';
-        }
-        try {
-            System.Diagnostics.Process.Start(DropletPath.Text, fileStringList);
-        } catch(System.Exception e) {
-            ErrorLog.instance.Add("Droplet Fehler", "/ müssen im Droplet Pfad mit \\ ersetzt werden.\n" + e.ToString(), ErrorLog.LogColor.RED);
+        string img = @"C:\Users\simon\Desktop\ct.png";
+        string sourceImgTrimmed = @"C:\Users\simon\Desktop\Rockingchair_02.psd";
+        using (MagickImage i = new MagickImage(img)) {
+            i.Trim();
+            i.RePage();
+            i.Density = new Density(300, 300);
+            i.Depth = 8;
+            i.Write(sourceImgTrimmed);
         }
     }
 

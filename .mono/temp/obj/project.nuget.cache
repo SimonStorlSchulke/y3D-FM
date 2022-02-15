@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5FYZyZpxDcw3NRJAybYljBqRJDE6y/n6VkRrKAxObJcgFXFlcq3aCjxzDLcX1zcFHjDRYUdG9JKwSoFo23xs1g==",
+  "dgSpecHash": "vwE6jb2Bd57lfZ5qDNsjzzu9bnuNnZMfnSN7pGJjwWQZr8fk1aersdoT6+6H9umUvReGwKjmTozBUQAuLJ2MfQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\simon\\.nuget\\packages\\magick.net-q16-anycpu\\9.1.2\\magick.net-q16-anycpu.9.1.2.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\magick.net.core\\9.1.2\\magick.net.core.9.1.2.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
     "C:\\Users\\simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"

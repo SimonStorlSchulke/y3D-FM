@@ -381,6 +381,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -615,8 +616,7 @@ text = "Known Issues
 - Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
 - Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
 
-[node name="Doplet Comp" type="VBoxContainer" parent="SplitMain/Tabs"]
-visible = false
+[node name="Batch Process" type="VBoxContainer" parent="SplitMain/Tabs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -629,87 +629,89 @@ __meta__ = {
 NPFoldersList = NodePath("../../SplitSidebar/PnFolders/ScrlFolders/VbFolders")
 NPRenameOptions = NodePath("../../../RenameOptions")
 
-[node name="LblDroplet" type="Label" parent="SplitMain/Tabs/Doplet Comp"]
+[node name="LblDroplet" type="Label" parent="SplitMain/Tabs/Batch Process"]
 margin_right = 948.0
 margin_bottom = 18.0
 custom_fonts/font = ExtResource( 7 )
-text = "Photoshop Droplet Comp"
+text = "Perform Batch Processes on each Image in the folders"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HbDropletPath" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
+[node name="HbDropletPath" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 22.0
 margin_right = 948.0
-margin_bottom = 49.0
+margin_bottom = 45.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Doplet Comp/HbDropletPath"]
-margin_top = 5.0
-margin_right = 78.0
-margin_bottom = 22.0
-text = "Droplet Path"
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbDropletPath"]
+margin_top = 3.0
+margin_right = 80.0
+margin_bottom = 20.0
+text = "Select Preset"
 
-[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletPath"]
-margin_left = 82.0
+[node name="Le" type="OptionButton" parent="SplitMain/Tabs/Batch Process/HbDropletPath"]
+margin_left = 84.0
 margin_right = 948.0
-margin_bottom = 27.0
+margin_bottom = 23.0
 size_flags_horizontal = 3
-text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\ecs_trim_droplet.exe"
+text = "ECS Trim"
+items = [ "ECS Trim", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null ]
+selected = 0
 
-[node name="HbDropletOutput" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
-margin_top = 53.0
+[node name="HbDropletOutput" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 49.0
 margin_right = 948.0
-margin_bottom = 80.0
+margin_bottom = 76.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Doplet Comp/HbDropletOutput"]
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbDropletOutput"]
 margin_top = 5.0
-margin_right = 134.0
+margin_right = 86.0
 margin_bottom = 22.0
-text = "Droplet Output Folder"
+text = "Output Folder"
 
-[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletOutput"]
-margin_left = 138.0
+[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbDropletOutput"]
+margin_left = 90.0
 margin_right = 948.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
 
-[node name="HbDropletCustomOutput" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
-margin_top = 84.0
+[node name="HbDropletCustomOutput" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 80.0
 margin_right = 948.0
-margin_bottom = 111.0
+margin_bottom = 107.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Doplet Comp/HbDropletCustomOutput"]
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbDropletCustomOutput"]
 margin_top = 5.0
 margin_right = 149.0
 margin_bottom = 22.0
 text = "Move to custom Folder?"
 
-[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletCustomOutput"]
+[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbDropletCustomOutput"]
 margin_left = 153.0
 margin_right = 948.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 
-[node name="BtnRunDroplet" type="Button" parent="SplitMain/Tabs/Doplet Comp"]
-margin_top = 115.0
+[node name="BtnRunDroplet" type="Button" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 111.0
 margin_right = 948.0
-margin_bottom = 138.0
-text = "Run Droplet"
+margin_bottom = 134.0
+text = "Run Batch Process"
 
-[node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Doplet Comp"]
-margin_top = 142.0
+[node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 138.0
 margin_right = 948.0
-margin_bottom = 159.0
+margin_bottom = 155.0
 
 [node name="BtnRun" type="Button" parent="."]
 anchor_left = 1.0
@@ -774,6 +776,6 @@ script = ExtResource( 12 )
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="SplitMain/Tabs/Doplet Comp/BtnRunDroplet" to="SplitMain/Tabs/Doplet Comp" method="Run"]
+[connection signal="pressed" from="SplitMain/Tabs/Batch Process/BtnRunDroplet" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
