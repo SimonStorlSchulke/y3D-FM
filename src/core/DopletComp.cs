@@ -21,6 +21,7 @@ public class DopletComp : Node
     RichTextLabel lblProcessed;
     OptionButton presetSelector;
     LineEdit lePresetOptions;
+    Label lblPresetDescription;
     RenameOptions rn;
     List<string> files;
     Godot.Timer tmr;
@@ -36,6 +37,7 @@ public class DopletComp : Node
         lblProcessed = GetNode<RichTextLabel>("LblProcessed");
         presetSelector = GetNode<OptionButton>("HbPreset/ObPreset");
         lePresetOptions = GetNode<LineEdit>("HbOptions/LeOptions");
+        lblPresetDescription = GetNode<Label>("LblPresetDescription");
 
         foreach (var process in BatchPresets.list) {
             presetSelector.AddItem(process.name);
@@ -47,13 +49,14 @@ public class DopletComp : Node
 
     public void UpdatePresetOptions(int i) {
         process = BatchPresets.list[i];
-        lePresetOptions.Text = process.options;
+        lblPresetDescription.Text = process.description;
+        lePresetOptions.Text = process.defaultOptions;
     }
 
     public void Run()
     {
         process = BatchPresets.list[presetSelector.Selected];
-        process.options = lePresetOptions.Text;
+        process.defaultOptions = lePresetOptions.Text;
 
         Main.instance.OnUpdateJobList();
         files = GetFiles();
@@ -86,7 +89,7 @@ public class DopletComp : Node
             using (MagickImage img = new MagickImage(files[atImage]))
             {
                 try {
-                process.function(img);
+                process.function(img, lePresetOptions.Text);
 
                 string[] paths = {outputFolder, System.IO.Path.GetFileNameWithoutExtension(files[atImage]) + ".psd"};
                 string destName = System.IO.Path.Combine(paths);
