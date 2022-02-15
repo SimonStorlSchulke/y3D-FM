@@ -2,44 +2,32 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7.2": {
-      "Magick.NET-Q16-AnyCPU/9.1.2": {
+      "Magick.NET-Q8-OpenMP-x64/9.1.2": {
         "type": "package",
         "dependencies": {
           "Magick.NET.Core": "9.1.2"
         },
         "compile": {
-          "lib/netstandard20/Magick.NET-Q16-AnyCPU.dll": {}
+          "lib/net20/Magick.NET-Q8-OpenMP-x64.dll": {}
         },
         "runtime": {
-          "lib/netstandard20/Magick.NET-Q16-AnyCPU.dll": {}
+          "lib/net20/Magick.NET-Q8-OpenMP-x64.dll": {}
         },
         "build": {
-          "build/netstandard20/Magick.NET-Q16-AnyCPU.targets": {}
+          "build/net20/Magick.NET-Q8-OpenMP-x64.targets": {}
         },
         "runtimeTargets": {
-          "runtimes/linux-musl-x64/native/Magick.Native-Q16-x64.dll.so": {
-            "assetType": "native",
-            "rid": "linux-musl-x64"
-          },
-          "runtimes/linux-x64/native/Magick.Native-Q16-x64.dll.so": {
+          "runtimes/linux-x64/native/Magick.Native-Q8-OpenMP-x64.dll.so": {
             "assetType": "native",
             "rid": "linux-x64"
           },
-          "runtimes/osx-x64/native/Magick.Native-Q16-x64.dll.dylib": {
-            "assetType": "native",
-            "rid": "osx-x64"
-          },
-          "runtimes/win-arm64/native/Magick.Native-Q16-arm64.dll": {
-            "assetType": "native",
-            "rid": "win-arm64"
-          },
-          "runtimes/win-x64/native/Magick.Native-Q16-x64.dll": {
+          "runtimes/win-x64/native/Magick.Native-Q8-OpenMP-x64.dll": {
             "assetType": "native",
             "rid": "win-x64"
           },
-          "runtimes/win-x86/native/Magick.Native-Q16-x86.dll": {
+          "runtimes/win-x64/native/vcomp140.dll": {
             "assetType": "native",
-            "rid": "win-x86"
+            "rid": "win-x64"
           }
         }
       },
@@ -67,31 +55,28 @@
     }
   },
   "libraries": {
-    "Magick.NET-Q16-AnyCPU/9.1.2": {
-      "sha512": "SCF+hHlds3SjyKpuE1tNbvaV/0XkB64gHO0TLNFAapodPnnhWNTWQIffg+DUSomzrIJUNhddsvCD2QDISSQ+mw==",
+    "Magick.NET-Q8-OpenMP-x64/9.1.2": {
+      "sha512": "pcNL9tp+cxF9kcE5Y39IN4rBoeeiiQWHI3CnvuLdhi7TKn/V51lEOsmdrvsjSjl4erAGzfdsrBVcu89XhI5aQA==",
       "type": "package",
-      "path": "magick.net-q16-anycpu/9.1.2",
+      "path": "magick.net-q8-openmp-x64/9.1.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Magick.NET.icon.png",
-        "Notice.linux-musl.txt",
         "Notice.linux.txt",
-        "Notice.osx.txt",
         "Notice.win.txt",
-        "build/netstandard20/Magick.NET-Q16-AnyCPU.targets",
-        "lib/netstandard20/Magick.NET-Q16-AnyCPU.dll",
-        "lib/netstandard20/Magick.NET-Q16-AnyCPU.xml",
-        "lib/netstandard21/Magick.NET-Q16-AnyCPU.dll",
-        "lib/netstandard21/Magick.NET-Q16-AnyCPU.xml",
-        "magick.net-q16-anycpu.9.1.2.nupkg.sha512",
-        "magick.net-q16-anycpu.nuspec",
-        "runtimes/linux-musl-x64/native/Magick.Native-Q16-x64.dll.so",
-        "runtimes/linux-x64/native/Magick.Native-Q16-x64.dll.so",
-        "runtimes/osx-x64/native/Magick.Native-Q16-x64.dll.dylib",
-        "runtimes/win-arm64/native/Magick.Native-Q16-arm64.dll",
-        "runtimes/win-x64/native/Magick.Native-Q16-x64.dll",
-        "runtimes/win-x86/native/Magick.Native-Q16-x86.dll"
+        "build/net20/Magick.NET-Q8-OpenMP-x64.targets",
+        "lib/net20/Magick.NET-Q8-OpenMP-x64.dll",
+        "lib/net20/Magick.NET-Q8-OpenMP-x64.xml",
+        "lib/netstandard20/Magick.NET-Q8-OpenMP-x64.dll",
+        "lib/netstandard20/Magick.NET-Q8-OpenMP-x64.xml",
+        "lib/netstandard21/Magick.NET-Q8-OpenMP-x64.dll",
+        "lib/netstandard21/Magick.NET-Q8-OpenMP-x64.xml",
+        "magick.net-q8-openmp-x64.9.1.2.nupkg.sha512",
+        "magick.net-q8-openmp-x64.nuspec",
+        "runtimes/linux-x64/native/Magick.Native-Q8-OpenMP-x64.dll.so",
+        "runtimes/win-x64/native/Magick.Native-Q8-OpenMP-x64.dll",
+        "runtimes/win-x64/native/vcomp140.dll"
       ]
     },
     "Magick.NET.Core/9.1.2": {
@@ -507,7 +492,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
-      "Magick.NET-Q16-AnyCPU >= 9.1.2",
+      "Magick.NET-Q8-OpenMP-x64 >= 9.1.2",
       "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.2"
     ]
   },
@@ -548,7 +533,7 @@
       "net472": {
         "targetAlias": "net472",
         "dependencies": {
-          "Magick.NET-Q16-AnyCPU": {
+          "Magick.NET-Q8-OpenMP-x64": {
             "target": "Package",
             "version": "[9.1.2, )"
           },

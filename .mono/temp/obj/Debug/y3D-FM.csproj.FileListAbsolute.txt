@@ -16,8 +16,7 @@ C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfo.cs
 C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CoreCompileInputs.cache
 C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.dll
 C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.pdb
-C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.Native-Q16-x64.dll
-C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.Native-Q16-x86.dll
-C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.NET-Q16-AnyCPU.dll
 C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.NET.Core.dll
 C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CopyComplete
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.Native-Q8-OpenMP-x64.dll
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.NET-Q8-OpenMP-x64.dll

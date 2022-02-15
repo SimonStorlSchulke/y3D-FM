@@ -38,7 +38,7 @@
         "net472": {
           "targetAlias": "net472",
           "dependencies": {
-            "Magick.NET-Q16-AnyCPU": {
+            "Magick.NET-Q8-OpenMP-x64": {
               "target": "Package",
               "version": "[9.1.2, )"
             },
