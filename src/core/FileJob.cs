@@ -29,7 +29,7 @@ public struct FileJob {
                 had_errors = true;
                 ErrorLog.instance.Add(
                     job.pathOriginal.GetFile() + " could not be renamed to " + job.pathDestination.GetFile(),
-                    e.ToString(),
+                    e.Message,
                     ErrorLog.LogColor.RED);
             }
         }

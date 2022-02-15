@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/ui/ProductFolderInput.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/FoldersList.cs" type="Script" id=2]
@@ -20,6 +20,25 @@
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0352941, 0.596078, 0.32549, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.172549, 0.164706, 0.196078, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.145098, 0.145098, 0.164706, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="Main" type="Panel"]
 anchor_right = 1.0
@@ -627,91 +646,134 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 NPFoldersList = NodePath("../../SplitSidebar/PnFolders/ScrlFolders/VbFolders")
+NPOutputFolder = NodePath("HbOutput/LeOutput")
 NPRenameOptions = NodePath("../../../RenameOptions")
+NPProgressBar = NodePath("HbRun/ProgressBar")
 
 [node name="LblDroplet" type="Label" parent="SplitMain/Tabs/Batch Process"]
 margin_right = 948.0
-margin_bottom = 18.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
 custom_fonts/font = ExtResource( 7 )
 text = "Perform Batch Processes on each Image in the folders"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HbDropletPath" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 22.0
+[node name="HbPreset" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 36.0
 margin_right = 948.0
-margin_bottom = 45.0
+margin_bottom = 59.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbDropletPath"]
+[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbPreset"]
 margin_top = 3.0
-margin_right = 80.0
+margin_right = 100.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
 text = "Select Preset"
 
-[node name="Le" type="OptionButton" parent="SplitMain/Tabs/Batch Process/HbDropletPath"]
-margin_left = 84.0
-margin_right = 948.0
+[node name="ObPreset" type="OptionButton" parent="SplitMain/Tabs/Batch Process/HbPreset"]
+margin_left = 104.0
+margin_right = 334.0
 margin_bottom = 23.0
-size_flags_horizontal = 3
-text = "ECS Trim"
-items = [ "ECS Trim", null, false, 0, null, "Item 1", null, false, 1, null, "Item 2", null, false, 2, null ]
+rect_min_size = Vector2( 230, 0 )
+text = "ECSTrim"
 selected = 0
 
-[node name="HbDropletOutput" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 49.0
+[node name="HbOptions" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 63.0
 margin_right = 948.0
-margin_bottom = 76.0
+margin_bottom = 90.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbDropletOutput"]
+[node name="LblOptions" type="Label" parent="SplitMain/Tabs/Batch Process/HbOptions"]
+margin_top = 5.0
+margin_right = 100.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 100, 0 )
+text = "Preset Options"
+
+[node name="LeOptions" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOptions"]
+margin_left = 104.0
+margin_right = 948.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 230, 0 )
+size_flags_horizontal = 3
+
+[node name="spacer" type="Control" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 94.0
+margin_right = 948.0
+margin_bottom = 98.0
+rect_min_size = Vector2( 0, 4 )
+
+[node name="HbOutput" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 102.0
+margin_right = 948.0
+margin_bottom = 129.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblOutputPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutput"]
 margin_top = 5.0
 margin_right = 86.0
 margin_bottom = 22.0
 text = "Output Folder"
 
-[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbDropletOutput"]
+[node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutput"]
 margin_left = 90.0
 margin_right = 948.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
 
-[node name="HbDropletCustomOutput" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 80.0
+[node name="spacer2" type="Control" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 133.0
 margin_right = 948.0
-margin_bottom = 107.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_bottom = 137.0
+rect_min_size = Vector2( 0, 4 )
 
-[node name="LblDropletPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbDropletCustomOutput"]
-margin_top = 5.0
-margin_right = 149.0
-margin_bottom = 22.0
-text = "Move to custom Folder?"
-
-[node name="Le" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbDropletCustomOutput"]
-margin_left = 153.0
+[node name="HbRun" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 141.0
 margin_right = 948.0
-margin_bottom = 27.0
-size_flags_horizontal = 3
+margin_bottom = 173.0
 
-[node name="BtnRunDroplet" type="Button" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 111.0
-margin_right = 948.0
-margin_bottom = 134.0
+[node name="BtnRun" type="Button" parent="SplitMain/Tabs/Batch Process/HbRun"]
+margin_right = 150.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 150, 0 )
 text = "Run Batch Process"
 
-[node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 138.0
+[node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Batch Process/HbRun"]
+margin_left = 154.0
 margin_right = 948.0
-margin_bottom = 155.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+size_flags_horizontal = 3
+custom_styles/fg = SubResource( 2 )
+custom_styles/bg = SubResource( 3 )
+
+[node name="TeProcessedImages" type="TextEdit" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 177.0
+margin_right = 948.0
+margin_bottom = 177.0
+text = "Processed"
+
+[node name="tmrNextImage" type="Timer" parent="SplitMain/Tabs/Batch Process"]
+wait_time = 0.05
+one_shot = true
+
+[node name="LblProcessed" type="RichTextLabel" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 181.0
+margin_right = 948.0
+margin_bottom = 963.0
+size_flags_vertical = 3
+bbcode_enabled = true
 
 [node name="BtnRun" type="Button" parent="."]
 anchor_left = 1.0
@@ -776,6 +838,8 @@ script = ExtResource( 12 )
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
-[connection signal="pressed" from="SplitMain/Tabs/Batch Process/BtnRunDroplet" to="SplitMain/Tabs/Batch Process" method="Run"]
+[connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
+[connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
+[connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
 [connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
