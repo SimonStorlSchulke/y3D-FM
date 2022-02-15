@@ -16,6 +16,7 @@ public class RenameOptions : Node {
     public List<string> removeFileNamePartsList;
     public string prefix;
     public string subfix;
+    public bool overwrite;
 
     // stores file and productname of File
     //Dictionary<string, string> fileList = new Dictionary<string, string>();

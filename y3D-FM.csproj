@@ -3,4 +3,7 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>y3DFM</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Magick.NET.Core" Version="9.1.2" />
+  </ItemGroup>
 </Project>

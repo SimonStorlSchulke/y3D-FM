@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj": {}
+    "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj": {
+    "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
+        "projectUniqueName": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
         "projectName": "y3D-FM",
-        "projectPath": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
-        "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Simon\\dev\\y3D-FM\\.mono\\temp\\obj\\",
+        "projectPath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
+        "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\simon\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net472"
@@ -38,6 +38,10 @@
         "net472": {
           "targetAlias": "net472",
           "dependencies": {
+            "Magick.NET.Core": {
+              "target": "Package",
+              "version": "[9.1.2, )"
+            },
             "Microsoft.NETFramework.ReferenceAssemblies": {
               "suppressParent": "All",
               "target": "Package",

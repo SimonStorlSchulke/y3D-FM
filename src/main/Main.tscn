@@ -41,6 +41,7 @@ NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/V
 NPTimerShowPreview = NodePath("TimerShowPreview")
 NPLePreFix = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HBPreSubix/VbPrefix/LePrefix")
 NPLeSubFix = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HBPreSubix/VbSubfix/LeSubFix")
+NPCbPverwrite = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbOverwrite")
 
 [node name="TimerShowPreview" type="Timer" parent="."]
 one_shot = true
@@ -357,10 +358,19 @@ margin_top = 21.0
 margin_right = 207.0
 margin_bottom = 48.0
 
-[node name="HSeparator5" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+[node name="CbOverwrite" type="CheckBox" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
 margin_top = 518.0
 margin_right = 418.0
-margin_bottom = 522.0
+margin_bottom = 543.0
+text = "Overwrite when Names already exists"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator5" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+margin_top = 547.0
+margin_right = 418.0
+margin_bottom = 551.0
 
 [node name="Tabs" type="TabContainer" parent="SplitMain"]
 margin_left = 442.0
@@ -446,15 +456,15 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="SplitMain/Tabs/Error Log"]
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 15 )
 text = "Errors"
 
 [node name="LblErrorLog" type="RichTextLabel" parent="SplitMain/Tabs/Error Log"]
 margin_top = 28.0
-margin_right = 1048.0
-margin_bottom = 1163.0
+margin_right = 948.0
+margin_bottom = 963.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.843137, 0.843137, 0.843137, 1 )
@@ -473,8 +483,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SplitMain/Tabs/Help"]
-margin_right = 1048.0
-margin_bottom = 1163.0
+margin_right = 948.0
+margin_bottom = 963.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
@@ -487,6 +497,7 @@ y3D-FM Ist ein Tool zur automatisierten Verwaltung von Dateien, speziell entwick
 [font=res://theme/new_dynamicfont.tres]Product Folders[/font]	
 
 Hier können per Eingabe oder Drag & Drop (ganzes Fenster gültig) Ordner angegeben werden, deren Dateien (auch in Unterordnern) berücksichtigt werden sollen. Der Produktname zum jeweiligen Ordner wird automatisch vom Ordnernamen abgeleitet, kann jedoch auch manuell geändert  werden.
+
 
 [font=res://theme/font_heading.tres]Optionen[/font]
 
@@ -501,6 +512,7 @@ Dateien, die die hier angegebene Zeichenfolgen enthalten werden vom Tool entgül
 [font=res://theme/new_dynamicfont.tres]Move all Files to their Top Level Folder[/font]	
 Ist diese Option aktiv, werden alle nicht ignorierten Dateien vom Tool, die sich in Unterordnern zu den oben angegebenen Ordnern befanden in deren jeweiligen Überordner verschoben.
 
+
 [font=res://theme/new_dynamicfont.tres]Replace With[/font]	
 Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen ersetzt werden sollen. Dabei können unter \"With\" auch folgende Bezeichner eingesetzt werden:
 
@@ -510,11 +522,17 @@ Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen e
 
 [color=yellow]<date>[/color] Setzt das aktuelle Datum ein (z.b. 20211205). Date kann auch z.B. bei \"ignore\", \"delete\" und \"replace this\" eingetragen werden, um Dateien zu erkennen, die ein Datum enthalten.
 
+
 [font=res://theme/new_dynamicfont.tres]Remove Parts from Filenames[/font]	
 Entfernt Zeichenfolgen aus Dateinamen. Separiert werden diese per Absatz.
 
+
 [font=res://theme/new_dynamicfont.tres]Prefix & Subfix[/font]	
 Werden vor / nach dem Dateinamen angefügt. Dateiendungen werden hierbei ignoriert.
+
+
+[font=res://theme/new_dynamicfont.tres]Overwrite when Names already exist[/font]	
+Ist diese Checkbox aktiv und entspricht der \"Zielname\" einer Datei einem, der bereits existiert, wird die ursprüngliche Datei überschrieben.
 
 
 [font=res://theme/font_heading.tres]Preview[/font]
@@ -529,6 +547,7 @@ Product Folders
 
 Hier können per Eingabe oder Drag & Drop (ganzes Fenster gültig) Ordner angegeben werden, deren Dateien (auch in Unterordnern) berücksichtigt werden sollen. Der Produktname zum jeweiligen Ordner wird automatisch vom Ordnernamen abgeleitet, kann jedoch auch manuell geändert  werden.
 
+
 Optionen
 
 1. Ignore Files	
@@ -542,6 +561,7 @@ Dateien, die die hier angegebene Zeichenfolgen enthalten werden vom Tool entgül
 Move all Files to their Top Level Folder	
 Ist diese Option aktiv, werden alle nicht ignorierten Dateien vom Tool, die sich in Unterordnern zu den oben angegebenen Ordnern befanden in deren jeweiligen Überordner verschoben.
 
+
 Replace With	
 Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen ersetzt werden sollen. Dabei können unter \"With\" auch folgende Bezeichner eingesetzt werden:
 
@@ -551,11 +571,17 @@ Hier können Zeichenfolgen angegeben werden, die in den Dateinamen mit anderen e
 
 <date> Setzt das aktuelle Datum ein (z.b. 20211205). Date kann auch z.B. bei \"ignore\", \"delete\" und \"replace this\" eingetragen werden, um Dateien zu erkennen, die ein Datum enthalten.
 
+
 Remove Parts from Filenames	
 Entfernt Zeichenfolgen aus Dateinamen. Separiert werden diese per Absatz.
 
+
 Prefix & Subfix	
 Werden vor / nach dem Dateinamen angefügt. Dateiendungen werden hierbei ignoriert.
+
+
+Overwrite when Names already exist	
+Ist diese Checkbox aktiv und entspricht der \"Zielname\" einer Datei einem, der bereits existiert, wird die ursprüngliche Datei überschrieben.
 
 
 Preview
@@ -572,8 +598,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SplitMain/Tabs/Known Issues"]
-margin_right = 1048.0
-margin_bottom = 1163.0
+margin_right = 948.0
+margin_bottom = 963.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
@@ -604,7 +630,7 @@ NPFoldersList = NodePath("../../SplitSidebar/PnFolders/ScrlFolders/VbFolders")
 NPRenameOptions = NodePath("../../../RenameOptions")
 
 [node name="LblDroplet" type="Label" parent="SplitMain/Tabs/Doplet Comp"]
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 18.0
 custom_fonts/font = ExtResource( 7 )
 text = "Photoshop Droplet Comp"
@@ -614,7 +640,7 @@ __meta__ = {
 
 [node name="HbDropletPath" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
 margin_top = 22.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 49.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -628,14 +654,14 @@ text = "Droplet Path"
 
 [node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletPath"]
 margin_left = 82.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\ecs_trim_droplet.exe"
 
 [node name="HbDropletOutput" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
 margin_top = 53.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 80.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -649,14 +675,14 @@ text = "Droplet Output Folder"
 
 [node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletOutput"]
 margin_left = 138.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
 
 [node name="HbDropletCustomOutput" type="HBoxContainer" parent="SplitMain/Tabs/Doplet Comp"]
 margin_top = 84.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 111.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -670,19 +696,19 @@ text = "Move to custom Folder?"
 
 [node name="Le" type="LineEdit" parent="SplitMain/Tabs/Doplet Comp/HbDropletCustomOutput"]
 margin_left = 153.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 
 [node name="BtnRunDroplet" type="Button" parent="SplitMain/Tabs/Doplet Comp"]
 margin_top = 115.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 138.0
 text = "Run Droplet"
 
 [node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Doplet Comp"]
 margin_top = 142.0
-margin_right = 1048.0
+margin_right = 948.0
 margin_bottom = 159.0
 
 [node name="BtnRun" type="Button" parent="."]
@@ -744,6 +770,7 @@ script = ExtResource( 12 )
 [connection signal="about_to_show" from="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" to="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" method="UpdateItems"]
 [connection signal="pressed" from="SplitMain/SplitSidebar/HbSaveLoad/BtnConfigFolder" to="SplitMain/SplitSidebar/HbSaveLoad/BtnConfigFolder" method="Open"]
 [connection signal="pressed" from="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbMoveToBaseFolder" to="." method="StartUpdateTimer"]
+[connection signal="pressed" from="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbOverwrite" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]

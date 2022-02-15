@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7.2": {
+      "Magick.NET.Core/9.1.2": {
+        "type": "package",
+        "compile": {
+          "lib/net20/Magick.NET.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net20/Magick.NET.Core.dll": {}
+        }
+      },
       "Microsoft.NETFramework.ReferenceAssemblies/1.0.2": {
         "type": "package",
         "dependencies": {
@@ -17,6 +26,25 @@
     }
   },
   "libraries": {
+    "Magick.NET.Core/9.1.2": {
+      "sha512": "6wU43oekNbfKZ7HZcsfROuwXjMLvKwa2M9ETVtreghmxF2jrxgL3aXK6QUzMIJkdRJeE0p/JcHCDeJLwF5ZJMA==",
+      "type": "package",
+      "path": "magick.net.core/9.1.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Copyright.txt",
+        "Magick.NET.icon.png",
+        "lib/net20/Magick.NET.Core.dll",
+        "lib/net20/Magick.NET.Core.xml",
+        "lib/netstandard20/Magick.NET.Core.dll",
+        "lib/netstandard20/Magick.NET.Core.xml",
+        "lib/netstandard21/Magick.NET.Core.dll",
+        "lib/netstandard21/Magick.NET.Core.xml",
+        "magick.net.core.9.1.2.nupkg.sha512",
+        "magick.net.core.nuspec"
+      ]
+    },
     "Microsoft.NETFramework.ReferenceAssemblies/1.0.2": {
       "sha512": "5/cSEVld+px/CuRrbohO/djfg6++eR6zGpy88MgqloXvkj//WXWpFZyu/OpkXPN0u5m+dN/EVwLNYFUxD4h2+A==",
       "type": "package",
@@ -411,23 +439,24 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
+      "Magick.NET.Core >= 9.1.2",
       "Microsoft.NETFramework.ReferenceAssemblies >= 1.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Simon\\.nuget\\packages\\": {}
+    "C:\\Users\\simon\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
+      "projectUniqueName": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
       "projectName": "y3D-FM",
-      "projectPath": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
-      "packagesPath": "C:\\Users\\Simon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Simon\\dev\\y3D-FM\\.mono\\temp\\obj\\",
+      "projectPath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
+      "packagesPath": "C:\\Users\\simon\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Simon\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\simon\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net472"
@@ -451,6 +480,10 @@
       "net472": {
         "targetAlias": "net472",
         "dependencies": {
+          "Magick.NET.Core": {
+            "target": "Package",
+            "version": "[9.1.2, )"
+          },
           "Microsoft.NETFramework.ReferenceAssemblies": {
             "suppressParent": "All",
             "target": "Package",

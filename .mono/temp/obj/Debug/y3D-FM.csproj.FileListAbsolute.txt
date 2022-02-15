@@ -7,3 +7,14 @@ C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfo.cs
 C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CoreCompileInputs.cache
 C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.dll
 C:\Users\Simon\dev\y3D-FM\.mono\temp\obj\Debug\y3D-FM.pdb
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\y3D-FM.dll
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\y3D-FM.pdb
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.AssemblyReference.cache
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfoInputs.cache
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.AssemblyInfo.cs
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CoreCompileInputs.cache
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.dll
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.pdb
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\bin\Debug\Magick.NET.Core.dll
+C:\Users\simon\Dev\GitHub\y3D-FM\.mono\temp\obj\Debug\y3D-FM.csproj.CopyComplete

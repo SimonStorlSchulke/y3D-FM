@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/d5HQesMXJgzIv/aDVUkX1CCcGIVw8lfQujRLUyBrH5sQfRzC8BGgIxGbSWp24Sx5ItigDCa3fpUzupzu0XasQ==",
+  "dgSpecHash": "5FYZyZpxDcw3NRJAybYljBqRJDE6y/n6VkRrKAxObJcgFXFlcq3aCjxzDLcX1zcFHjDRYUdG9JKwSoFo23xs1g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Simon\\dev\\y3D-FM\\y3D-FM.csproj",
+  "projectFilePath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
-    "C:\\Users\\Simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+    "C:\\Users\\simon\\.nuget\\packages\\magick.net.core\\9.1.2\\magick.net.core.9.1.2.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
+    "C:\\Users\\simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }

@@ -15,11 +15,13 @@ public class SaveData
     public string prefix;
     public string subfix;
     public string dropletPath;
+    public bool overwrite;
     public static SaveData FromOptions(RenameOptions rno) {
         SaveData sd = new SaveData();
         sd.baseFolders = rno.productFoldersDict.Keys.ToArray();
         sd.productNames = rno.productFoldersDict.Values.ToArray();
         sd.moveToBaseFolders = rno.moveToBaseFolders;
+        sd.overwrite = rno.overwrite;
         sd.ignoreFilesList = rno.ignoreFilesList.ToArray();
         sd.removeFilesList = rno.removeFilesList.ToArray();
         sd.removeNamePartsList = rno.removeFileNamePartsList.ToArray();
