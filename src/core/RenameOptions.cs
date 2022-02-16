@@ -35,7 +35,6 @@ public class RenameOptions : Node {
     }
 
     public bool ignoreFile(string unparsedFileName, string originalFileName) {
-
         bool ignore = false;
         foreach (string ignoreFile in ignoreFilesList) {
             string toCompare =  ignoreFile.Contains("<date>") ? unparsedFileName : originalFileName;
@@ -77,6 +76,8 @@ public class RenameOptions : Node {
 
         foreach (Tuple<string, string, string> fileOrigin in list) {
 
+            if (fileOrigin.Item1.EndsWith("Thumbs.db")) break;
+
             string originalFileName = fileOrigin.Item1.GetFile();
             string unparsedFileName = UnParseDate(fileOrigin.Item1.GetFile());
 
@@ -91,7 +92,6 @@ public class RenameOptions : Node {
             foreach (string ignoreFile in ignoreFilesList) {
                 // TODO replace with ignoreFIle method
                 string toCompare =  ignoreFile.Contains("<date>") ? unparsedFileName : originalFileName;
-
                 if (ignoreFile != "" &&  toCompare.Contains(ignoreFile)) {
                     ignore = true;
                     break;

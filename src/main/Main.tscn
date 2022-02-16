@@ -243,6 +243,7 @@ margin_top = 21.0
 margin_right = 207.0
 margin_bottom = 171.0
 rect_min_size = Vector2( 0, 150 )
+text = "Thumbs.db"
 
 [node name="VbRemove" type="VBoxContainer" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HbIgnoreRemove"]
 margin_left = 211.0
@@ -403,6 +404,7 @@ script = ExtResource( 18 )
 NPButtonRun = NodePath("../../BtnRun")
 
 [node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -656,7 +658,6 @@ text = "Known Issues
 - Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
 
 [node name="Batch Process" type="VBoxContainer" parent="SplitMain/Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -755,10 +756,31 @@ text = "Output Folder"
 
 [node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutput"]
 margin_left = 90.0
-margin_right = 948.0
+margin_right = 663.0
 margin_bottom = 27.0
 size_flags_horizontal = 3
 text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
+
+[node name="CbJpg" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
+margin_left = 667.0
+margin_right = 722.0
+margin_bottom = 27.0
+pressed = true
+text = "JPG"
+
+[node name="CbPsd" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
+margin_left = 726.0
+margin_right = 780.0
+margin_bottom = 27.0
+pressed = true
+text = "PSD"
+
+[node name="CbSort" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
+margin_left = 784.0
+margin_right = 948.0
+margin_bottom = 27.0
+pressed = true
+text = "Sort in Productfolders"
 
 [node name="spacer2" type="Control" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 169.0
@@ -870,5 +892,5 @@ script = ExtResource( 12 )
 [connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
 [connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
-[connection signal="pressed" from="BtnRun" to="." method="OnRun"]
 [connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
+[connection signal="pressed" from="BtnRun" to="." method="OnRun"]
