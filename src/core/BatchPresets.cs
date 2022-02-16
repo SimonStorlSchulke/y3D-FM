@@ -36,24 +36,40 @@ public static class BatchPresets
                 img.Depth = 8;
             }
         ),
-        /*new BatchProcess(
-            "Testoperator",
-            "A = 0.5, B = 2, c= false, d = true",
+        new BatchProcess(
+            "Title",
+            "Comb images",
+            "AO Layer Name Prefix = AO_, A= = 0.5, trim = false",
             (MagickImage img, string optionsString) => {
-                img.Trim();
-                img.RePage();
-                img.Density = new Density(300, 300);
-                img.Depth = 8;
                 var opt = compileOptions(optionsString);
+
+                string[] paths = {img.FileName.GetBaseDir(), opt["AOLayerNamePrefix"] + img.FileName.GetFile()};
+                string filenameAo = System.IO.Path.Combine(paths);
+
+                GD.Print(filenameAo);
+                using (MagickImage AO = new MagickImage(filenameAo))
+                {
+                    
+                    //img.Composite(AO, CompositeOperator.Multiply);
+                    MagickImageCollection c = new MagickImageCollection();
+                    MagickImage m = new MagickImage(img);
+                    c.Add(m);
+                    c.Add(img);
+                    c.Add(AO);
+                    c.Write(@"C:\Users\simon\Pictures\bg\test.psd");
+                }
+                //img.Trim();   
+                //img.RePage();
+                //img.Density = new Density(300, 300);
+                //img.Depth = 8;
             }
-        ),*/
+        ),
     };
 
     public static Dictionary<string, object> compileOptions(string optionsString) {
         Dictionary<string, object> dict = new Dictionary<string, object>();
 
         optionsString = optionsString.Replace(" ", ""); //remove whitespace
-        optionsString = optionsString.ToLower(); //make all lowercase
         string[] options = optionsString.Split(","); //separate individual options
 
         foreach (string optionString in options) {
@@ -63,6 +79,7 @@ public static class BatchPresets
             if (optionPair[1] == "true") value = true;
             else if (optionPair[1] == "false") value = false;
             else if(float.TryParse(optionPair[1], out f)) value = f;
+            else value = optionPair[1];
             dict.Add(optionPair[0], value);
         }
         return dict;

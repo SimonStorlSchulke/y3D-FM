@@ -403,7 +403,6 @@ script = ExtResource( 18 )
 NPButtonRun = NodePath("../../BtnRun")
 
 [node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -657,6 +656,7 @@ text = "Known Issues
 - Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
 
 [node name="Batch Process" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -702,7 +702,6 @@ margin_right = 334.0
 margin_bottom = 23.0
 rect_min_size = Vector2( 230, 0 )
 text = "ECSTrim"
-selected = 0
 
 [node name="LblPresetDescription" type="Label" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 63.0
@@ -871,5 +870,5 @@ script = ExtResource( 12 )
 [connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
 [connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
-[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
+[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
