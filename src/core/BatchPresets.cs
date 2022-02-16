@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ImageMagick;
 using System;
 
-public delegate void BatchProcessFunction(MagickImage img, string optionsString, bool psd = true, bool jpg = true);
+public delegate void BatchProcessFunction(MagickImage img, string optionsString, string destination, bool psd = true, bool jpg = true);
 
 public struct BatchProcess
 {
@@ -29,8 +29,8 @@ public static class BatchPresets
             "ECS Trim",
             "Remove whitespace from the image, change DPI to 300 pixels/inch and use 8 bits per channel. Optionally add a margin factor (in pixels) to the trimmer.",
             "margin = 0",
-            (MagickImage img, string optionsString, bool psd, bool jpg) => {
-                string destPath = DopletComp.GetSaveDestination(img.FileName, jpg: jpg, sort: true); // needs to be calles first
+            (MagickImage img, string optionsString, string destination, bool psd, bool jpg) => {
+                // needs to be calles first
                 int margin = Convert.ToInt32(compileOptions(optionsString)["margin"]);
                 img.Trim();
                 if (margin > 0) {
@@ -41,12 +41,16 @@ public static class BatchPresets
                 img.Depth = 8;
 
                 if (psd) {
-                    img.Write(destPath + ".psd");
+                    img.Write(destination + ".psd");
                 }
                 if (jpg) {
+                    string jpgDest = System.IO.Directory.GetParent(System.IO.Directory.GetParent(destination).FullName).FullName;
+                    GD.Print(jpgDest);
+                    jpgDest += "\\" + System.IO.Path.GetFileName(destination.GetBaseDir()) + "_jpg\\" + destination.GetFile();
+                    GD.Print(jpgDest);
                     var jpgFile = new MagickImage(img);
                     jpgFile.ColorAlpha(MagickColors.White);
-                    jpgFile.Write(destPath + ".jpg");
+                    jpgFile.Write(jpgDest + ".jpg");
                 }
             }
         ),
@@ -54,8 +58,7 @@ public static class BatchPresets
             "Title",
             "To make sure the layers are found, the AO Layers need to be in the same folder and have the same name as the Colorlayers but with an 'AO_' Prefix. The 'Prepare Title' Rename Preset should do that.",
             "AO Layer Name Prefix = AO_, AO = 0.5, trim = false",
-            (MagickImage img, string optionsString, bool psd, bool jpg) => {
-                string destPath = DopletComp.GetSaveDestination(img.FileName, jpg: jpg, sort: true); // needs to be calles first
+            (MagickImage img, string optionsString, string destination, bool psd, bool jpg) => {
                 var opt = compileOptions(optionsString);
                 if (img.FileName.GetFile().Contains((string)opt["AOLayerNamePrefix"])) {
                     throw(new Exception("Skipping AO Image"));
@@ -92,12 +95,12 @@ public static class BatchPresets
                     psdLayers.TrimBounds();
                     psdLayers.RePage();
                     if (psd) {
-                        psdLayers.Write(destPath + ".psd");
+                        psdLayers.Write(destination + ".psd");
                     }
                     if (jpg) {
                         var jpgFile = psdLayers.Flatten();
                         jpgFile.ColorAlpha(MagickColors.White);
-                        jpgFile.Write(destPath + ".jpg");
+                        jpgFile.Write(destination + ".jpg");
                     }
                 }
             }

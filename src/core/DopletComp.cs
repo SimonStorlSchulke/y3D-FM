@@ -56,11 +56,11 @@ public class DopletComp : Node
         UpdatePresetOptions(0);
     }
 
-    public static string GetSaveDestination(string filename, bool jpg = false, string productname = "prod", bool sort = true) {
+    public static string GetSaveDestination(string filename, bool createJpgFolder, string productname = "Unknown Product", bool sort = true) {
         
         string[] paths;
         if (sort) {
-            string subfoldername = jpg ? productname + "_jpg" : productname;
+            string subfoldername = productname;
             paths = new string[]{ 
             instance.GetNode<LineEdit>(instance.NPOutputFolder).Text,
             subfoldername,
@@ -72,8 +72,17 @@ public class DopletComp : Node
         }
 
         string fullPath = System.IO.Path.Combine(paths);
-        if (!System.IO.Directory.Exists(fullPath.GetBaseDir())) {
-            System.IO.Directory.CreateDirectory(fullPath);
+        string parentFolder = System.IO.Directory.GetParent(fullPath).FullName;
+
+        if (createJpgFolder) {
+            string parentFolderJPG = parentFolder + "_jpg";
+            if (!System.IO.Directory.Exists(parentFolderJPG)) {
+                System.IO.Directory.CreateDirectory(parentFolderJPG);
+            }
+        }
+
+        if (!System.IO.Directory.Exists(parentFolder)) {
+            System.IO.Directory.CreateDirectory(parentFolder);
         }
 
         return System.IO.Path.Combine(paths);
@@ -136,8 +145,9 @@ public class DopletComp : Node
             {
                 try
                 {
-                    process.function(img, lePresetOptions.Text, psd, jpg);
-                    lblProcessed.BbcodeText += "\n[color=lime]Processed[/color] " + GetSaveDestination(img.FileName);
+                    string dest = GetSaveDestination(img.FileName, jpg, files[atImage].Item2);
+                    process.function(img, lePresetOptions.Text, dest, psd, jpg);
+                    lblProcessed.BbcodeText += "\n[color=lime]Processed[/color] " + dest;
                 }
                 catch (System.Exception e)
                 {
