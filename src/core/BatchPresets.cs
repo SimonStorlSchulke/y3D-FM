@@ -23,6 +23,11 @@ public struct BatchProcess
 
 public static class BatchPresets
 {
+    public static string getJPGPath(string path) {
+    string jpgDest = System.IO.Directory.GetParent(System.IO.Directory.GetParent(path).FullName).FullName;
+    jpgDest += "\\" + System.IO.Path.GetFileName(path.GetBaseDir()) + "_jpg\\" + path.GetFile() + ".jpg";
+    return jpgDest;
+}
     public static BatchProcess[] list =
     {
         new BatchProcess(
@@ -30,7 +35,6 @@ public static class BatchPresets
             "Remove whitespace from the image, change DPI to 300 pixels/inch and use 8 bits per channel. Optionally add a margin factor (in pixels) to the trimmer.",
             "margin = 0",
             (MagickImage img, string optionsString, string destination, bool psd, bool jpg) => {
-                // needs to be calles first
                 int margin = Convert.ToInt32(compileOptions(optionsString)["margin"]);
                 img.Trim();
                 if (margin > 0) {
@@ -39,18 +43,17 @@ public static class BatchPresets
                 img.RePage();
                 img.Density = new Density(300, 300);
                 img.Depth = 8;
+                img.SetProfile(ColorProfile.SRGB);
 
                 if (psd) {
                     img.Write(destination + ".psd");
                 }
                 if (jpg) {
-                    string jpgDest = System.IO.Directory.GetParent(System.IO.Directory.GetParent(destination).FullName).FullName;
-                    GD.Print(jpgDest);
-                    jpgDest += "\\" + System.IO.Path.GetFileName(destination.GetBaseDir()) + "_jpg\\" + destination.GetFile();
-                    GD.Print(jpgDest);
                     var jpgFile = new MagickImage(img);
                     jpgFile.ColorAlpha(MagickColors.White);
-                    jpgFile.Write(jpgDest + ".jpg");
+                    jpgFile.Quality = 65;
+                    jpgFile.Write(DopletComp.outputFolderJPG + "/" + destination.GetFile() + ".jpg");
+                    //jpgFile.Write(getJPGPath(destination));
                 }
             }
         ),
@@ -69,6 +72,8 @@ public static class BatchPresets
 
                 using (MagickImage imgAO = new MagickImage(filenameAo))
                 {
+                    imgAO.SetProfile(ColorProfile.SRGB);
+                    img.SetProfile(ColorProfile.SRGB);
                     MagickImageCollection psdLayers = new MagickImageCollection();
                     img.Density = imgAO.Density = new Density(300, 300);
                     img.Depth = imgAO.Depth = 8;
@@ -100,11 +105,60 @@ public static class BatchPresets
                     if (jpg) {
                         var jpgFile = psdLayers.Flatten();
                         jpgFile.ColorAlpha(MagickColors.White);
-                        jpgFile.Write(destination + ".jpg");
+                        jpgFile.Quality = 65;
+                        jpgFile.Write(getJPGPath(destination));
                     }
                 }
             }
         ),
+        new BatchProcess(
+            "GF Rendercomp",
+            "Combine Background and Application",
+            "",
+            (MagickImage imgBG, string optionsString, string destination, bool psd, bool jpg) => {
+                //var opt = compileOptions(optionsString);
+                if (imgBG.FileName.GetFile().Contains("_App")) {
+                    throw(new Exception("Skipping App Image (applied in Filter)"));
+                }
+
+                string[] paths = {imgBG.FileName.GetBaseDir(), imgBG.FileName.GetFile().Replace("BG", "App")};
+                string filenameApp = System.IO.Path.Combine(paths);
+
+                using (MagickImage imgApp = new MagickImage(filenameApp))
+                {
+                    imgApp.SetProfile(ColorProfile.SRGB);
+                    imgBG.SetProfile(ColorProfile.SRGB);
+                    MagickImageCollection psdLayers = new MagickImageCollection();
+                    MagickImage imgBase = new MagickImage(imgBG);
+                    
+                    imgBG.Density = imgApp.Density = new Density(300, 300);
+                    imgBG.Depth = imgApp.Depth = 16;
+
+                    //imgApp.Compose = imgBG.Compose = CompositeOperator.Multiply; //Alpha, No, Replace, Blend, Over, Copy
+                    //imgBG.Compose
+
+                    var mApp = new MagickImage(imgBG);
+                    mApp.Composite(imgApp, CompositeOperator.CopyAlpha);
+                    
+                    imgBG.Label = "Background";
+                    imgApp.Label = "Application";
+                    psdLayers.Add(imgBase);
+                    psdLayers.Add(imgBG);
+                    //psdLayers.Add(mApp);
+                    psdLayers.RePage();
+
+                    if (psd) {
+                        //var s = psdLayers.Flatten();
+                        psdLayers.Write(destination + ".psd");
+                    }
+                    if (jpg) {
+                        var jpgFile = psdLayers.Flatten();
+                        jpgFile.ColorAlpha(MagickColors.White);
+                        jpgFile.Write(getJPGPath(destination));
+                    }
+                }
+            }
+        )
     };
 
     public static Dictionary<string, object> compileOptions(string optionsString) {

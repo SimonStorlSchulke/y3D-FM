@@ -4,40 +4,27 @@ using System.Collections.Generic;
 
 public class Main : Control {
 
-	[Export]
-	NodePath NPProductFolder;
+	[Export] NodePath NPProductFolder;
 
-	[Export]
-	NodePath NPDate;
+	[Export]NodePath NPDate;
 
-	[Export]
-	NodePath NPRemoveFiles;
+	[Export] NodePath NPRemoveFiles;
 
-	[Export]
-	NodePath NPIgnoreFiles;
+	[Export] NodePath NPIgnoreFiles;
 
-	[Export]
-	NodePath NPMoveToTopFolder;
+	[Export] NodePath NPMoveToTopFolder;
 
-	[Export]
-	NodePath NPReplaceWith;
+	[Export] NodePath NPReplaceWith;
 
-	[Export]
-	NodePath NPPreview;
+	[Export] NodePath NPPreview;
 
-	[Export]
-	NodePath NPRemoveFileNameParts;
+	[Export] NodePath NPRemoveFileNameParts;
 
-	[Export]
-	NodePath NPTimerShowPreview;
+	[Export] NodePath NPTimerShowPreview;
 
-	[Export]
-	NodePath NPLePreFix;
+	[Export] NodePath NPLePreFix;
 
-	[Export]
-	NodePath NPLeSubFix;
-	[Export]
-	NodePath NPCbPverwrite;
+	[Export] NodePath NPLeSubFix;
 	Timer timerShowPreview;
 
 	public static Main instance;
@@ -46,6 +33,7 @@ public class Main : Control {
 	public RenameOptions options;
 
 	public List<FileJob> jobList;
+	public List<FileJob> JobListExistingFiles;
  
 	public override void _Ready() {
 		timerShowPreview = GetNode<Timer>(NPTimerShowPreview);
@@ -88,7 +76,6 @@ public class Main : Control {
 		options.prefix = GetNode<LineEdit>(NPLePreFix).Text;
 		options.subfix = GetNode<LineEdit>(NPLeSubFix).Text;
 		options.moveToBaseFolders = GetNode<CheckBox>(NPMoveToTopFolder).Pressed;
-		options.overwrite = GetNode<CheckBox>(NPCbPverwrite).Pressed;
 
 		jobList = options.ParseFiles(refreshFiles);
 		GetNode<Preview>(NPPreview).Show(jobList);
@@ -111,7 +98,6 @@ public class Main : Control {
 		GetNode<TextEdit>(NPRemoveFileNameParts).Text = string.Join("\n", sd.removeNamePartsList);
 		GetNode<LineEdit>(NPLePreFix).Text = sd.prefix;
 		GetNode<LineEdit>(NPLeSubFix).Text = sd.subfix;
-		GetNode<CheckBox>(NPCbPverwrite).Pressed = sd.overwrite;
 		refreshFiles = true;
 		OnUpdateJobList();
 	}

@@ -76,8 +76,6 @@ public class RenameOptions : Node {
 
         foreach (Tuple<string, string, string> fileOrigin in list) {
 
-            if (fileOrigin.Item1.EndsWith("Thumbs.db")) break;
-
             string originalFileName = fileOrigin.Item1.GetFile();
             string unparsedFileName = UnParseDate(fileOrigin.Item1.GetFile());
 
@@ -92,7 +90,7 @@ public class RenameOptions : Node {
             foreach (string ignoreFile in ignoreFilesList) {
                 // TODO replace with ignoreFIle method
                 string toCompare =  ignoreFile.Contains("<date>") ? unparsedFileName : originalFileName;
-                if (ignoreFile != "" &&  toCompare.Contains(ignoreFile)) {
+                if (ignoreFile != "" &&  (toCompare.Contains(ignoreFile) || toCompare.Contains("Thumbs.db"))) {
                     ignore = true;
                     break;
                 }
@@ -150,7 +148,9 @@ public class RenameOptions : Node {
                 fileDest = fileDest + parsedSubfix;
             }
             
-            fileDest = moveToBaseFolders ? fileOrigin.Item2 + "\\" + fileDest : fileOrigin.Item1.GetBaseDir() + "\\" + fileDest;
+            bool toBaseFolder = System.IO.Directory.Exists(fileOrigin.Item2) ? moveToBaseFolders : false;
+
+            fileDest = toBaseFolder ? fileOrigin.Item2 + "\\" + fileDest : fileOrigin.Item1.GetBaseDir() + "\\" + fileDest;
             fileDest += System.IO.Path.GetExtension(fileOrigin.Item1);
 
             if (fileOrigin.Item1 != fileDest) {

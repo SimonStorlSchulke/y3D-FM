@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/ui/ProductFolderInput.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/FoldersList.cs" type="Script" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://src/ui/BtnConfigFolder.cs" type="Script" id=16]
 [ext_resource path="res://src/core/DopletComp.cs" type="Script" id=17]
 [ext_resource path="res://src/ui/Tabs.cs" type="Script" id=18]
+[ext_resource path="res://src/main/PuAlreadyExists.cs" type="Script" id=19]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.117647, 0.117647, 0.137255, 1 )
@@ -41,6 +42,9 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.231373, 0.223529, 0.258824, 1 )
+
 [node name="Main" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -61,7 +65,6 @@ NPRemoveFileNameParts = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/V
 NPTimerShowPreview = NodePath("TimerShowPreview")
 NPLePreFix = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HBPreSubix/VbPrefix/LePrefix")
 NPLeSubFix = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HBPreSubix/VbSubfix/LeSubFix")
-NPCbPverwrite = NodePath("SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbOverwrite")
 
 [node name="TimerShowPreview" type="Timer" parent="."]
 one_shot = true
@@ -121,7 +124,7 @@ margin_right = 196.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 7 )
-text = "Folders"
+text = "Folders & Files"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -379,19 +382,10 @@ margin_top = 21.0
 margin_right = 207.0
 margin_bottom = 48.0
 
-[node name="CbOverwrite" type="CheckBox" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
+[node name="HSeparator5" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
 margin_top = 518.0
 margin_right = 418.0
-margin_bottom = 543.0
-text = "Overwrite when Names already exists"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HSeparator5" type="HSeparator" parent="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions"]
-margin_top = 547.0
-margin_right = 418.0
-margin_bottom = 551.0
+margin_bottom = 522.0
 
 [node name="Tabs" type="TabContainer" parent="SplitMain"]
 margin_left = 442.0
@@ -404,7 +398,6 @@ script = ExtResource( 18 )
 NPButtonRun = NodePath("../../BtnRun")
 
 [node name="Preview" type="VBoxContainer" parent="SplitMain/Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -647,17 +640,26 @@ size_flags_vertical = 3
 custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
 bbcode_enabled = true
 bbcode_text = "[font=res://theme/font_heading.tres]Known Issues[/font]
+[font=res://theme/font_heading.tres]Known Issues[/font]
 
-- Droplet Funktion ist TODO
+- Batch Process \"Title\" gibt unnötige Fehlermeldung aus
+
+- Hinzugefügte Einzelne Dateien werden nach dem umbenennen nicht mehr gefunden (da sich natürlich der Pfad geändert) hat -> TODO: Pfad beim Umbenennen auch in Liste ändern.
+
 - Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
-- Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
+"
 text = "Known Issues
+Known Issues
 
-- Droplet Funktion ist TODO
+- Batch Process \"Title\" gibt unnötige Fehlermeldung aus
+
+- Hinzugefügte Einzelne Dateien werden nach dem umbenennen nicht mehr gefunden (da sich natürlich der Pfad geändert) hat -> TODO: Pfad beim Umbenennen auch in Liste ändern.
+
 - Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
-- Zugriff auf bestimmte Überordner verbieten per Config File (z.B. \\\\mca-dtp)"
+"
 
 [node name="Batch Process" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -748,50 +750,64 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblOutputPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutput"]
-margin_top = 5.0
-margin_right = 86.0
-margin_bottom = 22.0
-text = "Output Folder"
-
-[node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutput"]
-margin_left = 90.0
-margin_right = 663.0
-margin_bottom = 27.0
-size_flags_horizontal = 3
-text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
-
-[node name="CbJpg" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
-margin_left = 667.0
-margin_right = 722.0
-margin_bottom = 27.0
-pressed = true
-text = "JPG"
-
 [node name="CbPsd" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
-margin_left = 726.0
-margin_right = 780.0
+margin_right = 54.0
 margin_bottom = 27.0
 pressed = true
 text = "PSD"
 
-[node name="CbSort" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
-margin_left = 784.0
+[node name="LblOutputPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutput"]
+margin_left = 58.0
+margin_top = 5.0
+margin_right = 144.0
+margin_bottom = 22.0
+text = "Output Folder"
+
+[node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutput"]
+margin_left = 148.0
 margin_right = 948.0
 margin_bottom = 27.0
-pressed = true
-text = "Sort in Productfolders"
+size_flags_horizontal = 3
+text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
 
-[node name="spacer2" type="Control" parent="SplitMain/Tabs/Batch Process"]
+[node name="HbOutputJpg" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 169.0
 margin_right = 948.0
-margin_bottom = 173.0
+margin_bottom = 196.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CbJpg" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
+margin_right = 55.0
+margin_bottom = 27.0
+pressed = true
+text = "JPG"
+
+[node name="LblOutputPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
+margin_left = 59.0
+margin_top = 5.0
+margin_right = 145.0
+margin_bottom = 22.0
+text = "Output Folder"
+
+[node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
+margin_left = 149.0
+margin_right = 948.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+placeholder_text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output_jpg"
+
+[node name="spacer2" type="Control" parent="SplitMain/Tabs/Batch Process"]
+margin_top = 200.0
+margin_right = 948.0
+margin_bottom = 204.0
 rect_min_size = Vector2( 0, 4 )
 
 [node name="HbRun" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 177.0
+margin_top = 208.0
 margin_right = 948.0
-margin_bottom = 209.0
+margin_bottom = 240.0
 
 [node name="BtnRun" type="Button" parent="SplitMain/Tabs/Batch Process/HbRun"]
 margin_right = 150.0
@@ -809,9 +825,9 @@ custom_styles/fg = SubResource( 2 )
 custom_styles/bg = SubResource( 3 )
 
 [node name="TeProcessedImages" type="TextEdit" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 213.0
+margin_top = 244.0
 margin_right = 948.0
-margin_bottom = 213.0
+margin_bottom = 244.0
 text = "Processed"
 
 [node name="tmrNextImage" type="Timer" parent="SplitMain/Tabs/Batch Process"]
@@ -819,7 +835,7 @@ wait_time = 0.05
 one_shot = true
 
 [node name="LblProcessed" type="RichTextLabel" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 217.0
+margin_top = 248.0
 margin_right = 948.0
 margin_bottom = 963.0
 size_flags_vertical = 3
@@ -880,11 +896,51 @@ __meta__ = {
 [node name="RenameOptions" type="Node" parent="."]
 script = ExtResource( 12 )
 
+[node name="PuAlreadyExists" type="ConfirmationDialog" parent="."]
+visible = true
+margin_left = 534.0
+margin_top = 393.0
+margin_right = 834.0
+margin_bottom = 498.0
+rect_min_size = Vector2( 300, 400 )
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vb" type="VBoxContainer" parent="PuAlreadyExists"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -39.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblAlreadyExists" type="Label" parent="PuAlreadyExists/Vb"]
+margin_right = 284.0
+margin_bottom = 37.0
+text = "Files with the following Names already esist. Do you want to overwrite them?"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TeAlreadyExists" type="TextEdit" parent="PuAlreadyExists/Vb"]
+margin_top = 41.0
+margin_right = 284.0
+margin_bottom = 353.0
+size_flags_vertical = 3
+custom_colors/font_color_readonly = Color( 0.956863, 0.847059, 0, 1 )
+custom_styles/read_only = SubResource( 4 )
+readonly = true
+
 [connection signal="timeout" from="TimerShowPreview" to="." method="OnUpdateJobList"]
 [connection signal="about_to_show" from="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" to="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" method="UpdateItems"]
 [connection signal="pressed" from="SplitMain/SplitSidebar/HbSaveLoad/BtnConfigFolder" to="SplitMain/SplitSidebar/HbSaveLoad/BtnConfigFolder" method="Open"]
 [connection signal="pressed" from="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbMoveToBaseFolder" to="." method="StartUpdateTimer"]
-[connection signal="pressed" from="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/CbOverwrite" to="." method="StartUpdateTimer"]
 [connection signal="tab_changed" from="SplitMain/Tabs" to="SplitMain/Tabs" method="OnChangeTab"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
@@ -892,5 +948,6 @@ script = ExtResource( 12 )
 [connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
 [connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
-[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
+[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
+[connection signal="confirmed" from="PuAlreadyExists" to="PuAlreadyExists" method="DoIt"]

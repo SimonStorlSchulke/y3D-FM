@@ -11,20 +11,28 @@ public struct FileJob {
     }
 
     /// <summary>Exectues the FIleJob and returns errors if there were any.</summary>
-    public static void Execute(List<FileJob> jobList) {
-        bool overwrite = Main.instance.options.overwrite;
+    public static void Execute(List<FileJob> jobList, bool overwrite = false) {
         bool had_errors = false;
         ErrorLog.instance.Clear();
+        Main.instance.JobListExistingFiles = new List<FileJob>();
+        bool hadExistingFiles = false;
         foreach (FileJob job in jobList) {
             if (job.pathDestination == "DELETE") { // kinda dirty ;)
                 System.IO.File.Delete(job.pathOriginal);
                 continue;
             }
             try {
-                if (overwrite && System.IO.File.Exists(job.pathDestination)) {
-                    System.IO.File.Delete(job.pathDestination);
+                if (System.IO.File.Exists(job.pathDestination)) {
+                    if (overwrite) {
+                        System.IO.File.Delete(job.pathDestination);
+                        System.IO.File.Move(job.pathOriginal, job.pathDestination);
+                    } else {
+                        Main.instance.JobListExistingFiles.Add(job);
+                        hadExistingFiles = true;
+                    }
+                } else {
+                    System.IO.File.Move(job.pathOriginal, job.pathDestination);
                 }
-                System.IO.File.Move(job.pathOriginal, job.pathDestination);
             } catch (System.Exception e) {
                 had_errors = true;
                 ErrorLog.instance.Add(
@@ -32,6 +40,9 @@ public struct FileJob {
                     e.Message,
                     ErrorLog.LogColor.RED);
             }
+        }
+        if (hadExistingFiles) {
+            PuAlreadyExists.ShowPopup();
         }
         if (had_errors) {
             ErrorLog.instance.PopUp();

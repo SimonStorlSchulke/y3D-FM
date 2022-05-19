@@ -12,6 +12,8 @@ config_version=4
 
 config/name="y3D-FM"
 run/main_scene="res://src/main/Main.tscn"
+config/icon="res://src/ui/yfm.png"
+config/windows_native_icon="res://src/ui/yfm.ico"
 
 [display]
 

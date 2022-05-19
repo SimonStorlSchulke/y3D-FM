@@ -5,13 +5,47 @@ using System.Collections.Generic;
 
 public class RNUtil : Node
 {
-    // TODO handle warnings
-        public static string[] TryParseFiles(string path, bool recursive)
+
+    //File Paths that are forbidden to directly load in
+    readonly static string[] blacklistedDirs = new string[]{
+        @"\\FILE-SERVER\a",
+        @"\\FILE-SERVER\jobs",
+        @"\\FILE-SERVER\raid",
+        @"H:\",
+        @"\\mca-dtp\a",
+        @"\\mca-dtp\DFS-Area GLC",
+        };
+
+    static bool isBlacklisted(string path) {
+        bool blacklisted = false;
+        foreach (string blacklistedPath in blacklistedDirs)
+        {
+            string dirBL = System.IO.Path.GetFullPath(blacklistedPath);
+            string dirPath = System.IO.Path.GetFullPath(path);
+            if (dirBL == dirPath) {
+                blacklisted = true;
+                break;
+            }
+        }
+        return blacklisted;
+    }
+
+    public static string[] TryParseFiles(string path, bool recursive)
     {
+        var d = new Godot.Directory();
+        bool isDir = d.DirExists(path);
         string[] files = { };
+        if (isBlacklisted(path)) {
+            ErrorLog.instance.Add("CANNOT DIRECTLY ACCESS BLACKLISTED DIRECTORY " + path, "blacklisted Directories are:\n" + string.Join("\n", blacklistedDirs), ErrorLog.LogColor.RED);
+            ErrorLog.instance.PopUp();
+            return files;
+        }
         try
         {
-            files = recursive ? System.IO.Directory.GetFiles(path, "*", System.IO.SearchOption.AllDirectories) : System.IO.Directory.GetFiles(path);
+            if (isDir)
+                files = recursive ? System.IO.Directory.GetFiles(path, "*", System.IO.SearchOption.AllDirectories) : System.IO.Directory.GetFiles(path);
+            else
+                files = new string[] { path };
         }
         catch (System.Exception e)
         {
@@ -38,14 +72,16 @@ public class RNUtil : Node
         return dirs;
     }
 
-    public static void PrintStringPairDict(Dictionary<string, string> dict) {
+    public static void PrintStringPairDict(Dictionary<string, string> dict)
+    {
         foreach (KeyValuePair<string, string> kvp in dict)
         {
             GD.Print("Key = ", kvp.Key, "    Value = ", kvp.Value);
         }
     }
 
-    public static void PrintStringList(List<string> list) {
+    public static void PrintStringList(List<string> list)
+    {
         foreach (string str in list)
         {
             GD.Print(str);

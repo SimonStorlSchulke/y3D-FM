@@ -26,10 +26,11 @@ public class DopletComp : Node
     List<Tuple<string, string>> files;
     Godot.Timer tmr;
     BatchProcess process;
+    public static string outputFolderJPG;
     int atImage = 0;
     public static DopletComp instance;
 
-    public static readonly string[] supportedFormats = { "png", "jpg", "jpeg", "tiff", "tga", "exr", "bmp", "psd" };
+    public static readonly string[] supportedFormats = { "png", "jpg", "jpeg", "tiff", "tif", "tga", "exr", "bmp", "psd" };
     public override void _Ready()
     {
         if (instance == null) {
@@ -74,13 +75,6 @@ public class DopletComp : Node
         string fullPath = System.IO.Path.Combine(paths);
         string parentFolder = System.IO.Directory.GetParent(fullPath).FullName;
 
-        if (createJpgFolder) {
-            string parentFolderJPG = parentFolder + "_jpg";
-            if (!System.IO.Directory.Exists(parentFolderJPG)) {
-                System.IO.Directory.CreateDirectory(parentFolderJPG);
-            }
-        }
-
         if (!System.IO.Directory.Exists(parentFolder)) {
             System.IO.Directory.CreateDirectory(parentFolder);
         }
@@ -99,12 +93,10 @@ public class DopletComp : Node
 
     bool jpg;
     bool psd;
-    bool sort;
     public void Run()
     {
-        jpg = GetNode<CheckBox>("HbOutput/CbJpg").Pressed;
+        jpg = GetNode<CheckBox>("HbOutputJpg/CbJpg").Pressed;
         psd = GetNode<CheckBox>("HbOutput/CbPsd").Pressed;
-        sort = GetNode<CheckBox>("HbOutput/CbSort").Pressed;
         process = BatchPresets.list[presetSelector.Selected];
         process.defaultOptions = lePresetOptions.Text;
 
@@ -134,6 +126,7 @@ public class DopletComp : Node
         }
 
         string outputFolder = GetNode<LineEdit>(NPOutputFolder).Text;
+        outputFolderJPG = outputFolder + "_jpg";
         bool supported = false;
         foreach (string format in supportedFormats)
         {
@@ -152,7 +145,7 @@ public class DopletComp : Node
                 catch (System.Exception e)
                 {
                     if (e.Message != "Skipping AO Image") {
-                        lblProcessed.BbcodeText += "\n[color=red]Could not Process[/color] " + files[atImage].Item1.GetFile() + " " + e.Message;
+                        lblProcessed.BbcodeText += "\n[color=red]Could not Process[/color] " + files[atImage].Item1.GetFile() + " " + e;
                     }
                 }
             }
