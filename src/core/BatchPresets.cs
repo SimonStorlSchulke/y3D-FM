@@ -25,7 +25,7 @@ public static class BatchPresets
 {
     public static string getJPGPath(string path) {
     string jpgDest = System.IO.Directory.GetParent(System.IO.Directory.GetParent(path).FullName).FullName;
-    jpgDest += "\\" + System.IO.Path.GetFileName(path.GetBaseDir()) + "_jpg\\" + path.GetFile() + ".jpg";
+    jpgDest += "\\" + System.IO.Path.GetFileName(path.GetBaseDir()) + "_jpg\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + path.GetFile() + ".jpg";
     return jpgDest;
 }
     public static BatchProcess[] list =
@@ -52,22 +52,22 @@ public static class BatchPresets
                     var jpgFile = new MagickImage(img);
                     jpgFile.ColorAlpha(MagickColors.White);
                     jpgFile.Quality = 65;
-                    jpgFile.Write(DopletComp.outputFolderJPG + "/" + destination.GetFile() + ".jpg");
+                    string jpgFolder = DopletComp.outputFolderJPG + "\\" + DateTime.Now.ToString("yyyyMMdd");
+                    System.IO.Directory.CreateDirectory(jpgFolder);
+                    jpgFile.Write(jpgFolder + "\\" + destination.GetFile() + ".jpg");
                     //jpgFile.Write(getJPGPath(destination));
                 }
             }
         ),
         new BatchProcess(
             "Title",
-            "To make sure the layers are found, the AO Layers need to be in the same folder and have the same name as the Colorlayers but with an 'AO_' Prefix. The 'Prepare Title' Rename Preset should do that.",
-            "AO Layer Name Prefix = AO_, AO = 0.5, trim = false",
+            "Einfach MLI Ordner oder auch Kamera 01 Ordner reinziehen, Title Batch preset ausführen, fertig.",
+            "AOLayerPath = Shadow\\Shadow_(Singleframe)_0000.png, AO = 0.5, trim = false",
             (MagickImage img, string optionsString, string destination, bool psd, bool jpg) => {
                 var opt = compileOptions(optionsString);
-                if (img.FileName.GetFile().Contains((string)opt["AOLayerNamePrefix"])) {
-                    throw(new Exception("Skipping AO Image"));
-                }
 
-                string[] paths = {img.FileName.GetBaseDir(), opt["AOLayerNamePrefix"] + img.FileName.GetFile()};
+
+                string[] paths = {img.FileName.GetBaseDir().GetBaseDir(), (string)opt["AOLayerPath"]};
                 string filenameAo = System.IO.Path.Combine(paths);
 
                 using (MagickImage imgAO = new MagickImage(filenameAo))
@@ -78,35 +78,29 @@ public static class BatchPresets
                     img.Density = imgAO.Density = new Density(300, 300);
                     img.Depth = imgAO.Depth = 8;
 
-                    MagickImage imgbase = new MagickImage(img);
-                    MagickImage imgShadow = new MagickImage(imgAO);
-                    imgShadow.BlackThreshold(new Percentage(100));
-                    imgAO.HasAlpha = false;
-                    imgAO.Negate();
-                    
-                    imgShadow.Composite(imgAO, CompositeOperator.CopyAlpha);
-                    imgAO.Negate();
+                    MagickImage imgbase = new MagickImage(imgAO);
                     imgAO.HasAlpha = true;
-                    imgAO.Composite(img, CompositeOperator.CopyAlpha);
-                    
-                    imgAO.Compose = CompositeOperator.Multiply;
-                    imgShadow.Label = "Shadow";
+                    imgAO.Label = "Shadow";
                     img.Label = "Color";
-                    imgAO.Label = "AO";
                     psdLayers.Add(imgbase);
-                    psdLayers.Add(imgShadow);
-                    psdLayers.Add(img);
                     psdLayers.Add(imgAO);
+                    psdLayers.Add(img);
                     psdLayers.TrimBounds();
                     psdLayers.RePage();
+
+                    string fileName = img.FileName.GetBaseDir().GetBaseDir().GetBaseDir().GetFile();
+                    string dest = destination.GetBaseDir() + "\\" + fileName  + ".psd";
+                    string dateFolder = DateTime.Now.ToString("yyyyMMdd") + "\\";
+                    string destJPG = dest.GetBaseDir().GetBaseDir().GetBaseDir().GetBaseDir() + "\\output_jpg\\" + dateFolder + fileName  + ".jpg"; //voodoo!
+
                     if (psd) {
-                        psdLayers.Write(destination + ".psd");
+                        psdLayers.Write(destination.GetBaseDir() + "\\" + fileName  + ".psd");
                     }
                     if (jpg) {
                         var jpgFile = psdLayers.Flatten();
                         jpgFile.ColorAlpha(MagickColors.White);
                         jpgFile.Quality = 65;
-                        jpgFile.Write(getJPGPath(destination));
+                        jpgFile.Write(destJPG);
                     }
                 }
             }

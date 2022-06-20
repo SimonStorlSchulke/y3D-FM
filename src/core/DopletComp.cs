@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using ImageMagick;
 using System.Threading;
+using System.Linq;
 
 public class DopletComp : Node
 {
@@ -64,11 +65,13 @@ public class DopletComp : Node
             string subfoldername = productname;
             paths = new string[]{ 
             instance.GetNode<LineEdit>(instance.NPOutputFolder).Text,
+            DateTime.Now.ToString("yyyyMMdd"),
             subfoldername,
             System.IO.Path.GetFileNameWithoutExtension(filename)};
         } else {
             paths = new string[]{
-            instance.GetNode<LineEdit>(instance.NPOutputFolder).Text, 
+            instance.GetNode<LineEdit>(instance.NPOutputFolder).Text,
+            DateTime.Now.ToString("yyyyMMdd"),
             System.IO.Path.GetFileNameWithoutExtension(filename)};
         }
 
@@ -80,8 +83,6 @@ public class DopletComp : Node
         }
 
         return System.IO.Path.Combine(paths);
-        
-
     }
 
     public void UpdatePresetOptions(int i)
@@ -127,12 +128,18 @@ public class DopletComp : Node
 
         string outputFolder = GetNode<LineEdit>(NPOutputFolder).Text;
         outputFolderJPG = outputFolder + "_jpg";
-        bool supported = false;
-        foreach (string format in supportedFormats)
-        {
+        bool supported = supportedFormats.Contains(files[atImage].Item1.Extension());
+        /*foreach (string format in supportedFormats) {
             if (files[atImage].Item1.Extension() == format) { supported = true; }
+        }*/
+
+        bool isRenderElement = false;
+        string path = files[atImage].Item1;
+        if (path.Contains(".VRayAO") || path.Contains(".bumpNormals") || path.Contains("Shadow_(Singleframe)") || path.Contains(".txt")) { //TODO unmagicify
+            isRenderElement = true;
         }
-        if (supported)
+
+        if (supported && !isRenderElement)
         {
             using (MagickImage img = new MagickImage(files[atImage].Item1))
             {
@@ -144,13 +151,11 @@ public class DopletComp : Node
                 }
                 catch (System.Exception e)
                 {
-                    if (e.Message != "Skipping AO Image") {
-                        lblProcessed.BbcodeText += "\n[color=red]Could not Process[/color] " + files[atImage].Item1.GetFile() + " " + e;
-                    }
+                    lblProcessed.BbcodeText += "\n[color=red]Could not Process[/color] " + files[atImage].Item1.GetFile() + " " + e;
                 }
             }
         }
-        else
+        else if (!supported && !isRenderElement)
         {
             lblProcessed.BbcodeText += "\n[color=red]Could not Process (Filetype not supported)[/color] " + files[atImage].Item1.GetFile();
         }
