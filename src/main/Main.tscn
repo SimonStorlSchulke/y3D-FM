@@ -624,7 +624,6 @@ Im Batch Process Tab können alle unterstützten Bilddateien* auf einmal mit den
 "
 
 [node name="Known Issues" type="VBoxContainer" parent="SplitMain/Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -640,7 +639,6 @@ size_flags_vertical = 3
 custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
 bbcode_enabled = true
 bbcode_text = "[font=res://theme/font_heading.tres]Known Issues[/font]
-[font=res://theme/font_heading.tres]Known Issues[/font]
 
 - Batch Process \"Title\" gibt unnötige Fehlermeldung aus
 
@@ -649,7 +647,6 @@ bbcode_text = "[font=res://theme/font_heading.tres]Known Issues[/font]
 - Hinzufügen von Sub/Parent Ordnern von bereits hinzugefügten ist per manueller eingabe immernoch möglich
 "
 text = "Known Issues
-Known Issues
 
 - Batch Process \"Title\" gibt unnötige Fehlermeldung aus
 

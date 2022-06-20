@@ -62,7 +62,7 @@ public static class BatchPresets
         new BatchProcess(
             "Title",
             "Einfach MLI Ordner oder auch Kamera 01 Ordner reinziehen, Title Batch preset ausführen, fertig.",
-            "AOLayerPath = Shadow\\Shadow_(Singleframe)_0000.png, AO = 0.5, trim = false",
+            "AOLayerPath = Shadow\\Shadow_0000.png, AO = 0.5, trim = false",
             (MagickImage img, string optionsString, string destination, bool psd, bool jpg) => {
                 var opt = compileOptions(optionsString);
 
@@ -146,6 +146,7 @@ public static class BatchPresets
                         psdLayers.Write(destination + ".psd");
                     }
                     if (jpg) {
+                        psdLayers[0].Alpha(AlphaOption.Transparent);
                         var jpgFile = psdLayers.Flatten();
                         jpgFile.ColorAlpha(MagickColors.White);
                         jpgFile.Write(getJPGPath(destination));

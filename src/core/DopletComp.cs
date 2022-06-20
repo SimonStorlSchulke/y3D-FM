@@ -135,7 +135,7 @@ public class DopletComp : Node
 
         bool isRenderElement = false;
         string path = files[atImage].Item1;
-        if (path.Contains(".VRayAO") || path.Contains(".bumpNormals") || path.Contains("Shadow_(Singleframe)") || path.Contains(".txt")) { //TODO unmagicify
+        if (path.Contains(".VRayAO") || path.Contains(".bumpNormals") || path.Contains("Shadow_") || path.Contains(".txt")) { //TODO unmagicify
             isRenderElement = true;
         }
 
