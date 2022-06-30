@@ -624,6 +624,7 @@ Im Batch Process Tab können alle unterstützten Bilddateien* auf einmal mit den
 "
 
 [node name="Known Issues" type="VBoxContainer" parent="SplitMain/Tabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -945,6 +946,6 @@ readonly = true
 [connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
 [connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
-[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
+[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="confirmed" from="PuAlreadyExists" to="PuAlreadyExists" method="DoIt"]

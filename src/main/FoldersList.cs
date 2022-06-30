@@ -8,9 +8,20 @@ public class FoldersList : VBoxContainer
     [Export]
     PackedScene fEdit;
 
+    public static FoldersList instance;
+
     public override void _Ready()
     {
+        instance = this;
         GetTree().Connect("files_dropped", this, nameof(OnFilesDropped));
+    }
+
+    public void UpdateFileUI(string from ,string to) {
+        foreach (FolderLineEdit fe in GetChildren()) {
+            if (fe.leFolder.Text == from) {
+                fe.leFolder.Text = to;
+            }
+        }
     }
 
     /// <summary>Returns Productfolders (Folder / File + Productname)from the UI as Dictionary .</summary>
@@ -30,12 +41,15 @@ public class FoldersList : VBoxContainer
     public bool IsSubfolder(string parentPath, string childPath)
     {
         Uri parentUri;
-        try {
+        try
+        {
             parentUri = new Uri(parentPath);
-        } catch {
+        }
+        catch
+        {
             return false;
         }
-            
+
         var childUri = new System.IO.DirectoryInfo(childPath).Parent;
         while (childUri != null)
         {
@@ -48,6 +62,7 @@ public class FoldersList : VBoxContainer
         return false;
     }
 
+
     public void OnFilesDropped(string[] files, int screen)
     {
         var d = new Directory();
@@ -56,58 +71,58 @@ public class FoldersList : VBoxContainer
         ErrorLog.instance.Clear();
         foreach (var droppedFile in files)
         {
-                // If dropped files are folders, add them, but only if the folder isn't added already
-                bool alreadyAdded = false;
-                bool isParentFolder = false;
-                foreach (Node c in GetChildren())
+            // If dropped files are folders, add them, but only if the folder isn't added already
+            bool alreadyAdded = false;
+            bool isParentFolder = false;
+            foreach (Node c in GetChildren())
+            {
+                string fe = (c as FolderLineEdit).leFolder.Text;
+                if (fe != "" && IsSubfolder(fe, droppedFile))
                 {
-                    string fe = (c as FolderLineEdit).leFolder.Text;
-                    if (fe != "" && IsSubfolder(fe, droppedFile))
-                    {
-                        alreadyAdded = true;
-                    }
-                    if (fe != "" && fe.Contains(droppedFile))
-                    {
-                        isParentFolder = true;
-                    }
+                    alreadyAdded = true;
                 }
-                if (alreadyAdded)
+                if (fe != "" && fe.Contains(droppedFile))
                 {
-                    ErrorLog.instance.Add("Could not add Folder", "Folder " + droppedFile + " was already added or is a subfolder of one already added", ErrorLog.LogColor.YELLOW);
-                    hadErrors = true;
-                    continue;
+                    isParentFolder = true;
                 }
-                if (isParentFolder)
-                {
-                    ErrorLog.instance.Add("Could not add Folder", "Folder " + droppedFile + " is a parent folder of one already added", ErrorLog.LogColor.YELLOW);
-                    hadErrors = true;
-                    continue;
-                }
+            }
+            if (alreadyAdded)
+            {
+                ErrorLog.instance.Add("Could not add Folder", "Folder " + droppedFile + " was already added or is a subfolder of one already added", ErrorLog.LogColor.YELLOW);
+                hadErrors = true;
+                continue;
+            }
+            if (isParentFolder)
+            {
+                ErrorLog.instance.Add("Could not add Folder", "Folder " + droppedFile + " is a parent folder of one already added", ErrorLog.LogColor.YELLOW);
+                hadErrors = true;
+                continue;
+            }
 
-                has_updated = true;
+            has_updated = true;
 
-                FolderLineEdit lastChild = GetChild<FolderLineEdit>(GetChildCount() - 1);
+            FolderLineEdit lastChild = GetChild<FolderLineEdit>(GetChildCount() - 1);
+            bool isFolder = d.DirExists(droppedFile);
+            string productName = isFolder ? droppedFile.GetFile() : "";
 
-                string productName = d.DirExists(droppedFile) ? droppedFile.GetFile() : "";
+            if (lastChild.leFolder.Text == "")
+            {
+                lastChild.leFolder.Text = droppedFile;
+                lastChild.leProduct.Text = productName;
 
-                if (lastChild.leFolder.Text == "")
-                {
-                    lastChild.leFolder.Text = droppedFile;
-                    lastChild.leProduct.Text = productName;
+                FolderLineEdit dp = lastChild.Duplicate() as FolderLineEdit;
+                AddChild(dp);
+                dp.leFolder.Text = "";
+                dp.leProduct.Text = "";
+            }
+            else
+            {
+                FolderLineEdit dp = lastChild.Duplicate() as FolderLineEdit;
+                AddChild(dp);
+                dp.leFolder.Text = droppedFile;
+                dp.leProduct.Text = productName;
+            }
 
-                    FolderLineEdit dp = lastChild.Duplicate() as FolderLineEdit;
-                    AddChild(dp);
-                    dp.leFolder.Text = "";
-                    dp.leProduct.Text = "";
-                }
-                else
-                {
-                    FolderLineEdit dp = lastChild.Duplicate() as FolderLineEdit;
-                    AddChild(dp);
-                    dp.leFolder.Text = droppedFile;
-                    dp.leProduct.Text = productName;
-                }
-                
         }
         if (has_updated) Main.instance.StartUpdateTimer();
         if (hadErrors) ErrorLog.instance.PopUp();

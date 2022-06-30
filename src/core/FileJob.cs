@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Godot;
 public struct FileJob {
 
+    [Signal]
+    delegate void UpdateFileUI(string from, string to);
+
     public string pathOriginal;
     public string pathDestination;
 
@@ -10,8 +13,14 @@ public struct FileJob {
         pathDestination = to;
     }
 
+    static void MoveFile(string from, string to) {
+        System.IO.File.Move(from, to);
+        FoldersList.instance.UpdateFileUI(from, to);
+    }
+
     /// <summary>Exectues the FIleJob and returns errors if there were any.</summary>
     public static void Execute(List<FileJob> jobList, bool overwrite = false) {
+
         bool had_errors = false;
         ErrorLog.instance.Clear();
         Main.instance.JobListExistingFiles = new List<FileJob>();
@@ -25,13 +34,13 @@ public struct FileJob {
                 if (System.IO.File.Exists(job.pathDestination)) {
                     if (overwrite) {
                         System.IO.File.Delete(job.pathDestination);
-                        System.IO.File.Move(job.pathOriginal, job.pathDestination);
+                        MoveFile(job.pathOriginal, job.pathDestination);
                     } else {
                         Main.instance.JobListExistingFiles.Add(job);
                         hadExistingFiles = true;
                     }
                 } else {
-                    System.IO.File.Move(job.pathOriginal, job.pathDestination);
+                    MoveFile(job.pathOriginal, job.pathDestination);
                 }
             } catch (System.Exception e) {
                 had_errors = true;
