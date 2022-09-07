@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using ImageMagick;
 using System;
 
+
 public delegate void BatchProcessFunction(MagickImage img, string optionsString, string destination, bool psd = true, bool jpg = true);
 
+/// <summary> A process to be executed on a set of Images </summary>
 public struct BatchProcess
 {
     public string name;
@@ -21,13 +23,17 @@ public struct BatchProcess
     }
 }
 
+
 public static class BatchPresets
 {
-    public static string getJPGPath(string path) {
-    string jpgDest = System.IO.Directory.GetParent(System.IO.Directory.GetParent(path).FullName).FullName;
-    jpgDest += "\\" + System.IO.Path.GetFileName(path.GetBaseDir()) + "_jpg\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + path.GetFile() + ".jpg";
-    return jpgDest;
-}
+    public static string getJPGPath(string path)
+    {
+        string jpgDest = System.IO.Directory.GetParent(System.IO.Directory.GetParent(path).FullName).FullName;
+        jpgDest += "\\" + System.IO.Path.GetFileName(path.GetBaseDir()) + "_jpg\\" + DateTime.Now.ToString("yyyyMMdd") + "\\" + path.GetFile() + ".jpg";
+        return jpgDest;
+    }
+
+    /// <summary> Array of all BatchPresets. Dynamically added to the UI in <see cref="DopletComp"/> </summary>
     public static BatchProcess[] list =
     {
         new BatchProcess(
@@ -55,20 +61,26 @@ public static class BatchPresets
                     string jpgFolder = DopletComp.outputFolderJPG + "\\" + DateTime.Now.ToString("yyyyMMdd");
                     System.IO.Directory.CreateDirectory(jpgFolder);
                     jpgFile.Write(jpgFolder + "\\" + destination.GetFile() + ".jpg");
-                    //jpgFile.Write(getJPGPath(destination));
                 }
             }
         ),
         new BatchProcess(
             "Title",
             "Einfach MLI Ordner oder auch Kamera 01 Ordner reinziehen, Title Batch preset ausführen, fertig.",
-            "AOLayerPath = Shadow\\Shadow_0000.png, AO = 0.5, trim = false",
+            "ShadowLayerPath = Shadow\\Shadow_0000.png, trim = false",
             (MagickImage img, string optionsString, string destination, bool psd, bool jpg) => {
                 var opt = compileOptions(optionsString);
 
 
-                string[] paths = {img.FileName.GetBaseDir().GetBaseDir(), (string)opt["AOLayerPath"]};
+                string[] paths = {img.FileName.GetBaseDir().GetBaseDir(), (string)opt["ShadowLayerPath"]};
+
+                if (!System.IO.File.Exists(System.IO.Path.Combine(paths))) {
+                    // If shadow File is not found, try if it was rendered as a "(Singleframe)"
+                    paths[1] = ((string)opt["ShadowLayerPath"]).Replace("_0000", "_(Singleframe)_0000");
+                }
+
                 string filenameAo = System.IO.Path.Combine(paths);
+
 
                 using (MagickImage imgAO = new MagickImage(filenameAo))
                 {
@@ -85,29 +97,26 @@ public static class BatchPresets
                     psdLayers.Add(imgbase);
                     psdLayers.Add(imgAO);
                     psdLayers.Add(img);
-                    psdLayers.TrimBounds();
-                    psdLayers.RePage();
 
-                    string fileName = img.FileName.GetBaseDir().GetBaseDir().GetBaseDir().GetFile();
+
+                    string fileName = img.FileName.GetBaseDir().GetBaseDir().GetBaseDir().GetFile(); //disgusting
                     string dest = destination.GetBaseDir() + "\\" + fileName  + ".psd";
                     string dateFolder = DateTime.Now.ToString("yyyyMMdd") + "\\";
                     string destJPG = dest.GetBaseDir().GetBaseDir().GetBaseDir().GetBaseDir() + "\\output_jpg\\" + dateFolder + fileName  + ".jpg"; //voodoo!
 
                     if (psd) {
                         psdLayers.Write(destination.GetBaseDir() + "\\" + fileName  + ".psd");
+                        DopletComp.lblProcessed.BbcodeText += "\n[color=yellow]Achtung: [/color] PSD Outputs müssen nochmal in Photoshop geöffnet werden, um die Opazität des Schattens manuell einzustellen. ";
                     }
                     if (jpg) {
-                        var jpgFile = psdLayers.Flatten();
-                        jpgFile.ColorAlpha(MagickColors.White);
-                        jpgFile.Quality = 65;
-                        jpgFile.Write(destJPG);
+                        DopletComp.lblProcessed.BbcodeText += "\n[color=yellow]Achtung: [/color] Der Title-Batchprozess unterstützt keinen JPG output.";
                     }
                 }
             }
         ),
         new BatchProcess(
             "GF Rendercomp",
-            "Combine Background and Application",
+            "Combine Background and Application | WIP",
             "",
             (MagickImage imgBG, string optionsString, string destination, bool psd, bool jpg) => {
                 //var opt = compileOptions(optionsString);
@@ -124,7 +133,7 @@ public static class BatchPresets
                     imgBG.SetProfile(ColorProfile.SRGB);
                     MagickImageCollection psdLayers = new MagickImageCollection();
                     MagickImage imgBase = new MagickImage(imgBG);
-                    
+
                     imgBG.Density = imgApp.Density = new Density(300, 300);
                     imgBG.Depth = imgApp.Depth = 16;
 
@@ -133,7 +142,7 @@ public static class BatchPresets
 
                     var mApp = new MagickImage(imgBG);
                     mApp.Composite(imgApp, CompositeOperator.CopyAlpha);
-                    
+
                     imgBG.Label = "Background";
                     imgApp.Label = "Application";
                     psdLayers.Add(imgBase);
@@ -156,20 +165,25 @@ public static class BatchPresets
         )
     };
 
-    public static Dictionary<string, object> compileOptions(string optionsString) {
+    /// <summary> Compiles an optionsString like "AO = 0.8, trim = false" into a C# Dictionary </summary>
+    public static Dictionary<string, object> compileOptions(string optionsString)
+    {
         Dictionary<string, object> dict = new Dictionary<string, object>();
 
         optionsString = optionsString.Replace(" ", ""); //remove whitespace
         string[] options = optionsString.Split(","); //separate individual options
 
-        foreach (string optionString in options) {
+        foreach (string optionString in options)
+        {
             object value = 0;
             float f;
             string[] optionPair = optionString.Split("=");
-            if (optionPair[1] == "true") value = true;
-            else if (optionPair[1] == "false") value = false;
-            else if(float.TryParse(optionPair[1], out f)) value = f;
-            else value = optionPair[1];
+
+            // Assigns the options value depending on wether the input string represents a..
+            if (optionPair[1].ToLower() == "true") value = true; // ..boolean true
+            else if (optionPair[1].ToLower() == "false") value = false; // ..boolean false
+            else if (float.TryParse(optionPair[1], out f)) value = f; // ..number
+            else value = optionPair[1]; //.. or string
             dict.Add(optionPair[0], value);
         }
         return dict;

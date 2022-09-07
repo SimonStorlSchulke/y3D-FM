@@ -6,9 +6,6 @@
 margin_right = 418.0
 margin_bottom = 24.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LEF" type="LineEdit" parent="."]
 margin_right = 193.0

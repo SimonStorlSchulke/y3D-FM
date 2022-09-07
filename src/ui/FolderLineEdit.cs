@@ -1,6 +1,6 @@
 using Godot;
 
-public class FolderLineEdit : HBoxContainer
+public class FolderLineEdit : Node
 {
     public LineEdit leFolder;
     public LineEdit leProduct;
@@ -11,9 +11,12 @@ public class FolderLineEdit : HBoxContainer
         leProduct = GetNode<LineEdit>("LEP");
     }
 
-    void OnLEFChanged(string new_text) {
+    /// <summary> Add a Line when the User enters Text and set the ProductName to the folders name </summary>
+    void OnLEFChanged(string new_text) // Run when the user Enters Text
+    {
 
-        if (GetIndex() == GetParent().GetChildCount()-1 ) {
+        if (GetIndex() == GetParent().GetChildCount() - 1)
+        {
             Node dp = this.Duplicate();
             GetParent().AddChild(dp);
             (dp as FolderLineEdit).leFolder.Text = "";
@@ -21,11 +24,12 @@ public class FolderLineEdit : HBoxContainer
         leProduct.Text = leFolder.Text.GetFile();
     }
 
-    void OnBtnDeletePressed() {
-        if (!(GetIndex() == GetParent().GetChildCount()-1)) {
+    void OnBtnDeletePressed()
+    {
+        if (!(GetIndex() == GetParent().GetChildCount() - 1))
+        {
             QueueFree();
             Main.instance.StartUpdateTimer();
         }
     }
-
 }

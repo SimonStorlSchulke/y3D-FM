@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 
@@ -12,30 +12,16 @@ public class RNUtil : Node
         @"\\FILE-SERVER\jobs",
         @"\\FILE-SERVER\raid",
         @"H:\",
-        @"\\mca-dtp\a",
         @"\\mca-dtp\DFS-Area GLC",
         };
-
-    static bool isBlacklisted(string path) {
-        bool blacklisted = false;
-        foreach (string blacklistedPath in blacklistedDirs)
-        {
-            string dirBL = System.IO.Path.GetFullPath(blacklistedPath);
-            string dirPath = System.IO.Path.GetFullPath(path);
-            if (dirBL == dirPath) {
-                blacklisted = true;
-                break;
-            }
-        }
-        return blacklisted;
-    }
-
+    
     public static string[] TryParseFiles(string path, bool recursive)
     {
         var d = new Godot.Directory();
         bool isDir = d.DirExists(path);
         string[] files = { };
-        if (isBlacklisted(path)) {
+        if (blacklistedDirs.Contains(path))
+        {
             ErrorLog.instance.Add("CANNOT DIRECTLY ACCESS BLACKLISTED DIRECTORY " + path, "blacklisted Directories are:\n" + string.Join("\n", blacklistedDirs), ErrorLog.LogColor.RED);
             ErrorLog.instance.PopUp();
             return files;
@@ -54,23 +40,6 @@ public class RNUtil : Node
         return files;
     }
 
-    public static List<string> TryParseDirs(string path, bool recursive)
-    {
-        List<string> dirs;
-        try
-        {
-            string[] dirsArr = recursive ? System.IO.Directory.GetDirectories(path, "*", SearchOption.AllDirectories) : System.IO.Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly);
-            dirs = new List<string>(dirsArr);
-            dirs.Add(path);
-        }
-        catch (System.Exception e)
-        {
-            ErrorLog.instance.Add("Error reading directories", e.ToString(), ErrorLog.LogColor.RED);
-
-            dirs = new List<string>();
-        }
-        return dirs;
-    }
 
     public static void PrintStringPairDict(Dictionary<string, string> dict)
     {

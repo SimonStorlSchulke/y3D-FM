@@ -1,11 +1,8 @@
 using Godot;
-using System;
-
 
 public class Tabs : TabContainer
 {
-    [Export]
-    NodePath NPButtonRun;
+    [Export] NodePath NPButtonRun;
     Button btnRun;
 
     public override void _Ready()
@@ -13,11 +10,9 @@ public class Tabs : TabContainer
         btnRun = GetNode<Button>(NPButtonRun);
     }
 
-    void OnChangeTab(int tab) {
-        if (tab == 4) {
-            btnRun.Hide();
-        } else {
-            btnRun.Show();
-        }
+    void OnChangeTab(int tab)
+    {
+        if (tab == 4) btnRun.Hide();
+        else btnRun.Show();
     }
 }

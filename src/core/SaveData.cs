@@ -1,7 +1,6 @@
-using Godot;
-using System.Collections.Generic;
 using System.Linq;
 
+/// <summary> C# Representation of the Data saved in .yfm files in the <see cref="Save"/> class. </summary>
 public class SaveData
 {
     public string[] baseFolders = {};
@@ -15,8 +14,12 @@ public class SaveData
     public string prefix;
     public string subfix;
     public string dropletPath;
+    public string moveToPath;
     public bool overwrite;
-    public static SaveData FromOptions(RenameOptions rno) {
+
+    /// <summary> Creates a SaveData Object from the current <see cref="RenameOptions"/> </summar>
+    public static SaveData FromOptions(RenameOptions rno) 
+    {
         SaveData sd = new SaveData();
         sd.baseFolders = rno.productFoldersDict.Keys.ToArray();
         sd.productNames = rno.productFoldersDict.Values.ToArray();
@@ -29,6 +32,7 @@ public class SaveData
         sd.replaceDictTo = rno.replaceWithDict.Values.ToArray();
         sd.prefix = rno.prefix;
         sd.subfix = rno.subfix;
+        sd.moveToPath = rno.moveToPath;
         return sd;
     }
 }

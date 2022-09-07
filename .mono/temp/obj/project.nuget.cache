@@ -1,13 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1KChMfyp4yjg0L4yXngljHMAuXy39c6HJMKpF56DtJHmZR5jUJPu9VONdSxt4uSE0Ts7TQ19AUqLle1R5ZwORw==",
+  "dgSpecHash": "sds6fSqbdw2p/Rl1Fm52P9LyQ1ndRdTC4t66vEBYUPsEzxMhQMWuMtso10OQUWsR394Xq3vsXMwknZ5Oyp6bag==",
   "success": true,
   "projectFilePath": "C:\\Users\\simon\\Dev\\GitHub\\y3D-FM\\y3D-FM.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\simon\\.nuget\\packages\\magick.net-q8-openmp-x64\\9.1.2\\magick.net-q8-openmp-x64.9.1.2.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\magick.net.core\\9.1.2\\magick.net.core.9.1.2.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.2\\microsoft.netframework.referenceassemblies.1.0.2.nupkg.sha512",
-    "C:\\Users\\simon\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.2\\microsoft.netframework.referenceassemblies.net472.1.0.2.nupkg.sha512"
+    "C:\\Users\\simon\\.nuget\\packages\\magick.net.core\\9.1.2\\magick.net.core.9.1.2.nupkg.sha512"
   ],
   "logs": []
 }

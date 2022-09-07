@@ -2,7 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class Preview : Control {
+public class Preview : Control
+{
     GridContainer table;
     CheckBox cbShowFullPathsOrig;
     CheckBox cbShowFullPathsDest;
@@ -42,35 +43,40 @@ public class Preview : Control {
     [Export]
     PackedScene tbPresetL2;
 
-    public override void _Ready() {
+    public override void _Ready()
+    {
         cbShowFullPathsOrig = GetNode<CheckBox>("HbPreviewTop/CbShowFullPathsOrig");
         cbShowFullPathsDest = GetNode<CheckBox>("HbPreviewTop/CbShowFullPathsDest");
         cbShowColorCodes = GetNode<CheckBox>("HbPreviewTop/CbShowColorCodes");
         table = GetNode<GridContainer>("Scrl/Grid");
     }
 
-    public void Show(List<FileJob> jobs) {
-        
-        foreach (ToolButton item in table.GetChildren()) {
+    public void Show(List<FileJob> jobs)
+    {
+
+        foreach (ToolButton item in table.GetChildren())
+        {
             item.QueueFree();
         }
 
-        int i=0;
-        foreach (FileJob job in jobs) {
-            
-            ToolButton tbOrig = (i%2==0) ? tbPresetL1.Instance<ToolButton>() : tbPresetL2.Instance<ToolButton>();
+        int i = 0;
+        foreach (FileJob job in jobs)
+        {
+
+            ToolButton tbOrig = (i % 2 == 0) ? tbPresetL1.Instance<ToolButton>() : tbPresetL2.Instance<ToolButton>();
             ToolButton tbDest = tbOrig.Duplicate() as ToolButton;
 
             tbOrig.Text = cbShowFullPathsOrig.Pressed ? job.pathOriginal + "   " : job.pathOriginal.GetFile() + "   ";
             tbDest.Text = cbShowFullPathsDest.Pressed ? job.pathDestination : job.pathDestination.GetFile();
-            
-            if (cbShowColorCodes.Pressed) {
+
+            if (cbShowColorCodes.Pressed)
+            {
                 tbOrig.AddColorOverride("font_color", checkForColorCode(job.pathOriginal.GetFile()));
                 tbDest.AddColorOverride("font_color", checkForColorCode(job.pathDestination.GetFile()));
             }
 
-            tbOrig.Connect("pressed", this, nameof(OnFileClicked), new Godot.Collections.Array(){job.pathOriginal});
-            tbDest.Connect("pressed", this, nameof(OnFileClicked), new Godot.Collections.Array(){job.pathOriginal});
+            tbOrig.Connect("pressed", this, nameof(OnFileClicked), new Godot.Collections.Array() { job.pathOriginal });
+            tbDest.Connect("pressed", this, nameof(OnFileClicked), new Godot.Collections.Array() { job.pathOriginal });
 
             table.AddChild(tbOrig);
             table.AddChild(tbDest);
@@ -82,24 +88,33 @@ public class Preview : Control {
 
 
 
-    public void OnFileClicked(string href) {
-        try {
+    public void OnFileClicked(string href)
+    {
+        try
+        {
             System.Diagnostics.Process.Start(href);
-        } catch(System.Exception e) {
-            //Error handling
+        }
+        catch (System.Exception e)
+        {
+            //if required: Error handling
         }
     }
 
-    Color checkForColorCode(string str) {
+    Color checkForColorCode(string str)
+    {
         string color = "cccccc";
-        foreach (KeyValuePair<string, string> c in colorCodes) {
-            if (str.Contains(c.Key)) {
+        foreach (KeyValuePair<string, string> c in colorCodes)
+        {
+            if (str.Contains(c.Key))
+            {
                 color = c.Value;
                 break;
             }
         }
-        foreach (KeyValuePair<string, string> c in colorNames) {
-            if (str.Contains(c.Key)) {
+        foreach (KeyValuePair<string, string> c in colorNames)
+        {
+            if (str.Contains(c.Key))
+            {
                 color = c.Value;
                 break;
             }

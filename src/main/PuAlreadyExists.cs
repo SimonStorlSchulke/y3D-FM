@@ -11,17 +11,18 @@ public class PuAlreadyExists : ConfirmationDialog
         instance = this;
     }
 
-    public static void ShowPopup() {
+    public static void ShowPopup()
+    {
         instance.GetNode<TextEdit>("Vb/TeAlreadyExists").Text = "";
-        foreach (FileJob fj in Main.instance.JobListExistingFiles) {
+        foreach (FileJob fj in Main.instance.JobListExistingFiles)
+        {
             instance.GetNode<TextEdit>("Vb/TeAlreadyExists").Text += fj.pathDestination.GetFile() + "\n";
         }
         instance.PopupCentered();
     }
 
-    public void DoIt() {
+    public void DoIt() // Execute Filejobs when the user pressed OK
+    {
         FileJob.Execute(Main.instance.JobListExistingFiles, overwrite: true);
     }
-
-
 }

@@ -5,8 +5,7 @@ using System;
 public class FoldersList : VBoxContainer
 {
 
-    [Export]
-    PackedScene fEdit;
+    [Export] PackedScene fEdit;
 
     public static FoldersList instance;
 
@@ -16,9 +15,14 @@ public class FoldersList : VBoxContainer
         GetTree().Connect("files_dropped", this, nameof(OnFilesDropped));
     }
 
-    public void UpdateFileUI(string from ,string to) {
-        foreach (FolderLineEdit fe in GetChildren()) {
-            if (fe.leFolder.Text == from) {
+    /// <summary> Update the folders and files currently loaded to the updated paths after running the renamer. </summary>
+    public void UpdateFileUI(string from, string to)
+    {
+        // Brute force check all FolderLineEdits if the file to rename is there. Not exactly elegant but performance seems ok.
+        foreach (FolderLineEdit fe in GetChildren())
+        {
+            if (fe.leFolder.Text == from)
+            {
                 fe.leFolder.Text = to;
             }
         }

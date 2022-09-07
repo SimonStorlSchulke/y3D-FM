@@ -8,7 +8,8 @@ public class ErrorLog : RichTextLabel
     [Export]
     NodePath NPTabs;
 
-    public enum LogColor {
+    public enum LogColor
+    {
         BLUE,
         GREEN,
         YELLOW,
@@ -21,18 +22,23 @@ public class ErrorLog : RichTextLabel
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        if (instance == null) {
+        if (instance == null)
+        {
             instance = this;
-        } else {
+        }
+        else
+        {
             GD.Print("Only one Instance of ErrorLog is allowed");
         }
     }
 
-    public void PopUp() {
+    public void PopUp()
+    {
         GetNode<TabContainer>(NPTabs).CurrentTab = 1;
     }
 
-    public void Add(string title, string text, LogColor colorTitle) {
+    public void Add(string title, string text, LogColor colorTitle)
+    {
         string bbc;
         switch (colorTitle)
         {
@@ -59,12 +65,15 @@ public class ErrorLog : RichTextLabel
                 break;
         }
 
-        bbc += "\n"+text;
+        bbc += "\n" + text;
 
         string last_chars = this.BbcodeText.Substring(Math.Max(0, this.BbcodeText.Length - 2));
-        if (this.Text == "" || last_chars == "\n\n") {
+        if (this.Text == "" || last_chars == "\n\n")
+        {
             this.AppendBbcode(bbc);
-        } else {
+        }
+        else
+        {
             this.AppendBbcode("\n\n" + bbc);
         }
     }

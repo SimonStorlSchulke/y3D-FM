@@ -20,31 +20,37 @@ public class Save : AcceptDialog
         Connect("confirmed", this, nameof(OnSaveConfigPressed));
     }
 
-    public void PU() {
+    public void PU()
+    {
         PopupCentered();
     }
 
-    public void OnSaveConfigPressed() {
+    public void OnSaveConfigPressed()
+    {
         string path = OS.GetExecutablePath().GetBaseDir() + "\\y3d_fm_configs\\" + GetNode<LineEdit>("SaveDialog/LineEdit").Text + ".yfm";
-        try {
+        try
+        {
             DirectoryInfo di = new DirectoryInfo(OS.GetExecutablePath().GetBaseDir());
             di.CreateSubdirectory("y3d_fm_configs");
             SaveToFile(path);
-        } catch(System.Exception e) {
+        }
+        catch (System.Exception e)
+        {
             ErrorLog.instance.Clear();
-            ErrorLog.instance.Add("Error saving to config folder at "+ path, e.ToString(), ErrorLog.LogColor.RED);
+            ErrorLog.instance.Add("Error saving to config folder at " + path, e.ToString(), ErrorLog.LogColor.RED);
             ErrorLog.instance.PopUp();
         }
     }
 
-    public void SaveToFile(string path) {
+    public void SaveToFile(string path)
+    {
         SaveData sd = SaveData.FromOptions(GetNode<RenameOptions>(NPRenameOptions));
 
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(sd.GetType());
-        
+
         Utf8StringWriter st = new Utf8StringWriter();
         x.Serialize(st, sd);
-        using (StreamWriter writer = new StreamWriter(path))  
+        using (StreamWriter writer = new StreamWriter(path))
         {
             writer.Write(st);
         }
