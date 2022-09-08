@@ -89,9 +89,6 @@ one_shot = true
 [node name="SplitMain" type="HSplitContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="SplitSidebar" type="VBoxContainer" parent="SplitMain"]
 margin_right = 430.0
@@ -114,6 +111,7 @@ margin_right = 178.0
 margin_bottom = 36.0
 theme = ExtResource( 10 )
 text = "Load Config"
+flat = false
 script = ExtResource( 13 )
 
 [node name="BtnConfigFolder" type="Button" parent="SplitMain/SplitSidebar/HbSaveLoad"]
@@ -970,6 +968,6 @@ readonly = true
 [connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
 [connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
-[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
+[connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="confirmed" from="PuAlreadyExists" to="PuAlreadyExists" method="DoIt"]

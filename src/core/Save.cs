@@ -42,6 +42,7 @@ public class Save : AcceptDialog
         }
     }
 
+    /// <summary> Creates a SaveData Object from the current <see cref="RenameOptions"/> and saves them as an XML File </summary>
     public void SaveToFile(string path)
     {
         SaveData sd = SaveData.FromOptions(GetNode<RenameOptions>(NPRenameOptions));
