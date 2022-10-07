@@ -2,4 +2,4 @@
 
 File Renaming and Image Batch-Processing Tool - mostly for managing renderings at yoose3D. Using C#, Magick.NET and Godot.
 
-![2022-06-20 16_34_10-y3D-FM (DEBUG)](https://user-images.githubusercontent.com/25198913/174626076-fb3e8ff3-abb5-42ae-9501-328a3e598d7a.jpg)
+<img width="813" alt="y3dfm" src="https://user-images.githubusercontent.com/25198913/189076081-e92f66b4-0d50-4f31-9643-bd6c81b1f73f.png">
