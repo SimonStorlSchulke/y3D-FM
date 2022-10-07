@@ -15,6 +15,16 @@ public class FoldersList : VBoxContainer
         GetTree().Connect("files_dropped", this, nameof(OnFilesDropped));
     }
 
+    public void OpenArgsPaths() {
+        string[] args = OS.GetCmdlineArgs();
+        
+        if (args.Length == 0) {
+            return;
+        }
+        
+        OnFilesDropped(args, 0);
+    }
+
     /// <summary> Update the folders and files currently loaded to the updated paths after running the renamer. </summary>
     public void UpdateFileUI(string from, string to)
     {

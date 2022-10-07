@@ -47,6 +47,7 @@ public class Main : Control
         {
             GD.Print("Only one Instance of Main is allowed");
         }
+        FoldersList.instance.OpenArgsPaths();
     }
 
     /// <summary> A times is used to update the Rename-Preview. To save performance, it is not updated instantly after each
