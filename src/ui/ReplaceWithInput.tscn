@@ -7,9 +7,6 @@ margin_top = 18.0
 margin_right = 418.0
 margin_bottom = 42.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LEReplace" type="LineEdit" parent="."]
 margin_right = 165.0

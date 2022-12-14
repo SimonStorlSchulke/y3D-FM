@@ -24,5 +24,6 @@ public class PuAlreadyExists : ConfirmationDialog
     public void DoIt() // Execute Filejobs when the user pressed OK
     {
         FileJob.Execute(Main.instance.JobListExistingFiles, overwrite: true);
+        Main.instance.StartUpdateTimer();
     }
 }

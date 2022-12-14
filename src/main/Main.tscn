@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://src/ui/ProductFolderInput.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/main/FoldersList.cs" type="Script" id=2]
@@ -19,6 +19,11 @@
 [ext_resource path="res://src/core/DopletComp.cs" type="Script" id=17]
 [ext_resource path="res://src/ui/Tabs.cs" type="Script" id=18]
 [ext_resource path="res://src/main/PuAlreadyExists.cs" type="Script" id=19]
+[ext_resource path="res://theme/open_folder.png" type="Texture" id=20]
+[ext_resource path="res://theme/ic_p.png" type="Texture" id=21]
+[ext_resource path="res://theme/hb.tres" type="DynamicFont" id=22]
+[ext_resource path="res://theme/reload_small.png" type="Texture" id=23]
+[ext_resource path="res://theme/reload_small_hover.png" type="Texture" id=24]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.112136, 0.112136, 0.126953, 1 )
@@ -64,6 +69,12 @@ corner_radius_bottom_left = 2
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.231373, 0.223529, 0.258824, 1 )
 
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.415686, 0.101961, 0.745098, 1 )
+border_width_top = 350
+border_color = Color( 1, 0.411765, 0.411765, 1 )
+border_blend = true
+
 [node name="Main" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -89,6 +100,7 @@ one_shot = true
 [node name="SplitMain" type="HSplitContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/separation = 6
 
 [node name="SplitSidebar" type="VBoxContainer" parent="SplitMain"]
 margin_right = 430.0
@@ -132,24 +144,32 @@ margin_left = 6.0
 margin_top = 6.0
 margin_right = 430.0
 margin_bottom = 14.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="LbFolders" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
-margin_right = 196.0
-margin_bottom = 18.0
-size_flags_horizontal = 3
+margin_top = 1.0
+margin_right = 167.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 167, 0 )
 custom_fonts/font = ExtResource( 7 )
 text = "Folders & Files"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Button" type="TextureButton" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
+margin_left = 171.0
+margin_right = 192.0
+margin_bottom = 21.0
+rect_min_size = Vector2( 21, 21 )
+texture_normal = ExtResource( 23 )
+texture_hover = ExtResource( 24 )
+expand = true
+
 [node name="LbFolders2" type="Label" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
-margin_left = 200.0
+margin_left = 196.0
+margin_top = 1.0
 margin_right = 396.0
-margin_bottom = 18.0
+margin_bottom = 19.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 7 )
 text = "Product Names"
@@ -160,7 +180,7 @@ __meta__ = {
 [node name="Control" type="Control" parent="SplitMain/SplitSidebar/PnFolders/HBF2"]
 margin_left = 400.0
 margin_right = 424.0
-margin_bottom = 18.0
+margin_bottom = 21.0
 rect_min_size = Vector2( 24, 0 )
 
 [node name="ScrlFolders" type="ScrollContainer" parent="SplitMain/SplitSidebar/PnFolders"]
@@ -416,7 +436,7 @@ margin_right = 418.0
 margin_bottom = 524.0
 
 [node name="Tabs" type="TabContainer" parent="SplitMain"]
-margin_left = 442.0
+margin_left = 438.0
 margin_right = 1400.0
 margin_bottom = 1000.0
 size_flags_horizontal = 3
@@ -433,6 +453,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = 50.0
+margin_right = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 6 )
@@ -443,7 +464,7 @@ tbPresetL1 = ExtResource( 8 )
 tbPresetL2 = ExtResource( 9 )
 
 [node name="HbPreviewTop" type="HBoxContainer" parent="SplitMain/Tabs/Preview"]
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 25.0
 
 [node name="Label" type="Label" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
@@ -474,19 +495,19 @@ text = "Full Paths Destination"
 
 [node name="Stretch" type="Control" parent="SplitMain/Tabs/Preview/HbPreviewTop"]
 margin_left = 472.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 
 [node name="Scrl" type="ScrollContainer" parent="SplitMain/Tabs/Preview"]
 margin_top = 29.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 950.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Grid" type="GridContainer" parent="SplitMain/Tabs/Preview/Scrl"]
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 921.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -499,20 +520,21 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 37.0
+margin_top = 50.0
+margin_right = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="SplitMain/Tabs/Error Log"]
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 15 )
 text = "Errors"
 
 [node name="LblErrorLog" type="RichTextLabel" parent="SplitMain/Tabs/Error Log"]
 margin_top = 28.0
-margin_right = 948.0
-margin_bottom = 963.0
+margin_right = 942.0
+margin_bottom = 950.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.843137, 0.843137, 0.843137, 1 )
@@ -526,13 +548,14 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 37.0
+margin_top = 50.0
+margin_right = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SplitMain/Tabs/Help"]
-margin_right = 948.0
-margin_bottom = 963.0
+margin_right = 942.0
+margin_bottom = 950.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
@@ -659,13 +682,14 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 37.0
+margin_top = 50.0
+margin_right = -10.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SplitMain/Tabs/Known Issues"]
-margin_right = 948.0
-margin_bottom = 963.0
+margin_right = 942.0
+margin_bottom = 950.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/default_color = Color( 0.866667, 0.862745, 0.870588, 1 )
@@ -684,19 +708,22 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
-margin_top = 37.0
+margin_top = 50.0
+margin_right = -10.0
 rect_min_size = Vector2( 300, 0 )
+size_flags_horizontal = 0
 script = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 NPFoldersList = NodePath("../../SplitSidebar/PnFolders/ScrlFolders/VbFolders")
 NPOutputFolder = NodePath("HbOutput/LeOutput")
+NPOutputFolderJpg = NodePath("HbOutputJpg/LeOutput")
 NPRenameOptions = NodePath("../../../RenameOptions")
 NPProgressBar = NodePath("HbRun/ProgressBar")
 
 [node name="LblDroplet" type="Label" parent="SplitMain/Tabs/Batch Process"]
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 custom_fonts/font = ExtResource( 7 )
@@ -707,7 +734,7 @@ __meta__ = {
 
 [node name="HbPreset" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 36.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 59.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -729,7 +756,7 @@ text = "ECSTrim"
 
 [node name="LblPresetDescription" type="Label" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 63.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 95.0
 rect_min_size = Vector2( 0, 32 )
 custom_colors/font_color = Color( 0.67451, 0.67451, 0.67451, 1 )
@@ -737,7 +764,7 @@ autowrap = true
 
 [node name="HbOptions" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 99.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 126.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -752,93 +779,117 @@ text = "Action Options"
 
 [node name="LeOptions" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOptions"]
 margin_left = 104.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 27.0
 rect_min_size = Vector2( 230, 0 )
 size_flags_horizontal = 3
 
 [node name="spacer" type="Control" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 130.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 134.0
 rect_min_size = Vector2( 0, 4 )
 
 [node name="HbOutput" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
 margin_top = 138.0
-margin_right = 948.0
-margin_bottom = 165.0
+margin_right = 942.0
+margin_bottom = 174.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CbPsd" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutput"]
 margin_right = 54.0
-margin_bottom = 27.0
+margin_bottom = 36.0
 pressed = true
 text = "PSD"
 
 [node name="LblOutputPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutput"]
 margin_left = 58.0
-margin_top = 5.0
+margin_top = 9.0
 margin_right = 144.0
-margin_bottom = 22.0
+margin_bottom = 26.0
 text = "Output Folder"
 
 [node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutput"]
 margin_left = 148.0
-margin_right = 948.0
-margin_bottom = 27.0
+margin_right = 902.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output"
 
+[node name="BtnOpenPsdFolder" type="Button" parent="SplitMain/Tabs/Batch Process/HbOutput"]
+modulate = Color( 1, 1, 1, 0.662745 )
+margin_left = 906.0
+margin_right = 942.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Open PSD Output in Windows Explorer"
+icon = ExtResource( 20 )
+expand_icon = true
+
 [node name="HbOutputJpg" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 169.0
-margin_right = 948.0
-margin_bottom = 196.0
+margin_top = 178.0
+margin_right = 942.0
+margin_bottom = 214.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="CbJpg" type="CheckBox" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
 margin_right = 55.0
-margin_bottom = 27.0
+margin_bottom = 36.0
 pressed = true
 text = "JPG"
 
 [node name="LblOutputPath" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
 margin_left = 59.0
-margin_top = 5.0
+margin_top = 9.0
 margin_right = 145.0
-margin_bottom = 22.0
+margin_bottom = 26.0
 text = "Output Folder"
 
-[node name="LeOutput" type="LineEdit" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
+[node name="LeOutput" type="Label" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
 margin_left = 149.0
-margin_right = 948.0
-margin_bottom = 27.0
+margin_top = 9.0
+margin_right = 902.0
+margin_bottom = 26.0
 size_flags_horizontal = 3
-placeholder_text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output_jpg"
+custom_colors/font_color = Color( 1, 1, 1, 0.454902 )
+text = "\\\\mca-dtp\\DFS-Area GLC\\_intern\\droplets\\output_jpg"
+
+[node name="BtnOpenJpgFolder" type="Button" parent="SplitMain/Tabs/Batch Process/HbOutputJpg"]
+modulate = Color( 1, 1, 1, 0.662745 )
+margin_left = 906.0
+margin_right = 942.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 36, 36 )
+hint_tooltip = "Open JPG Output in Windows Explorer"
+icon = ExtResource( 20 )
+expand_icon = true
 
 [node name="spacer2" type="Control" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 200.0
-margin_right = 948.0
-margin_bottom = 204.0
+margin_top = 218.0
+margin_right = 942.0
+margin_bottom = 222.0
 rect_min_size = Vector2( 0, 4 )
 
 [node name="HbRun" type="HBoxContainer" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 208.0
-margin_right = 948.0
-margin_bottom = 240.0
+margin_top = 226.0
+margin_right = 942.0
+margin_bottom = 258.0
 
 [node name="BtnRun" type="Button" parent="SplitMain/Tabs/Batch Process/HbRun"]
 margin_right = 150.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 150, 0 )
 text = "Run Batch Process"
+icon = ExtResource( 21 )
+expand_icon = true
 
 [node name="ProgressBar" type="ProgressBar" parent="SplitMain/Tabs/Batch Process/HbRun"]
 margin_left = 154.0
-margin_right = 948.0
+margin_right = 942.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
@@ -846,9 +897,9 @@ custom_styles/fg = SubResource( 2 )
 custom_styles/bg = SubResource( 3 )
 
 [node name="TeProcessedImages" type="TextEdit" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 244.0
-margin_right = 948.0
-margin_bottom = 244.0
+margin_top = 262.0
+margin_right = 942.0
+margin_bottom = 262.0
 text = "Processed"
 
 [node name="tmrNextImage" type="Timer" parent="SplitMain/Tabs/Batch Process"]
@@ -856,9 +907,9 @@ wait_time = 0.05
 one_shot = true
 
 [node name="LblProcessed" type="RichTextLabel" parent="SplitMain/Tabs/Batch Process"]
-margin_top = 248.0
-margin_right = 948.0
-margin_bottom = 963.0
+margin_top = 266.0
+margin_right = 942.0
+margin_bottom = 950.0
 size_flags_vertical = 3
 bbcode_enabled = true
 
@@ -867,14 +918,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -116.0
+margin_left = -146.0
 margin_top = -53.0
 margin_right = -20.0
 margin_bottom = -20.0
 text = "Run Renamer"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+icon = ExtResource( 21 )
+expand_icon = true
 
 [node name="PuSave" type="AcceptDialog" parent="."]
 anchor_left = 0.5
@@ -957,17 +1007,68 @@ custom_colors/font_color_readonly = Color( 0.956863, 0.847059, 0, 1 )
 custom_styles/read_only = SubResource( 4 )
 readonly = true
 
+[node name="hb" type="Panel" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 7 )
+
+[node name="ct" type="CenterContainer" parent="hb"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="vb" type="VBoxContainer" parent="hb/ct"]
+margin_left = 489.0
+margin_top = 364.0
+margin_right = 911.0
+margin_bottom = 635.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="hb/ct/vb"]
+margin_right = 422.0
+margin_bottom = 52.0
+custom_fonts/font = ExtResource( 22 )
+text = "Happy Birthday Andy!"
+
+[node name="Label2" type="Label" parent="hb/ct/vb"]
+margin_top = 56.0
+margin_right = 422.0
+margin_bottom = 107.0
+custom_fonts/font = ExtResource( 15 )
+text = "Mach dir nen schönen Tag!
+LG, Simon"
+
+[node name="Control" type="Control" parent="hb/ct/vb"]
+margin_top = 111.0
+margin_right = 422.0
+margin_bottom = 211.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="Button" type="Button" parent="hb/ct/vb"]
+margin_top = 215.0
+margin_right = 422.0
+margin_bottom = 271.0
+rect_min_size = Vector2( 0, 56 )
+custom_fonts/font = ExtResource( 15 )
+text = "Ok äh... danke."
+
 [connection signal="timeout" from="TimerShowPreview" to="." method="OnUpdateJobList"]
 [connection signal="about_to_show" from="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" to="SplitMain/SplitSidebar/HbSaveLoad/BtnLoad" method="UpdateItems"]
 [connection signal="pressed" from="SplitMain/SplitSidebar/HbSaveLoad/BtnConfigFolder" to="SplitMain/SplitSidebar/HbSaveLoad/BtnConfigFolder" method="Open"]
+[connection signal="pressed" from="SplitMain/SplitSidebar/PnFolders/HBF2/Button" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="SplitMain/SplitSidebar/PnOptions/ScrlOptions/VbOptions/HBoxContainer/CbMoveToBaseFolder" to="." method="StartUpdateTimer"]
 [connection signal="tab_changed" from="SplitMain/Tabs" to="SplitMain/Tabs" method="OnChangeTab"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowColorCodes" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsOrig" to="." method="OnUpdateJobList"]
 [connection signal="pressed" from="SplitMain/Tabs/Preview/HbPreviewTop/CbShowFullPathsDest" to="." method="OnUpdateJobList"]
 [connection signal="item_selected" from="SplitMain/Tabs/Batch Process/HbPreset/ObPreset" to="SplitMain/Tabs/Batch Process" method="UpdatePresetOptions"]
+[connection signal="text_changed" from="SplitMain/Tabs/Batch Process/HbOutput/LeOutput" to="SplitMain/Tabs/Batch Process" method="OnOutputFolderChanged"]
+[connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbOutput/BtnOpenPsdFolder" to="SplitMain/Tabs/Batch Process" method="OpenPsdFolder"]
+[connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbOutputJpg/BtnOpenJpgFolder" to="SplitMain/Tabs/Batch Process" method="OpenJpgFolder"]
 [connection signal="pressed" from="SplitMain/Tabs/Batch Process/HbRun/BtnRun" to="SplitMain/Tabs/Batch Process" method="Run"]
 [connection signal="timeout" from="SplitMain/Tabs/Batch Process/tmrNextImage" to="SplitMain/Tabs/Batch Process" method="ProcessImages"]
 [connection signal="pressed" from="BtnRun" to="." method="StartUpdateTimer"]
 [connection signal="pressed" from="BtnRun" to="." method="OnRun"]
 [connection signal="confirmed" from="PuAlreadyExists" to="PuAlreadyExists" method="DoIt"]
+[connection signal="pressed" from="hb/ct/vb/Button" to="." method="hideit"]

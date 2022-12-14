@@ -42,7 +42,7 @@ public struct FileJob
             {
                 if (System.IO.File.Exists(job.pathDestination))
                 {
-                    if (overwrite)
+                    if (overwrite && System.IO.File.Exists(job.pathOriginal))
                     {
                         System.IO.File.Delete(job.pathDestination);
                         MoveFile(job.pathOriginal, job.pathDestination);

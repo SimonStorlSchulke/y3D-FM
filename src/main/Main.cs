@@ -48,6 +48,22 @@ public class Main : Control
             GD.Print("Only one Instance of Main is allowed");
         }
         FoldersList.instance.OpenArgsPaths();
+
+        int d = DateTime.Now.Day;
+        int m = DateTime.Now.Month;
+
+
+        // Andy zum Geburtstag gratulieren (wichtig)
+        if (d == 14 && m == 5) {
+            GetNode<Control>("hb").Visible = true;
+        } else if ((DateTime.Now.DayOfWeek == DayOfWeek.Monday) && ((d == 15 && m == 5) || (d == 16 && m == 5))) {
+            GetNode<Control>("hb").Visible = true;
+            GetNode<Label>("hb/ct/vb/Label").Text = "Happy Birthday (im Nachhinein) Andy!";
+        }
+    }
+
+    public void hideit() {
+        GetNode<Control>("hb").Visible = false;
     }
 
     /// <summary> A times is used to update the Rename-Preview. To save performance, it is not updated instantly after each

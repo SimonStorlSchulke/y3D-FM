@@ -1,10 +1,18 @@
 using Godot;
 using System.Linq;
+using System;
 using System.IO;
 using System.Collections.Generic;
 
 public class RNUtil : Node
 {
+    public static void CreateDirIfNotExisting(string path) {
+        if(!System.IO.Directory.Exists(path))
+        try {
+            System.IO.Directory.CreateDirectory(path);
+        } catch {
+        }
+    }
 
     //File Paths that are forbidden to directly load in
     readonly static string[] blacklistedDirs = new string[]{

@@ -55,12 +55,13 @@ public static class BatchPresets
                     img.Write(destination + ".psd");
                 }
                 if (jpg) {
+                    string jpgDest = destination.Replace("output", "output_jpg");
                     var jpgFile = new MagickImage(img);
                     jpgFile.ColorAlpha(MagickColors.White);
                     jpgFile.Quality = 65;
-                    string jpgFolder = DopletComp.outputFolderJPG + "\\" + DateTime.Now.ToString("yyyyMMdd");
-                    System.IO.Directory.CreateDirectory(jpgFolder);
-                    jpgFile.Write(jpgFolder + "\\" + destination.GetFile() + ".jpg");
+                    System.IO.Directory.CreateDirectory(jpgDest.GetBaseDir());
+                    jpgFile.Write(jpgDest + ".jpg");
+                    GD.Print(jpgDest + ".jpg");
                 }
             }
         ),

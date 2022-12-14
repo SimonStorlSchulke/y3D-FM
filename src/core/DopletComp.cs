@@ -9,16 +9,13 @@ using System.Linq;
 public class DopletComp : Node
 {
     FoldersList foldersList;
-    [Export]
-    NodePath NPFoldersList;
-    [Export]
-    NodePath NPOutputFolder;
+    [Export] NodePath NPFoldersList;
+    [Export] NodePath NPOutputFolder;
+    [Export] NodePath NPOutputFolderJpg;
 
-    [Export]
-    NodePath NPRenameOptions;
+    [Export] NodePath NPRenameOptions;
 
-    [Export]
-    NodePath NPProgressBar;
+    [Export] NodePath NPProgressBar;
     ProgressBar progressBar;
     public static RichTextLabel lblProcessed;
     OptionButton presetSelector;
@@ -61,6 +58,30 @@ public class DopletComp : Node
 
         process = BatchPresets.list[presetSelector.Selected];
         UpdatePresetOptions(0);
+    }
+
+    public void OnOutputFolderChanged(string path) {
+        GetNode<Label>(NPOutputFolderJpg).Text = path + "_jpg";
+    }
+
+    public void OpenPsdFolder() {
+        string path = instance.GetNode<LineEdit>(instance.NPOutputFolder).Text;
+        RNUtil.CreateDirIfNotExisting(path);
+        try {
+            System.Diagnostics.Process.Start(path);
+        } catch {
+
+        }
+    }
+
+    public void OpenJpgFolder() {
+        string path = instance.GetNode<LineEdit>(instance.NPOutputFolder).Text + "_jpg";
+        RNUtil.CreateDirIfNotExisting(path);
+        try {
+            System.Diagnostics.Process.Start(path);
+        } catch {
+
+        }
     }
 
     public static string GetSaveDestination(string filename, bool createJpgFolder, string productname = "Unknown Product", bool sort = true)
