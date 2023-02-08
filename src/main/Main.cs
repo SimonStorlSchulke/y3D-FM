@@ -66,7 +66,7 @@ public class Main : Control
         GetNode<Control>("hb").Visible = false;
     }
 
-    /// <summary> A times is used to update the Rename-Preview. To save performance, it is not updated instantly after each
+    /// <summary> A timer is used to update the Rename-Preview. To save performance, it is not updated instantly after each
     /// User input, but after a short time without user-input </summary>
     public void StartUpdateTimer()
     {
